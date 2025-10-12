@@ -1,5 +1,23 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Landing site for Phonetap
+
+- Terms: /terms
+- Privacy: /privacy
+- Delete Account: /delete-account
+
+### Setup
+1. Copy .env.example to .env.local and fill values.
+2. Run: pnpm dev
+
+### Auth flow
+- Request code: POST /api/auth/request-code { email }
+- Verify code: POST /api/auth/verify { email, code } sets httpOnly session cookie.
+
+### Delete endpoint
+- POST /api/delete requires session cookie; proxies to BACKEND_DELETE_URL with { email }.
+
+
 ## Getting Started
 
 First, run the development server:

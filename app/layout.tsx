@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const coolvetica = localFont({ src: "../public/fonts/coolvetica-rg.ttf", variable: "--font-heading" });
+const dmsans = localFont({ src: "../public/fonts/DMSans-Medium.ttf", variable: "--font-body" });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,10 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${coolvetica.variable} ${dmsans.variable} antialiased`}>
+        <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
