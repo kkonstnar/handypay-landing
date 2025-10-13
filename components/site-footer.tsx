@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export function SiteFooter() {
   return (
-    <footer className="w-full border-t py-8">
+    <footer className="w-full border-t border-neutral-200 border-1 py-8">
       <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <Image src="/handypay.svg" alt="HandyPay" width={24} height={24} />
