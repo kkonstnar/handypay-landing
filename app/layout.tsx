@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${coolvetica.variable} ${dmsans.variable} antialiased`}>
+      <body className={`${coolvetica.variable} ${dmsans.variable} antialiased bg-white text-black`}>
         <SiteHeader />
         {children}
         <SiteFooter />
