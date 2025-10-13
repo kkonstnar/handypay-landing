@@ -27,7 +27,7 @@ export async function verifySessionToken(token: string): Promise<{ email: string
     });
     const email = typeof payload.email === "string" ? payload.email : null;
     return email ? { email } : null;
-  } catch (_err) {
+  } catch {
     return null;
   }
 }

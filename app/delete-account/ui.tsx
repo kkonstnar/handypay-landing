@@ -1,16 +1,9 @@
 "use client";
 import { useState } from "react";
-import { Apple } from "lucide-react";
+import Image from "next/image";
 
-async function postJson(path: string, body: unknown) {
-  const res = await fetch(path, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data?.error ?? "Request failed");
-  return data;
-}
-
-export default function DeleteClient({ initialAuthed }: { initialAuthed: boolean }) {
-  const [userId, setUserId] = useState("");
+export default function DeleteClient() {
+  const [userId] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -33,8 +26,8 @@ export default function DeleteClient({ initialAuthed }: { initialAuthed: boolean
         throw new Error(msg);
       }
       setSuccess("Account deleted successfully.");
-    } catch (e: any) {
-      setError(e?.message || "Deletion failed");
+    } catch (e: unknown) {
+      setError((e as Error)?.message || "Deletion failed");
     } finally {
       setBusy(false);
     }
@@ -59,7 +52,7 @@ export default function DeleteClient({ initialAuthed }: { initialAuthed: boolean
             }}
             className="border rounded px-4 py-2 flex items-center justify-center gap-2 hover:bg-neutral-50 cursor-pointer"
           >
-            <img src="/google.svg" alt="Google" className="w-5 h-5" />
+            <Image src="/google.svg" alt="Google" width={20} height={20} />
             <span>Continue with Google</span>
           </button>
           <button
@@ -71,7 +64,7 @@ export default function DeleteClient({ initialAuthed }: { initialAuthed: boolean
             }}
             className="border rounded px-4 py-2 flex items-center justify-center gap-2 hover:bg-neutral-50 cursor-pointer"
           >
-            <img src="/apple.svg" alt="Apple" className="w-5 h-5" />
+            <Image src="/apple.svg" alt="Apple" width={20} height={20} />
             <span>Continue with Apple</span>
           </button>
         </div>

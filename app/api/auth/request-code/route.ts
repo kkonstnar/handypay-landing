@@ -5,7 +5,7 @@ import { Resend } from "resend";
 const schema = z.object({ email: z.string().email() });
 
 // In-memory code store (dev/demo only). Replace with DB/Redis in production.
-const globalAny = global as any;
+const globalAny = global as { __authCodes?: Map<string, { code: string; expiresAt: number }> };
 const CODE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 if (!globalAny.__authCodes) globalAny.__authCodes = new Map<string, { code: string; expiresAt: number }>();
 const codeStore: Map<string, { code: string; expiresAt: number }> = globalAny.__authCodes;

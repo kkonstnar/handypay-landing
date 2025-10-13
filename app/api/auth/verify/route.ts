@@ -4,7 +4,7 @@ import { signSessionToken } from "@/lib/auth";
 
 const schema = z.object({ email: z.string().email(), code: z.string().length(6) });
 
-const globalAny = global as any;
+const globalAny = global as { __authCodes?: Map<string, { code: string; expiresAt: number }> };
 if (!globalAny.__authCodes) globalAny.__authCodes = new Map<string, { code: string; expiresAt: number }>();
 const codeStore: Map<string, { code: string; expiresAt: number }> = globalAny.__authCodes;
 

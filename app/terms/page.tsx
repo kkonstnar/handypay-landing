@@ -6,8 +6,8 @@ export default function Page() {
 
       <h2>1. Introduction</h2>
       <p>
-        Welcome to HandyPay ("we," "our," or "us"). These Terms of Service
-        ("Terms") govern your use of the HandyPay mobile application and
+        Welcome to HandyPay (&quot;we,&quot; &quot;our,&quot; or &quot;us&quot;). These Terms of Service
+        (&quot;Terms&quot;) govern your use of the HandyPay mobile application and
         payment services. By using our services, you agree to be bound by these
         Terms. If you do not agree to these Terms, please do not use our
         services.

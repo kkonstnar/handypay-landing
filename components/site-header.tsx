@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { GetAppButton } from "@/components/get-app-button";
 
 export function SiteHeader() {
