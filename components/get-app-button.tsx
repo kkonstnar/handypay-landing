@@ -3,7 +3,7 @@ import * as React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { QRCodeSVG } from "qrcode.react";
-import { Smartphone } from "lucide-react";
+import { Smartphone, X } from "lucide-react";
 
 function isMobile() {
   if (typeof navigator === "undefined") return false;
@@ -30,15 +30,19 @@ export function GetAppButton() {
         <Smartphone className="ml-2 h-4 w-4" />
       </Button>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/40" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg w-[320px]">
-          <Dialog.Title className="text-lg font-semibold mb-2">Scan to download</Dialog.Title>
-          <div className="flex items-center justify-center py-4">
-            <QRCodeSVG value={APP_URL} size={200} includeMargin />
-          </div>
-          <p className="text-sm text-neutral-600 mb-4 break-all">{APP_URL}</p>
-          <div className="flex justify-end">
-            <Button variant="secondary" size="sm" onClick={() => setOpen(false)}>Close</Button>
+        <Dialog.Overlay className="fixed inset-0 bg-black/50" />
+        <Dialog.Content className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-md w-[320px] md:w-[360px] p-5">
+          <Dialog.Title className="sr-only">Scan to download</Dialog.Title>
+          <Dialog.Close asChild>
+            <button aria-label="Close" className="absolute top-3 right-3 text-neutral-500 hover:text-black cursor-pointer">
+              <X className="w-5 h-5" />
+            </button>
+          </Dialog.Close>
+          <div className="w-full">
+            <div className="w-full aspect-square p-3">
+              <QRCodeSVG value={APP_URL} className="w-full h-full" />
+            </div>
+            <p className="text-center text-base font-medium mt-2">Scan to download</p>
           </div>
         </Dialog.Content>
       </Dialog.Portal>
