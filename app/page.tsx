@@ -67,7 +67,7 @@ export default function Home() {
                 className="font-mono"
               />
             </div>
-             <div className="pointer-events-none absolute md:bottom-0 bottom-20 z-50 left-0 right-0 h-26 bg-gradient-to-t from-white via-white/70 to-transparent" />
+             <div className="pointer-events-none absolute md:bottom-0 bottom-10 z-50 left-0 right-0 h-26 bg-gradient-to-t from-white via-white/70 to-transparent" />
             </motion.div>
         </div>
       </section>
