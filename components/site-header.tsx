@@ -10,8 +10,9 @@ export function SiteHeader() {
           <Image src="/handypay-full.svg" alt="HandyPay" width={120} height={32} />
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-neutral-700">
-          <a href="#features" className="hover:text-black">Cards</a>
-          <a href="#features" className="hover:text-black">Features</a>
+        <a href="#features" className="hover:text-black">Features</a>
+          <a href="#testimonials" className="hover:text-black">Testmonials</a>
+          
         </nav>
         <div className="flex items-center gap-2">
           <GetAppButton />

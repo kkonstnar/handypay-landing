@@ -4,8 +4,8 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
-const coolvetica = localFont({ src: "../public/fonts/coolvetica-rg.ttf", variable: "--font-heading" });
-const dmsans = localFont({ src: "../public/fonts/DMSans-Medium.ttf", variable: "--font-body" });
+const sfRoundedHeading = localFont({ src: "../public/fonts/SF-Pro-Rounded-Regular.otf", variable: "--font-heading" });
+const sfRounded = localFont({ src: "../public/fonts/SF-Pro-Rounded-Regular.otf", variable: "--font-body" });
 
 export const metadata: Metadata = {
   title: "HandyPay",
@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${coolvetica.variable} ${dmsans.variable} antialiased bg-white text-black`}>
+      <body className={`${sfRoundedHeading.variable} ${sfRounded.variable} antialiased bg-white text-black`}>
         <SiteHeader />
         {children}
         <SiteFooter />
