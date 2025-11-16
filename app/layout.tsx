@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
@@ -60,14 +60,6 @@ export const metadata: Metadata = {
   publisher: "HandyPay",
   applicationName: "HandyPay",
   referrer: "origin-when-cross-origin",
-  colorScheme: "light",
-  themeColor: "#3AB75C",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-  },
   formatDetection: {
     email: false,
     address: false,
@@ -135,6 +127,15 @@ export const metadata: Metadata = {
     "apple-mobile-web-app-capable": "yes",
     "apple-mobile-web-app-status-bar-style": "default",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  colorScheme: "light",
+  themeColor: "#3AB75C",
 };
 
 export default function RootLayout({
