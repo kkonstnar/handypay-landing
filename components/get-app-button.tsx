@@ -31,7 +31,7 @@ function getMobileOS() {
 // TODO: Replace with actual app store URLs
 const IOS_APP_URL = process.env.NEXT_PUBLIC_IOS_APP_URL || "https://apps.apple.com/app/handypay";
 const ANDROID_APP_URL = process.env.NEXT_PUBLIC_ANDROID_APP_URL || "https://play.google.com/store/apps/details?id=com.handypay";
-const APP_URL = process.env.NEXT_PUBLIC_APP_DOWNLOAD_URL || "https://tryhandypay.org/app";
+const APP_URL = process.env.NEXT_PUBLIC_APP_DOWNLOAD_URL || "https://tryhandypay.com/app";
 
 export function GetAppButton() {
   const [showQRCode, setShowQRCode] = React.useState(false);

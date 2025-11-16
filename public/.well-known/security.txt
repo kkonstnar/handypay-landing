@@ -1,9 +1,9 @@
-Contact: mailto:support@tryhandypay.org
+Contact: mailto:support@tryhandypay.com
 Expires: 2025-12-31T23:59:59.000Z
 Preferred-Languages: en
-Canonical: https://tryhandypay.org/.well-known/security.txt
+Canonical: https://tryhandypay.com/.well-known/security.txt
 
 # Security Policy
-# If you discover a security vulnerability, please email us at support@tryhandypay.org
+# If you discover a security vulnerability, please email us at support@tryhandypay.com
 # We appreciate responsible disclosure and will respond within 48 hours.
 

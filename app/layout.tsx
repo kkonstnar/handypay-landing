@@ -10,7 +10,7 @@ import { GoogleAnalyticsProvider } from "@/components/providers/google-analytics
 const sfRoundedHeading = localFont({ src: "../public/fonts/SF-Pro-Rounded-Regular.otf", variable: "--font-heading" });
 const sfRounded = localFont({ src: "../public/fonts/SF-Pro-Rounded-Regular.otf", variable: "--font-body" });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.org";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -217,7 +217,7 @@ export default function RootLayout({
       "name": "Jamaica"
     },
     "sameAs": [
-      "https://www.instagram.com/handypay",
+      "https://www.instagram.com/handypayapp",
       "https://www.tiktok.com/@handypay",
       "https://discord.gg/handypay"
     ],

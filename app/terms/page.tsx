@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.org";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
@@ -405,7 +405,7 @@ export default function Page() {
       <h2>14. Termination</h2>
       <p>
         <strong>Termination by You:</strong> You may terminate your account at any time by 
-        contacting us at support@tryhandypay.org or through the app settings. Upon termination, 
+        contacting us at support@tryhandypay.com or through the app settings. Upon termination, 
         you will remain responsible for all outstanding fees and charges.
       </p>
       <p>
@@ -510,7 +510,7 @@ export default function Page() {
       <p>
         <strong>Notices:</strong> Notices to you may be sent to the email address associated 
         with your account or posted in the app. Notices to us should be sent to 
-        support@tryhandypay.org.
+        support@tryhandypay.com.
       </p>
       <p>
         <strong>Language:</strong> These Terms are written in English. Any translations are 
@@ -589,7 +589,7 @@ export default function Page() {
       </p>
       <p>
         <strong>Support Channels:</strong> Support is available through email at 
-        support@tryhandypay.org. We aim to respond to support inquiries within 48 hours during 
+        support@tryhandypay.com. We aim to respond to support inquiries within 48 hours during 
         business days.
       </p>
       <p>
@@ -1147,7 +1147,7 @@ export default function Page() {
         <strong>Notices to Us:</strong> Notices to HandyPay must be sent in writing to:
       </p>
       <ul>
-        <li>Email: support@tryhandypay.org</li>
+        <li>Email: support@tryhandypay.com</li>
         <li>Address: HandyPay, Jamaica</li>
       </ul>
       <p>
@@ -1214,7 +1214,7 @@ export default function Page() {
         please contact us:
       </p>
       <ul>
-        <li><strong>Email:</strong> support@tryhandypay.org or support@tryhandypay.com</li>
+        <li><strong>Email:</strong> support@tryhandypay.com or support@tryhandypay.com</li>
         <li><strong>Address:</strong> HandyPay, Jamaica</li>
         <li><strong>Support Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM JST</li>
       </ul>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.org";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -651,7 +651,7 @@ export default function Page() {
       </p>
       <p>
         <strong>Exercising Your Rights:</strong> To exercise any of these rights, please contact 
-        us at privacy@tryhandypay.org. We will respond to your request within 30 days.
+        us at privacy@tryhandypay.com. We will respond to your request within 30 days.
       </p>
 
       <h2>26. Cookies and Tracking Technologies - Detailed</h2>
@@ -930,7 +930,7 @@ export default function Page() {
         certain requests.
       </p>
       <p>
-        To exercise your California privacy rights, please contact us at privacy@tryhandypay.org.
+        To exercise your California privacy rights, please contact us at privacy@tryhandypay.com.
       </p>
 
       <h2>34. European Privacy Rights (GDPR)</h2>
@@ -948,7 +948,7 @@ export default function Page() {
       </p>
       <p>
         <strong>Data Protection Officer:</strong> For GDPR-related inquiries, you can contact 
-        our Data Protection Officer at privacy@tryhandypay.org.
+        our Data Protection Officer at privacy@tryhandypay.com.
       </p>
       <p>
         <strong>Supervisory Authority:</strong> You have the right to lodge a complaint with 
@@ -1002,9 +1002,9 @@ export default function Page() {
         practices, please contact us:
       </p>
       <ul>
-        <li><strong>Email:</strong> privacy@tryhandypay.org or support@tryhandypay.org</li>
+        <li><strong>Email:</strong> privacy@tryhandypay.com or support@tryhandypay.com</li>
         <li><strong>Address:</strong> HandyPay, Jamaica</li>
-        <li><strong>Data Protection Officer:</strong> privacy@tryhandypay.org</li>
+        <li><strong>Data Protection Officer:</strong> privacy@tryhandypay.com</li>
       </ul>
       <p>
         <strong>Response Time:</strong> We aim to respond to privacy inquiries within 30 days. 

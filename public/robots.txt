@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://tryhandypay.org/sitemap.xml
+Sitemap: https://tryhandypay.com/sitemap.xml
 
 # Disallow admin/private routes if any
 Disallow: /api/

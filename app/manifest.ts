@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.org";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
