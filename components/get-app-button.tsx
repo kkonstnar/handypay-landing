@@ -32,6 +32,8 @@ function getMobileOS() {
 const IOS_APP_URL = process.env.NEXT_PUBLIC_IOS_APP_URL || "https://apps.apple.com/app/handypay";
 const ANDROID_APP_URL = process.env.NEXT_PUBLIC_ANDROID_APP_URL || "https://play.google.com/store/apps/details?id=com.handypay";
 const APP_URL = process.env.NEXT_PUBLIC_APP_DOWNLOAD_URL || "https://tryhandypay.com/app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
+const QR_CODE_TRACKING_URL = `${siteUrl}/app/download?source=header_button`;
 
 export function GetAppButton() {
   const [showQRCode, setShowQRCode] = React.useState(false);
@@ -155,7 +157,7 @@ export function GetAppButton() {
             className="absolute top-full left-1/2 -translate-x-1/2 mt-3 bg-white rounded-xl shadow-lg p-5 z-50 min-w-[200px]"
           >
             <div className="w-full aspect-square p-3 relative">
-              <QRCodeSVG value={APP_URL} className="w-full h-full" />
+              <QRCodeSVG value={QR_CODE_TRACKING_URL} className="w-full h-full" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-white rounded-lg p-0">
                   <Image 
