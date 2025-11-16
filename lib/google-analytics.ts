@@ -9,12 +9,9 @@
 
 declare global {
   interface Window {
-    gtag: (
-      command: "config" | "event" | "js" | "set",
-      targetId: string | Date,
-      config?: Record<string, any>
-    ) => void;
-    dataLayer: any[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    gtag: (...args: any[]) => void;
+    dataLayer: unknown[];
   }
 }
 
@@ -24,8 +21,9 @@ export function initGA(measurementId: string) {
 
   // Initialize dataLayer
   window.dataLayer = window.dataLayer || [];
-  window.gtag = function () {
-    window.dataLayer.push(arguments);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  window.gtag = function (...args: any[]) {
+    window.dataLayer.push(args);
   };
   window.gtag("js", new Date());
   window.gtag("config", measurementId, {
@@ -36,20 +34,27 @@ export function initGA(measurementId: string) {
 // Track event to Google Analytics
 export function trackGAEvent(
   eventName: string,
-  parameters?: Record<string, any>
+  parameters?: Record<string, unknown>
 ) {
   if (typeof window === "undefined" || !window.gtag) return;
 
   try {
-    window.gtag("event", eventName, {
-      ...parameters,
-      // Ensure UTM parameters are included
-      ...(parameters?.utm_source && { campaign_source: parameters.utm_source }),
-      ...(parameters?.utm_medium && { campaign_medium: parameters.utm_medium }),
-      ...(parameters?.utm_campaign && {
-        campaign_name: parameters.utm_campaign,
-      }),
-    });
+    const eventParams: Record<string, unknown> = {
+      ...(parameters || {}),
+    };
+
+    // Ensure UTM parameters are included
+    if (parameters?.utm_source) {
+      eventParams.campaign_source = parameters.utm_source;
+    }
+    if (parameters?.utm_medium) {
+      eventParams.campaign_medium = parameters.utm_medium;
+    }
+    if (parameters?.utm_campaign) {
+      eventParams.campaign_name = parameters.utm_campaign;
+    }
+
+    window.gtag("event", eventName, eventParams);
   } catch (error) {
     console.error("Google Analytics tracking error:", error);
   }

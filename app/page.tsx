@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Script from "next/script";
 import { motion } from "framer-motion";
-import { Landmark, FileText, Heart, Globe, Users, UserCircle, Repeat, Smartphone, Wallet, ThumbsUp, CreditCard, ChevronDown } from "lucide-react";
+import { Landmark, FileText, Heart, Globe, Users, UserCircle, Repeat, Wallet, ThumbsUp, CreditCard, ChevronDown } from "lucide-react";
 import NumberFlow from "@number-flow/react";
 import { useState, useEffect, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
@@ -304,8 +304,6 @@ export default function Home() {
       setUserReactions(userReactions);
     }
   };
-
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.org";
 
   const faqStructuredData = {
     "@context": "https://schema.org",

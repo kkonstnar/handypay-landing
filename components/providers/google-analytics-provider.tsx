@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import {
@@ -14,7 +14,7 @@ import {
   getStoredUTMParams,
 } from "@/lib/tracking-utils";
 
-export function GoogleAnalyticsProvider({
+function GoogleAnalyticsInner({
   children,
 }: {
   children: React.ReactNode;
@@ -194,6 +194,18 @@ export function GoogleAnalyticsProvider({
       />
       {children}
     </>
+  );
+}
+
+export function GoogleAnalyticsProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <Suspense fallback={children}>
+      <GoogleAnalyticsInner>{children}</GoogleAnalyticsInner>
+    </Suspense>
   );
 }
 

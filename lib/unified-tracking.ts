@@ -19,7 +19,7 @@ interface TrackEventOptions {
   // Event name
   eventName: string;
   // Event properties
-  properties?: Record<string, any>;
+  properties?: Record<string, unknown>;
   // Whether to track to PostHog (default: true)
   trackPostHog?: boolean;
   // Whether to track to Google Analytics (default: true)

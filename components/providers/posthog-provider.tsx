@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import posthog from "posthog-js";
 import { initPostHog } from "@/lib/posthog";
@@ -13,7 +13,7 @@ import {
   trackDropOff,
 } from "@/lib/tracking-utils";
 
-export function PostHogProvider({ children }: { children: React.ReactNode }) {
+function PostHogProviderInner({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const pageStartTime = useRef<number>(Date.now());
@@ -135,5 +135,13 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return <>{children}</>;
+}
+
+export function PostHogProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <Suspense fallback={children}>
+      <PostHogProviderInner>{children}</PostHogProviderInner>
+    </Suspense>
+  );
 }
 
