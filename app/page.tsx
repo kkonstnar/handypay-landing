@@ -354,7 +354,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex justify-center relative -mt-2 md:-mt-4"
+              className="flex justify-center relative -mt-2 md:-mt-4 bg-white"
               style={{height: 460}}
             >
             <Image src="/iphone-mockup.svg" alt="iPhone" width={300} height={560} priority />
