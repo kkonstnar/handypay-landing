@@ -13,12 +13,14 @@ function isMobile() {
 
 function getMobileOS() {
   if (typeof navigator === "undefined") return null;
-  const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+  const userAgent = navigator.userAgent || navigator.vendor || (window as Window & { opera?: string }).opera;
+  
+  if (!userAgent) return null;
   
   if (/android/i.test(userAgent)) {
     return "android";
   }
-  if (/iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream) {
+  if (/iPad|iPhone|iPod/.test(userAgent) && !(window as Window & { MSStream?: unknown }).MSStream) {
     return "ios";
   }
   return null;

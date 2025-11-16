@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Landmark, CreditCard, FileText, Heart, Globe, Users, UserCircle, Repeat, Smartphone, Wallet, ThumbsUp } from "lucide-react";
+import { Landmark, FileText, Heart, Globe, Users, UserCircle, Repeat, Smartphone, Wallet, ThumbsUp } from "lucide-react";
 import NumberFlow from "@number-flow/react";
 import { useState, useEffect, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
@@ -15,12 +15,14 @@ function isMobile() {
 
 function getMobileOS() {
   if (typeof window === "undefined") return null;
-  const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+  const userAgent = navigator.userAgent || navigator.vendor || (window as Window & { opera?: string }).opera;
+  
+  if (!userAgent) return null;
   
   if (/android/i.test(userAgent)) {
     return "android";
   }
-  if (/iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream) {
+  if (/iPad|iPhone|iPod/.test(userAgent) && !(window as Window & { MSStream?: unknown }).MSStream) {
     return "ios";
   }
   return null;
@@ -38,7 +40,6 @@ export default function Home() {
   const androidQRRef = useRef<HTMLDivElement>(null);
   const [featureReactions, setFeatureReactions] = useState<Record<string, number>>({});
   const [userReactions, setUserReactions] = useState<Record<string, boolean>>({});
-  const [isLoadingReactions, setIsLoadingReactions] = useState(true);
 
   // Load initial reactions from API
   useEffect(() => {
@@ -63,7 +64,7 @@ export default function Home() {
                   }
                 });
                 setUserReactions(validReactions);
-              } catch (e) {
+              } catch {
                 // Ignore parse errors
               }
             }
@@ -71,8 +72,6 @@ export default function Home() {
         }
       } catch (error) {
         console.error("Failed to load reactions:", error);
-      } finally {
-        setIsLoadingReactions(false);
       }
     };
 
@@ -669,7 +668,7 @@ export default function Home() {
                     />
                   </div>
                   <p className="text-neutral-900 leading-relaxed mb-4">
-                    Game changer for my business. Customers love scanning the QR code - it's so fast.
+                    Game changer for my business. Customers love scanning the QR code - it&apos;s so fast.
                   </p>
                   <p className="text-neutral-900 leading-relaxed">
                     Getting paid directly to my <span className="font-bold">Jamaican bank account</span> in just a few days? This is exactly what I needed.
@@ -697,7 +696,7 @@ export default function Home() {
               <div className="flex flex-col gap-6">
                 <div className="bg-white p-6 border border-neutral-200" style={{ borderRadius: '14px 8px 14px 8px', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
                   <p className="text-neutral-900 leading-relaxed mb-4">
-                    No more complicated payment setups. Just generate a QR code and you're done.
+                    No more complicated payment setups. Just generate a QR code and you&apos;re done.
                   </p>
                   <div className="flex items-center gap-2">
                     <span className="text-neutral-600 text-sm">Aaliyah Johnson</span>
