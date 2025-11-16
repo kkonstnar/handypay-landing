@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Landmark, FileText, Heart, Globe, Users, UserCircle, Repeat, Smartphone, Wallet, ThumbsUp } from "lucide-react";
+import { Landmark, FileText, Heart, Globe, Users, UserCircle, Repeat, Smartphone, Wallet, ThumbsUp, CreditCard, ChevronDown } from "lucide-react";
 import NumberFlow from "@number-flow/react";
 import { useState, useEffect, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
@@ -40,6 +40,7 @@ export default function Home() {
   const androidQRRef = useRef<HTMLDivElement>(null);
   const [featureReactions, setFeatureReactions] = useState<Record<string, number>>({});
   const [userReactions, setUserReactions] = useState<Record<string, boolean>>({});
+  const [showMoreFeatures, setShowMoreFeatures] = useState(false);
 
   // Load initial reactions from API
   useEffect(() => {
@@ -240,10 +241,12 @@ export default function Home() {
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-base text-neutral-600 max-w-2xl mx-auto"
+              className="text-base text-neutral-600 max-w-2xl mx-auto mb-6"
             >
               HandyPay makes it easy for anyone to accept digital payments with QR codes and payment links, directly to their <strong>Jamaican bank account</strong> or <strong>Western Union</strong>.
             </motion.p>
+           
+              
             <motion.div
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
@@ -254,7 +257,7 @@ export default function Home() {
                 <button
                   ref={iosButtonRef}
                   onClick={handleIOSClick}
-                  className="inline-flex items-center gap-2 px-6 py-2 bg-white text-black border border-neutral-300 rounded-full font-medium text-sm hover:bg-neutral-50 transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-2 bg-white text-black border border-neutral-300 rounded-full font-medium text-sm hover:bg-neutral-50 transition-colors cursor-pointer"
                 >
                   <Image 
                     src="/apple.svg" 
@@ -298,7 +301,7 @@ export default function Home() {
                 <button
                   ref={androidButtonRef}
                   onClick={handleAndroidClick}
-                  className="inline-flex items-center gap-2 px-6 py-2 bg-white text-black border border-neutral-300 rounded-full font-medium text-sm hover:bg-neutral-50 transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-2 bg-white text-black border border-neutral-300 rounded-full font-medium text-sm hover:bg-neutral-50 transition-colors cursor-pointer"
                 >
                   <Image 
                     src="/64px-Google_Play_2022_icon.svg.png" 
@@ -343,11 +346,63 @@ export default function Home() {
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.35 }}
-              className="flex items-center justify-center gap-3 mt-4"
+              className="hidden md:flex items-center justify-center gap-6 mt-4 mb-2"
             >
-              <span className="text-sm text-neutral-600">Partnered with</span>
-              <Image src="/stripe.svg" alt="Stripe" width={54} height={20} /> <span className="text-sm text-neutral-600">&</span>
-              <Image src="/wulogo.png" alt="Western Union" width={54} height={20} />
+              <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-0.5">
+                  {[...Array(5)].map((_, i) => {
+                    const rating = 4.8;
+                    const starValue = i + 1;
+                    const isFilled = starValue <= Math.floor(rating);
+                    return (
+                      <svg 
+                        key={i} 
+                        className={`w-4 h-4 ${isFilled ? 'text-yellow-400 fill-current' : 'text-neutral-300'}`} 
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    );
+                  })}
+                </div>
+                <span className="text-sm text-neutral-600 font-medium">4.8</span>
+                <span className="text-xs text-neutral-500">App Store</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-0.5">
+                  {[...Array(5)].map((_, i) => {
+                    const rating = 4.7;
+                    const starValue = i + 1;
+                    const isFilled = starValue <= Math.floor(rating);
+                    return (
+                      <svg 
+                        key={i} 
+                        className={`w-4 h-4 ${isFilled ? 'text-yellow-400 fill-current' : 'text-neutral-300'}`} 
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    );
+                  })}
+                </div>
+                <span className="text-sm text-neutral-600 font-medium">4.7</span>
+                <span className="text-xs text-neutral-500">Google Play</span>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-col items-center justify-center gap-4 mt-6"
+            >
+              <div className="flex items-center justify-center gap-3">
+                <span className="text-sm text-neutral-600">Partnered with</span>
+                <Image src="/stripe.svg" alt="Stripe" width={54} height={20} /> <span className="text-sm text-neutral-600">&</span>
+                <Image src="/wulogo.png" alt="Western Union" width={54} height={20} />
+              </div>
+              
             </motion.div>
           </div>
             <motion.div
@@ -507,129 +562,182 @@ export default function Home() {
                 <NumberFlow value={featureReactions.subscriptions || 0} />
               </button>
             </div>
-            <div className="bg-white p-8 rounded-lg relative opacity-75">
-              <div className="flex items-center gap-3 mb-2">
-                <FileText className="w-8 h-8 text-neutral-400" />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-semibold">Invoicing</h3>
-                  <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
-                </div>
-              </div>
-              <p className="text-xs text-neutral-500 mb-3">Feb 12, 2025</p>
-              <p className="text-neutral-600 mb-4">
-                Create and send professional invoices to your customers
-              </p>
-              <button
-                onClick={() => handleFeatureReaction("invoicing")}
-                className={`flex items-center gap-2 text-xs transition-colors ${
-                  userReactions.invoicing 
-                    ? "text-[#3AB75C]" 
-                    : "text-neutral-500 hover:text-neutral-700"
-                }`}
-              >
-                <ThumbsUp className={`w-4 h-4 ${userReactions.invoicing ? "fill-current" : ""}`} />
-                <NumberFlow value={featureReactions.invoicing || 0} />
-              </button>
-            </div>
-            <div className="bg-white p-8 rounded-lg relative opacity-75">
-              <div className="flex items-center gap-3 mb-2">
-                <UserCircle className="w-8 h-8 text-neutral-400" />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-semibold">Customers</h3>
-                  <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
-                </div>
-              </div>
-              <p className="text-xs text-neutral-500 mb-3">Mar 20, 2025</p>
-              <p className="text-neutral-600 mb-4">
-                Track customer payment history and manage your customer relationships
-              </p>
-              <button
-                onClick={() => handleFeatureReaction("customers")}
-                className={`flex items-center gap-2 text-xs transition-colors ${
-                  userReactions.customers 
-                    ? "text-[#3AB75C]" 
-                    : "text-neutral-500 hover:text-neutral-700"
-                }`}
-              >
-                <ThumbsUp className={`w-4 h-4 ${userReactions.customers ? "fill-current" : ""}`} />
-                <NumberFlow value={featureReactions.customers || 0} />
-              </button>
-            </div>
-            <div className="bg-white p-8 rounded-lg relative opacity-75">
-              <div className="flex items-center gap-3 mb-2">
-                <Users className="w-8 h-8 text-neutral-400" />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-semibold">Team Accounts</h3>
-                  <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
-                </div>
-              </div>
-              <p className="text-xs text-neutral-500 mb-3">Apr 15, 2025</p>
-              <p className="text-neutral-600 mb-4">
-                Collaborate with your team and manage multiple users on one account
-              </p>
-              <button
-                onClick={() => handleFeatureReaction("teamAccounts")}
-                className={`flex items-center gap-2 text-xs transition-colors ${
-                  userReactions.teamAccounts 
-                    ? "text-[#3AB75C]" 
-                    : "text-neutral-500 hover:text-neutral-700"
-                }`}
-              >
-                <ThumbsUp className={`w-4 h-4 ${userReactions.teamAccounts ? "fill-current" : ""}`} />
-                <NumberFlow value={featureReactions.teamAccounts || 0} />
-              </button>
-            </div>
-            <div className="bg-white p-8 rounded-lg relative opacity-75">
-              <div className="flex items-center gap-3 mb-2">
-                <Smartphone className="w-8 h-8 text-neutral-400" />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-semibold">Virtual Cards</h3>
-                  <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
-                </div>
-              </div>
-              <p className="text-xs text-neutral-500 mb-3">May 22, 2025</p>
-              <p className="text-neutral-600 mb-4">
-                Issue virtual cards instantly for online payments and subscriptions
-              </p>
-              <button
-                onClick={() => handleFeatureReaction("virtualCards")}
-                className={`flex items-center gap-2 text-xs transition-colors ${
-                  userReactions.virtualCards 
-                    ? "text-[#3AB75C]" 
-                    : "text-neutral-500 hover:text-neutral-700"
-                }`}
-              >
-                <ThumbsUp className={`w-4 h-4 ${userReactions.virtualCards ? "fill-current" : ""}`} />
-                <NumberFlow value={featureReactions.virtualCards || 0} />
-              </button>
-            </div>
-            <div className="bg-white p-8 rounded-lg relative opacity-75">
-              <div className="flex items-center gap-3 mb-2">
-                <Wallet className="w-8 h-8 text-neutral-400" />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-semibold">Physical Cards</h3>
-                  <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
-                </div>
-              </div>
-              <p className="text-xs text-neutral-500 mb-3">Jun 10, 2025</p>
-              <p className="text-neutral-600 mb-4">
-                Order physical cards delivered to your address for in-person payments
-              </p>
-              <button
-                onClick={() => handleFeatureReaction("physicalCards")}
-                className={`flex items-center gap-2 text-xs transition-colors ${
-                  userReactions.physicalCards 
-                    ? "text-[#3AB75C]" 
-                    : "text-neutral-500 hover:text-neutral-700"
-                }`}
-              >
-                <ThumbsUp className={`w-4 h-4 ${userReactions.physicalCards ? "fill-current" : ""}`} />
-                <NumberFlow value={featureReactions.physicalCards || 0} />
-              </button>
-            </div>
+            <AnimatePresence>
+              {showMoreFeatures && (
+                <>
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                    className="bg-white p-8 rounded-lg relative opacity-75"
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <FileText className="w-8 h-8 text-neutral-400" />
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-xl font-semibold">Invoicing</h3>
+                        <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-neutral-500 mb-3">Feb 12, 2025</p>
+                    <p className="text-neutral-600 mb-4">
+                      Create and send professional invoices to your customers
+                    </p>
+                    <button
+                      onClick={() => handleFeatureReaction("invoicing")}
+                      className={`flex items-center gap-2 text-xs transition-colors ${
+                        userReactions.invoicing 
+                          ? "text-[#3AB75C]" 
+                          : "text-neutral-500 hover:text-neutral-700"
+                      }`}
+                    >
+                      <ThumbsUp className={`w-4 h-4 ${userReactions.invoicing ? "fill-current" : ""}`} />
+                      <NumberFlow value={featureReactions.invoicing || 0} />
+                    </button>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3, delay: 0.05, ease: [0.4, 0, 0.2, 1] }}
+                    className="bg-white p-8 rounded-lg relative opacity-75"
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <UserCircle className="w-8 h-8 text-neutral-400" />
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-xl font-semibold">Customers</h3>
+                        <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-neutral-500 mb-3">Mar 20, 2025</p>
+                    <p className="text-neutral-600 mb-4">
+                      Track customer payment history and manage your customer relationships
+                    </p>
+                    <button
+                      onClick={() => handleFeatureReaction("customers")}
+                      className={`flex items-center gap-2 text-xs transition-colors ${
+                        userReactions.customers 
+                          ? "text-[#3AB75C]" 
+                          : "text-neutral-500 hover:text-neutral-700"
+                      }`}
+                    >
+                      <ThumbsUp className={`w-4 h-4 ${userReactions.customers ? "fill-current" : ""}`} />
+                      <NumberFlow value={featureReactions.customers || 0} />
+                    </button>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
+                    className="bg-white p-8 rounded-lg relative opacity-75"
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <Users className="w-8 h-8 text-neutral-400" />
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-xl font-semibold">Team Accounts</h3>
+                        <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-neutral-500 mb-3">Apr 15, 2025</p>
+                    <p className="text-neutral-600 mb-4">
+                      Collaborate with your team and manage multiple users on one account
+                    </p>
+                    <button
+                      onClick={() => handleFeatureReaction("teamAccounts")}
+                      className={`flex items-center gap-2 text-xs transition-colors ${
+                        userReactions.teamAccounts 
+                          ? "text-[#3AB75C]" 
+                          : "text-neutral-500 hover:text-neutral-700"
+                      }`}
+                    >
+                      <ThumbsUp className={`w-4 h-4 ${userReactions.teamAccounts ? "fill-current" : ""}`} />
+                      <NumberFlow value={featureReactions.teamAccounts || 0} />
+                    </button>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
+                    className="bg-white p-8 rounded-lg relative opacity-75"
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <CreditCard className="w-8 h-8 text-neutral-400" />
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-xl font-semibold">Virtual Cards</h3>
+                        <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-neutral-500 mb-3">May 22, 2025</p>
+                    <p className="text-neutral-600 mb-4">
+                      Issue virtual cards instantly for online payments and subscriptions
+                    </p>
+                    <button
+                      onClick={() => handleFeatureReaction("virtualCards")}
+                      className={`flex items-center gap-2 text-xs transition-colors ${
+                        userReactions.virtualCards 
+                          ? "text-[#3AB75C]" 
+                          : "text-neutral-500 hover:text-neutral-700"
+                      }`}
+                    >
+                      <ThumbsUp className={`w-4 h-4 ${userReactions.virtualCards ? "fill-current" : ""}`} />
+                      <NumberFlow value={featureReactions.virtualCards || 0} />
+                    </button>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
+                    className="bg-white p-8 rounded-lg relative opacity-75"
+                  >
+                    <div className="flex items-center gap-3 mb-2">
+                      <Wallet className="w-8 h-8 text-neutral-400" />
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-xl font-semibold">Physical Cards</h3>
+                        <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-neutral-500 mb-3">Jun 10, 2025</p>
+                    <p className="text-neutral-600 mb-4">
+                      Order physical cards delivered to your address for in-person payments
+                    </p>
+                    <button
+                      onClick={() => handleFeatureReaction("physicalCards")}
+                      className={`flex items-center gap-2 text-xs transition-colors ${
+                        userReactions.physicalCards 
+                          ? "text-[#3AB75C]" 
+                          : "text-neutral-500 hover:text-neutral-700"
+                      }`}
+                    >
+                      <ThumbsUp className={`w-4 h-4 ${userReactions.physicalCards ? "fill-current" : ""}`} />
+                      <NumberFlow value={featureReactions.physicalCards || 0} />
+                    </button>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
           </div>
+          {!showMoreFeatures && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex justify-center mt-12"
+            >
+              <button
+                onClick={() => setShowMoreFeatures(true)}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black border border-neutral-300 rounded-full font-medium text-sm hover:bg-neutral-50 transition-colors cursor-pointer"
+              >
+                More Features
+                <ChevronDown className="w-4 h-4" />
+              </button>
+            </motion.div>
+          )}
           {/* Payment Methods */}
-           <div className="text-center mb-32">
+           <div className="text-center mb-32 mt-20">
             <p className="text-sm text-neutral-600 mb-8">All major payment methods accepted</p>
             <div className="flex flex-wrap justify-center items-center gap-2 mb-8">
               {Array.from({ length: 7 }).map((_, i) => (

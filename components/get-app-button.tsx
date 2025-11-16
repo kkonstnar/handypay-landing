@@ -88,7 +88,7 @@ export function GetAppButton() {
         className="text-black hover:bg-neutral-100 cursor-pointer"
       >
         Get the app
-        <Smartphone className="ml-2 h-4 w-4" />
+        <Smartphone className="ml-2 h-4 w-4" color="black" />
       </Button>
       
       <AnimatePresence>
