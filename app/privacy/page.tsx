@@ -1,3 +1,24 @@
+import type { Metadata } from "next";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.org";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "HandyPay Privacy Policy - Learn how we protect your personal information and payment data. Secure payment processing for merchants in Jamaica.",
+  alternates: {
+    canonical: `${siteUrl}/privacy`,
+  },
+  openGraph: {
+    title: "Privacy Policy | HandyPay",
+    description: "HandyPay Privacy Policy - How we collect, use, and protect your data for secure payment processing in Jamaica",
+    url: `${siteUrl}/privacy`,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
 export default function Page() {
   return (
     <main className="container mx-auto px-4 py-12 prose max-w-4xl">

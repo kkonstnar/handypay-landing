@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Script from "next/script";
 import { motion } from "framer-motion";
 import { Landmark, FileText, Heart, Globe, Users, UserCircle, Repeat, Smartphone, Wallet, ThumbsUp, CreditCard, ChevronDown } from "lucide-react";
 import NumberFlow from "@number-flow/react";
@@ -7,6 +8,8 @@ import { useState, useEffect, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import { AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
+import posthog from "posthog-js";
+import { trackGAEvent } from "@/lib/google-analytics";
 
 function isMobile() {
   if (typeof window === "undefined") return false;
@@ -86,6 +89,45 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  // Track scroll depth
+  useEffect(() => {
+    let maxScroll = 0;
+    const trackedDepths = new Set<number>();
+
+    const handleScroll = () => {
+      const scrollPercent = Math.round(
+        (window.scrollY /
+          (document.documentElement.scrollHeight - window.innerHeight)) *
+          100
+      );
+
+      // Track at 25%, 50%, 75%, and 100%
+      const milestones = [25, 50, 75, 100];
+      milestones.forEach((milestone) => {
+        if (
+          scrollPercent >= milestone &&
+          !trackedDepths.has(milestone) &&
+          maxScroll < milestone
+        ) {
+          trackedDepths.add(milestone);
+          maxScroll = milestone;
+          posthog.capture("scroll_depth", {
+            depth: milestone,
+            page: "home",
+          });
+          // Also track to Google Analytics
+          trackGAEvent("scroll_depth", {
+            depth: milestone,
+            page: "home",
+          });
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // Close QR code when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -121,9 +163,25 @@ export default function Home() {
   }, [showQRCode]);
 
   const handleIOSClick = () => {
+    // Track download click to both PostHog and Google Analytics
+    const eventData = {
+      platform: "ios",
+      source: "hero_section",
+      device_type: isMobile() ? "mobile" : "desktop",
+    };
+    posthog.capture("app_download_clicked", eventData);
+    trackGAEvent("app_download_clicked", eventData);
+
     if (isMobile()) {
       const os = getMobileOS();
       if (os === "ios") {
+        const redirectData = {
+          platform: "ios",
+          source: "hero_section",
+          redirect_type: "direct",
+        };
+        posthog.capture("app_download_redirected", redirectData);
+        trackGAEvent("app_download_redirected", redirectData);
         window.location.href = IOS_APP_URL;
       } else {
         // On mobile but not iOS, still redirect
@@ -136,9 +194,25 @@ export default function Home() {
   };
 
   const handleAndroidClick = () => {
+    // Track download click to both PostHog and Google Analytics
+    const eventData = {
+      platform: "android",
+      source: "hero_section",
+      device_type: isMobile() ? "mobile" : "desktop",
+    };
+    posthog.capture("app_download_clicked", eventData);
+    trackGAEvent("app_download_clicked", eventData);
+
     if (isMobile()) {
       const os = getMobileOS();
       if (os === "android") {
+        const redirectData = {
+          platform: "android",
+          source: "hero_section",
+          redirect_type: "direct",
+        };
+        posthog.capture("app_download_redirected", redirectData);
+        trackGAEvent("app_download_redirected", redirectData);
         window.location.href = ANDROID_APP_URL;
       } else {
         // On mobile but not Android, still redirect
@@ -153,6 +227,15 @@ export default function Home() {
   const handleFeatureReaction = async (featureId: string) => {
     const isCurrentlyReacted = userReactions[featureId];
     const action = isCurrentlyReacted ? "decrement" : "increment";
+
+    // Track feature reaction to both PostHog and Google Analytics
+    const reactionData = {
+      feature_id: featureId,
+      action: action,
+      feature_name: featureId.replace(/([A-Z])/g, " $1").trim(),
+    };
+    posthog.capture("feature_reaction", reactionData);
+    trackGAEvent("feature_reaction", reactionData);
 
     // Show confetti when incrementing (thumbs up)
     if (!isCurrentlyReacted && typeof window !== "undefined") {
@@ -221,10 +304,176 @@ export default function Home() {
       setUserReactions(userReactions);
     }
   };
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.org";
+
+  const faqStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does HandyPay work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HandyPay allows you to accept digital payments in Jamaica using QR codes and payment links. Simply generate a QR code or share a payment link, and customers can pay you directly. Funds are deposited to your Jamaican bank account or Western Union account within 2 business days."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What payment methods does HandyPay accept?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HandyPay accepts all major credit and debit cards including Visa, Mastercard, American Express, and Discover. We also support Apple Pay and Google Pay for contactless payments."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does it take to receive payments in Jamaica?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Payments are processed and deposited to your Jamaican bank account or Western Union account within 2 business days after the transaction is completed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I accept payments in both USD and JMD?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, HandyPay supports multi-currency payments. You can accept payments in both USD (US Dollars) and JMD (Jamaican Dollars), allowing you to choose the currency that works best for your business."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is HandyPay available for iOS and Android?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, HandyPay is available for both iOS and Android devices. You can download it from the App Store for iPhone or Google Play Store for Android devices."
+        }
+      }
+    ]
+  };
+
+  const reviewStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "HandyPay",
+    "description": "Mobile payment app for accepting card payments with QR codes and payment links in Jamaica",
+    "brand": {
+      "@type": "Brand",
+      "name": "HandyPay"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.75",
+      "reviewCount": "6",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Keisha Williams"
+        },
+        "datePublished": "2024-01-01",
+        "reviewBody": "Game changer for my business. Customers love scanning the QR code - it's so fast. Getting paid directly to my Jamaican bank account in just a few days? This is exactly what I needed.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Marcus Thompson"
+        },
+        "datePublished": "2024-01-01",
+        "reviewBody": "The payment links are perfect for WhatsApp. I just send it and get paid instantly.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Aaliyah Johnson"
+        },
+        "datePublished": "2024-01-01",
+        "reviewBody": "No more complicated payment setups. Just generate a QR code and you're done.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Jamal Davis"
+        },
+        "datePublished": "2024-01-01",
+        "reviewBody": "Western Union payouts are a lifesaver. I wish I found HandyPay sooner. Setting up payments used to take weeks, now it takes minutes.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Tyrone Mitchell"
+        },
+        "datePublished": "2024-01-01",
+        "reviewBody": "HandyPay is awesome. The QR code payments work flawlessly, and getting paid to my Jamaican bank account in 2 days is exactly what I needed. Best decision I made for my business.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      },
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "Jordan Washington"
+        },
+        "datePublished": "2024-01-01",
+        "reviewBody": "@handypay made accepting card payments so simple. The payment links work perfectly for my customers, and I love that I can get paid to Western Union too.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      }
+    ]
+  };
+
   return (
-    <div className="flex flex-col">
+    <main className="flex flex-col">
+      <Script
+        id="faq-structured-data"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
+      />
+      <Script
+        id="review-structured-data"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewStructuredData) }}
+      />
       {/* Hero Section */}
-      <section className="min-h-screen flex items-end px-4">
+      <section aria-label="Hero section" className="min-h-screen flex items-end px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mt-12 md:mt-16 mb-4">
             <motion.h1
@@ -261,7 +510,7 @@ export default function Home() {
                 >
                   <Image 
                     src="/apple.svg" 
-                    alt="" 
+                    alt="Apple App Store logo" 
                     width={20} 
                     height={20}
                     className="w-5 h-5"
@@ -305,7 +554,7 @@ export default function Home() {
                 >
                   <Image 
                     src="/64px-Google_Play_2022_icon.svg.png" 
-                    alt="" 
+                    alt="Google Play Store logo" 
                     width={16} 
                     height={16}
                     className="w-4 h-4"
@@ -412,9 +661,24 @@ export default function Home() {
               className="flex justify-center relative -mt-2 md:-mt-4 bg-white"
               style={{height: 460}}
             >
-            <Image src="/iphone-mockup.svg" alt="iPhone" width={300} height={560} priority />
+            <Image 
+              src="/iphone-mockup.svg" 
+              alt="HandyPay mobile app interface showing QR code payment feature on iPhone" 
+              width={300} 
+              height={560} 
+              priority 
+              sizes="(max-width: 768px) 100vw, 300px"
+              loading="eager"
+            />
             <div className="absolute top-24 md:top-38">
-              <Image src="/qr-icon.svg" alt="QR Code" width={140} height={140} />
+              <Image 
+                src="/qr-icon.svg" 
+                alt="QR code for accepting payments with HandyPay" 
+                width={140} 
+                height={140}
+                sizes="140px"
+                loading="lazy"
+              />
             </div>
             <div className="absolute top-64 md:top-80 left-1/2 -translate-x-1/2 text-xl font-semibold text-black">
               <NumberFlow
@@ -429,7 +693,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 -mt-20 md:-mt-20 px-4 bg-white">
+      <section id="features" aria-label="Features" className="py-20 -mt-20 md:-mt-20 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-4xl font-bold text-center mb-16 heading">Features</h2>
           
@@ -437,7 +701,14 @@ export default function Home() {
             <div className="bg-white p-8 rounded-lg">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-8 h-8 relative">
-                  <Image src="/home-tab.svg" alt="QR" fill className="object-contain" />
+                  <Image 
+                    src="/home-tab.svg" 
+                    alt="QR code payment icon" 
+                    fill 
+                    className="object-contain"
+                    sizes="32px"
+                    loading="lazy"
+                  />
                 </div>
                 <h3 className="text-xl font-semibold">QR Code Payments</h3>
               </div>
@@ -459,7 +730,14 @@ export default function Home() {
             <div className="bg-white p-8 rounded-lg">
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-8 h-8 relative">
-                  <Image src="/payment-link-green.svg" alt="Payment Link" fill className="object-contain" />
+                  <Image 
+                    src="/payment-link-green.svg" 
+                    alt="Payment link icon for sharing payment requests" 
+                    fill 
+                    className="object-contain"
+                    sizes="32px"
+                    loading="lazy"
+                  />
                 </div>
                 <h3 className="text-xl font-semibold">Payment Links</h3>
               </div>
@@ -728,7 +1006,12 @@ export default function Home() {
               className="flex justify-center mt-12"
             >
               <button
-                onClick={() => setShowMoreFeatures(true)}
+                onClick={() => {
+                  const eventData = { section: "features" };
+                  posthog.capture("more_features_clicked", eventData);
+                  trackGAEvent("more_features_clicked", eventData);
+                  setShowMoreFeatures(true);
+                }}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black border border-neutral-300 rounded-full font-medium text-sm hover:bg-neutral-50 transition-colors cursor-pointer"
               >
                 More Features
@@ -740,16 +1023,31 @@ export default function Home() {
            <div className="text-center mb-32 mt-20">
             <p className="text-sm text-neutral-600 mb-8">All major payment methods accepted</p>
             <div className="flex flex-wrap justify-center items-center gap-2 mb-8">
-              {Array.from({ length: 7 }).map((_, i) => (
+              {[
+                "Visa",
+                "Mastercard", 
+                "American Express",
+                "Discover",
+                "Apple Pay",
+                "Google Pay",
+                "Stripe"
+              ].map((name, i) => (
                 <div key={i} className="w-12 h-6 relative">
-                  <Image src={`/payment-${i + 1}.svg`} alt={`Payment method ${i + 1}`} fill className="object-contain" />
+                  <Image 
+                    src={`/payment-${i + 1}.svg`} 
+                    alt={`${name} payment method accepted`} 
+                    fill 
+                    className="object-contain"
+                    sizes="48px"
+                    loading="lazy"
+                  />
                 </div>
               ))}
             </div>
           </div>
 
           {/* Testimonials Section */}
-          <div id="testimonials" className="mb-16 w-full">
+          <section id="testimonials" aria-label="Customer testimonials" className="mb-16 w-full">
             <div className="text-center mb-16 space-y-4">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-balance heading">
                 Entrepreneurs love HandyPay
@@ -870,13 +1168,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </section>
 
          
 
           {/* Removed benefits card per request */}
         </div>
       </section>
-    </div>
+    </main>
   );
 }

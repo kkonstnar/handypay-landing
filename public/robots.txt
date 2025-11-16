@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://tryhandypay.org/sitemap.xml
+
+# Disallow admin/private routes if any
+Disallow: /api/
+Disallow: /delete-account
+

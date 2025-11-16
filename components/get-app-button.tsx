@@ -5,6 +5,8 @@ import { QRCodeSVG } from "qrcode.react";
 import { Smartphone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import posthog from "posthog-js";
+import { trackGAEvent } from "@/lib/google-analytics";
 
 function isMobile() {
   if (typeof navigator === "undefined") return false;
@@ -37,19 +39,70 @@ export function GetAppButton() {
   const buttonRef = React.useRef<HTMLButtonElement>(null);
 
   const handleClick = () => {
+    // Track button click to both PostHog and Google Analytics
+    const buttonEventData = {
+      location: "header",
+      device_type: isMobile() ? "mobile" : "desktop",
+    };
+    posthog.capture("get_app_button_clicked", buttonEventData);
+    trackGAEvent("get_app_button_clicked", buttonEventData);
+
     if (isMobile()) {
       const os = getMobileOS();
       if (os === "ios") {
+        const downloadData = {
+          platform: "ios",
+          source: "header_button",
+          device_type: "mobile",
+        };
+        const redirectData = {
+          platform: "ios",
+          source: "header_button",
+          redirect_type: "direct",
+        };
+        posthog.capture("app_download_clicked", downloadData);
+        trackGAEvent("app_download_clicked", downloadData);
+        posthog.capture("app_download_redirected", redirectData);
+        trackGAEvent("app_download_redirected", redirectData);
         window.location.href = IOS_APP_URL;
       } else if (os === "android") {
+        const downloadData = {
+          platform: "android",
+          source: "header_button",
+          device_type: "mobile",
+        };
+        const redirectData = {
+          platform: "android",
+          source: "header_button",
+          redirect_type: "direct",
+        };
+        posthog.capture("app_download_clicked", downloadData);
+        trackGAEvent("app_download_clicked", downloadData);
+        posthog.capture("app_download_redirected", redirectData);
+        trackGAEvent("app_download_redirected", redirectData);
         window.location.href = ANDROID_APP_URL;
       } else {
         // Fallback for other mobile devices
+        const downloadData = {
+          platform: "other",
+          source: "header_button",
+          device_type: "mobile",
+        };
+        posthog.capture("app_download_clicked", downloadData);
+        trackGAEvent("app_download_clicked", downloadData);
         window.location.href = APP_URL;
       }
     } else {
       // Desktop: toggle QR code visibility
       setShowQRCode(!showQRCode);
+      if (!showQRCode) {
+        const qrData = {
+          source: "header_button",
+          platform: "desktop",
+        };
+        posthog.capture("qr_code_shown", qrData);
+        trackGAEvent("qr_code_shown", qrData);
+      }
     }
   };
 
