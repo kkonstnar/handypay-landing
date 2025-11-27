@@ -10,6 +10,8 @@ import { AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import posthog from "posthog-js";
 import { trackGAEvent } from "@/lib/google-analytics";
+import { Input } from "@/components/ui/input";
+import { EmailInput } from "@/components/email-input";
 
 function isMobile() {
   if (typeof window === "undefined") return false;
@@ -46,6 +48,39 @@ export default function Home() {
   const [featureReactions, setFeatureReactions] = useState<Record<string, number>>({});
   const [userReactions, setUserReactions] = useState<Record<string, boolean>>({});
   const [showMoreFeatures, setShowMoreFeatures] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+
+  const rotatingTexts = [
+    "Accept Payments\nwith your phone.",
+    "Create QR Codes\ninstantly.",
+    "Multi Currency\nSupport.",
+    "Send Payment Links\neverywhere.",
+    "Get Paid to Your\nJamaican Bank Account."
+  ];
+
+  const rotatingDescriptions = [
+    "No setup fees, no monthly fees, no hidden costs. Generate QR codes instantly for customers to scan and pay with cards, Cash App, PayPal, Apple Pay, or Google Pay.",
+    "Generate QR codes instantly for customers to scan and pay with cards, Cash App, PayPal, Apple Pay, or Google Pay.",
+    "Accept payments in both USD and JMD. Choose the currency that works best for your business.",
+    "Share payment links via WhatsApp, SMS, or email. Get paid wherever your customers are.",
+    "Receive payments directly to your Jamaican bank account within 2 business days."
+  ];
+
+  const rotatingImages = [
+    "/webp/happy man.webp",
+    "/webp/woman with phone.webp",
+    "/webp/woman handypay.webp"
+  ];
+
+  // Rotating text effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTextIndex((prev) => (prev + 1) % rotatingTexts.length);
+    }, 3000); // Change every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [rotatingTexts.length]);
 
   // Load initial reactions from API
   useEffect(() => {
@@ -473,34 +508,66 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewStructuredData) }}
       />
       {/* Hero Section */}
-      <section aria-label="Hero section" className="min-h-screen flex items-end px-4">
+      <section aria-label="Hero section" className="min-h-screen flex items-start px-4 pt-8 md:pt-16 pb-12 md:pb-20">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mt-12 md:mt-16 mb-4">
+          <div className="grid md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12 items-start">
+            {/* Left Column - Text Content */}
+            <div className="text-left">
             <motion.h1
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-5xl md:text-6xl font-medium mb-6 heading"
+                className="text-4xl md:text-5xl lg:text-6xl font-medium mb-6 heading min-h-[180px] flex items-center"
             >
-              Accept Card Payments
-              <br />
-              with your phone.
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={currentTextIndex}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                  className="whitespace-pre-line"
+                >
+                  {rotatingTexts[currentTextIndex]}
+                </motion.span>
+              </AnimatePresence>
             </motion.h1>
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="text-base text-neutral-600 max-w-2xl mx-auto mb-6"
+              className="text-base text-neutral-600 mb-8 min-h-[3rem] flex items-center"
             >
-              HandyPay makes it easy for anyone to accept digital payments with QR codes and payment links, directly to their <strong>Jamaican bank account</strong> or <strong>Western Union</strong>.
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={currentTextIndex}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.4 }}
+                  className="leading-relaxed"
+                >
+                  {rotatingDescriptions[currentTextIndex]}
             </motion.p>
+              </AnimatePresence>
+            </motion.div>
+
+            {/* Email Input */}
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="mb-8"
+            >
+              <EmailInput />
+            </motion.div>
            
-              
+              {/* Download Buttons - Commented out
             <motion.div
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex items-center justify-center gap-4 mt-8 mb-6 flex-wrap relative"
+                className="flex items-center gap-4 mb-6 flex-wrap relative"
             >
               <div className="relative">
                 <button
@@ -515,7 +582,7 @@ export default function Home() {
                     height={20}
                     className="w-5 h-5"
                   />
-                  <span>Download on App Store</span>
+                  <span>Get the Beta App</span>
                 </button>
                 <AnimatePresence>
                   {showQRCode === "ios" && (
@@ -525,7 +592,7 @@ export default function Home() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.3 }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 bg-white rounded-xl shadow-lg p-5 z-50 min-w-[200px]"
+                        className="absolute top-full left-0 mt-3 bg-white rounded-xl shadow-lg p-5 z-50 min-w-[200px]"
                     >
                       <div className="w-full aspect-square p-3 relative">
                         <QRCodeSVG value={QR_CODE_TRACKING_URL} className="w-full h-full" />
@@ -559,7 +626,7 @@ export default function Home() {
                     height={16}
                     className="w-4 h-4"
                   />
-                  <span>Get it on Google Play</span>
+                  <span>Get the Beta App</span>
                 </button>
                 <AnimatePresence>
                   {showQRCode === "android" && (
@@ -569,7 +636,7 @@ export default function Home() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.3 }}
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 bg-white rounded-xl shadow-lg p-5 z-50 min-w-[200px]"
+                        className="absolute top-full left-0 mt-3 bg-white rounded-xl shadow-lg p-5 z-50 min-w-[200px]"
                     >
                       <div className="w-full aspect-square p-3 relative">
                         <QRCodeSVG value={QR_CODE_TRACKING_URL} className="w-full h-full" />
@@ -591,469 +658,219 @@ export default function Home() {
                 </AnimatePresence>
               </div>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              className="hidden md:flex items-center justify-center gap-6 mt-4 mb-2"
-            >
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center gap-0.5">
-                  {[...Array(5)].map((_, i) => {
-                    const rating = 4.8;
-                    const starValue = i + 1;
-                    const isFilled = starValue <= Math.floor(rating);
-                    return (
-                      <svg 
-                        key={i} 
-                        className={`w-4 h-4 ${isFilled ? 'text-yellow-400 fill-current' : 'text-neutral-300'}`} 
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    );
-                  })}
-                </div>
-                <span className="text-sm text-neutral-600 font-medium">4.8</span>
-                <span className="text-xs text-neutral-500">App Store</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center gap-0.5">
-                  {[...Array(5)].map((_, i) => {
-                    const rating = 4.7;
-                    const starValue = i + 1;
-                    const isFilled = starValue <= Math.floor(rating);
-                    return (
-                      <svg 
-                        key={i} 
-                        className={`w-4 h-4 ${isFilled ? 'text-yellow-400 fill-current' : 'text-neutral-300'}`} 
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    );
-                  })}
-                </div>
-                <span className="text-sm text-neutral-600 font-medium">4.7</span>
-                <span className="text-xs text-neutral-500">Google Play</span>
-              </div>
-            </motion.div>
+            */}
+
+              {/* Partners */}
             <motion.div
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-col items-center justify-center gap-4 mt-6"
+                className="flex items-center gap-3"
             >
-              <div className="flex items-center justify-center gap-3">
                 <span className="text-sm text-neutral-600">Partnered with</span>
                 <Image src="/stripe.svg" alt="Stripe" width={54} height={20} /> <span className="text-sm text-neutral-600">&</span>
                 <Image src="/wulogo.png" alt="Western Union" width={54} height={20} />
-              </div>
-              
             </motion.div>
           </div>
+
+            {/* Middle Column - Vertical Loader */}
+            <div className="hidden md:flex flex-col items-center justify-center py-8">
+              <div className="w-px h-32 bg-gradient-to-b from-transparent via-neutral-300 to-transparent relative">
+                <motion.div
+                  key={currentTextIndex}
+                  className="absolute inset-0 bg-gradient-to-b from-[#3AB75C] to-[#3AB75C] rounded-full"
+                  initial={{ scaleY: 0, opacity: 0.3 }}
+                  animate={{
+                    scaleY: [0, 1, 1, 0],
+                    opacity: [0.3, 1, 1, 0.3],
+                  }}
+                  transition={{
+                    duration: 3,
+                    ease: "easeInOut",
+                    times: [0, 0.2, 0.8, 1]
+                  }}
+                  style={{
+                    transformOrigin: 'top'
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Right Column - Rotating Images */}
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex justify-center relative -mt-2 md:-mt-4 bg-white"
-              style={{height: 460}}
+              className="flex justify-center md:justify-end relative h-full min-h-[380px]"
             >
-            <Image 
-              src="/iphone-mockup.svg" 
-              alt="HandyPay mobile app interface showing QR code payment feature on iPhone" 
-              width={300} 
-              height={560} 
-              priority 
-              sizes="(max-width: 768px) 100vw, 300px"
-              loading="eager"
-            />
-            <div className="absolute top-24 md:top-38">
-              <Image 
-                src="/qr-icon.svg" 
-                alt="QR code for accepting payments with HandyPay" 
-                width={140} 
-                height={140}
-                sizes="140px"
-                loading="lazy"
-              />
+              <div className="rounded-3xl aspect-square w-full max-w-[480px] relative overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentTextIndex}
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Image
+                      src={rotatingImages[currentTextIndex % rotatingImages.length]}
+                      alt={`Hero image ${(currentTextIndex % rotatingImages.length) + 1}`}
+                      fill
+                      className="object-cover rounded-3xl"
+                    />
+                  </motion.div>
+                </AnimatePresence>
             </div>
-            <div className="absolute top-64 md:top-80 left-1/2 -translate-x-1/2 text-xl font-semibold text-black">
-              <NumberFlow
-                value={amount}
-                format={{ style: "currency", currency: "JMD", minimumFractionDigits: 2 }}
-                className="font-mono"
-              />
+
+              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-xl font-semibold text-black z-10">
+             
             </div>
-             <div className="pointer-events-none absolute md:bottom-0 bottom-10 z-50 left-0 right-0 h-26 bg-gradient-to-t from-white via-white/70 to-transparent" />
             </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" aria-label="Features" className="py-20 -mt-20 md:-mt-20 px-4 bg-white">
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-4xl font-bold text-center mb-16 heading">Features</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <div className="bg-white p-8 rounded-lg">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 relative">
-                  <Image 
-                    src="/home-tab.svg" 
-                    alt="QR code payment icon" 
-                    fill 
-                    className="object-contain"
-                    sizes="32px"
-                    loading="lazy"
-                  />
+      {/*
+      <section className="py-32 bg-neutral-50">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="text-left mb-16">
+            <h2 className="text-4xl md:text-5xl font-medium heading tracking-tight mb-4">
+              Power up your business
+              <br />
+              your way.
+            </h2>
                 </div>
-                <h3 className="text-xl font-semibold">QR Code Payments</h3>
-              </div>
-              <p className="text-neutral-600 mb-4">
-                Generate a QR code and let customers pay instantly with their phone
-              </p>
-              <button
-                onClick={() => handleFeatureReaction("qrCodePayments")}
-                className={`flex items-center gap-2 text-xs transition-colors ${
-                  userReactions.qrCodePayments 
-                    ? "text-[#3AB75C]" 
-                    : "text-neutral-500 hover:text-neutral-700"
-                }`}
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { label: "QR Codes" },
+              { label: "Payment Links" },
+              { label: "Bank Deposits" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="bg-neutral-100 rounded-3xl aspect-square shadow-sm border border-neutral-200 flex flex-col items-center justify-center text-neutral-400"
               >
-                <ThumbsUp className={`w-4 h-4 ${userReactions.qrCodePayments ? "fill-current" : ""}`} />
-                <NumberFlow value={featureReactions.qrCodePayments ?? 74} />
-              </button>
+                <div className="w-full h-full bg-neutral-200 rounded-2xl flex flex-col items-center justify-center gap-4">
+                  <span className="font-medium text-neutral-800 text-center px-4">{item.label}</span>
             </div>
-            <div className="bg-white p-8 rounded-lg">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-8 h-8 relative">
-                  <Image 
-                    src="/payment-link-green.svg" 
-                    alt="Payment link icon for sharing payment requests" 
-                    fill 
-                    className="object-contain"
-                    sizes="32px"
-                    loading="lazy"
-                  />
                 </div>
-                <h3 className="text-xl font-semibold">Payment Links</h3>
+            ))}
               </div>
-              <p className="text-neutral-600 mb-4">
-                Share a link via WhatsApp, SMS, or social media to collect payments
-              </p>
-              <button
-                onClick={() => handleFeatureReaction("paymentLinks")}
-                className={`flex items-center gap-2 text-xs transition-colors ${
-                  userReactions.paymentLinks 
-                    ? "text-[#3AB75C]" 
-                    : "text-neutral-500 hover:text-neutral-700"
-                }`}
-              >
-                <ThumbsUp className={`w-4 h-4 ${userReactions.paymentLinks ? "fill-current" : ""}`} />
-                <NumberFlow value={featureReactions.paymentLinks ?? 81} />
-              </button>
             </div>
-            <div className="bg-white p-8 rounded-lg">
-              <div className="flex items-center gap-3 mb-2">
-                <Landmark className="w-8 h-8 text-[#3AB75C]" />
-                <h3 className="text-xl font-semibold">Fast Payouts</h3>
+      </section>
+      */}
+
+      {/* Secure Section */}
+      {/*
+      <section className="py-32 bg-white">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="bg-neutral-100 rounded-3xl aspect-square w-full relative overflow-hidden">
+              Placeholder for illustration
               </div>
-              <p className="text-neutral-600 mb-4">
-                Get paid to your Jamaican bank account or Western Union in 2 business days.
+            <div>
+              <span className="text-[#3AB75C] font-medium mb-4 block">Secure</span>
+              <h2 className="text-4xl md:text-5xl font-medium mb-6 heading tracking-tight">
+                Relentless protection.
+                <br />
+                Restful ease.
+              </h2>
+              <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
+                HandyPay is built with bank-grade security to keep your money safe. We use advanced encryption and fraud monitoring to protect every transaction.
               </p>
-              <button
-                onClick={() => handleFeatureReaction("fastPayouts")}
-                className={`flex items-center gap-2 text-xs transition-colors ${
-                  userReactions.fastPayouts 
-                    ? "text-[#3AB75C]" 
-                    : "text-neutral-500 hover:text-neutral-700"
-                }`}
-              >
-                <ThumbsUp className={`w-4 h-4 ${userReactions.fastPayouts ? "fill-current" : ""}`} />
-                <NumberFlow value={featureReactions.fastPayouts ?? 68} />
-              </button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
+                {[
+                  "Bank-Grade Security",
+                  "Fraud Protection",
+                  "Encrypted Data",
+                  "24/7 Monitoring",
+                  "Secure Payouts", 
+                  "Verified Merchants"
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <svg className="w-5 h-5 text-[#3AB75C]" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-[#3AB75C] font-medium">{item}</span>
             </div>
-            <div className="bg-white p-8 rounded-lg">
-              <div className="flex items-center gap-3 mb-2">
-                <Heart className="w-8 h-8 text-[#3AB75C]" />
-                <h3 className="text-xl font-semibold">Donations</h3>
+                ))}
               </div>
-              <p className="text-neutral-600 mb-4">
-                Accept donations easily with QR codes and payment links for your cause or organization
-              </p>
-              <button
-                onClick={() => handleFeatureReaction("donations")}
-                className={`flex items-center gap-2 text-xs transition-colors ${
-                  userReactions.donations 
-                    ? "text-[#3AB75C]" 
-                    : "text-neutral-500 hover:text-neutral-700"
-                }`}
-              >
-                <ThumbsUp className={`w-4 h-4 ${userReactions.donations ? "fill-current" : ""}`} />
-                <NumberFlow value={featureReactions.donations ?? 76} />
-              </button>
             </div>
-            <div className="bg-white p-8 rounded-lg">
-              <div className="flex items-center gap-3 mb-2">
-                <Globe className="w-8 h-8 text-[#3AB75C]" />
-                <h3 className="text-xl font-semibold">Multi-Currency</h3>
               </div>
-              <p className="text-neutral-600 mb-4">
-                Accept payments in USD or JMD - choose the currency that works best for your business
-              </p>
-              <button
-                onClick={() => handleFeatureReaction("multiCurrency")}
-                className={`flex items-center gap-2 text-xs transition-colors ${
-                  userReactions.multiCurrency 
-                    ? "text-[#3AB75C]" 
-                    : "text-neutral-500 hover:text-neutral-700"
-                }`}
-              >
-                <ThumbsUp className={`w-4 h-4 ${userReactions.multiCurrency ? "fill-current" : ""}`} />
-                <NumberFlow value={featureReactions.multiCurrency ?? 72} />
-              </button>
             </div>
-            <div className="bg-white p-8 rounded-lg relative opacity-75">
-              <div className="flex items-center gap-3 mb-2">
-                <Repeat className="w-8 h-8 text-neutral-400" />
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-semibold">Subscriptions</h3>
-                  <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
+      </section>
+      */}
+      {/* Merchant Tools Section */}
+      <section className="py-32 bg-white">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="bg-neutral-100 rounded-3xl aspect-[4/3] w-full relative overflow-hidden">
+              <Image
+                src="/webp/black man busines.webp"
+                alt="Business owner using HandyPay"
+                fill
+                className="object-cover"
+              />
                 </div>
-              </div>
-              <p className="text-xs text-neutral-500 mb-3">Jan 8, 2025</p>
-              <p className="text-neutral-600 mb-4">
-                Set up recurring payments and manage subscriptions effortlessly
+            <div>
+              <span className="text-neutral-500 text-sm font-medium tracking-wider uppercase mb-4 block">MERCHANT TOOLS</span>
+              <h2 className="text-4xl md:text-5xl font-medium mb-6 heading tracking-tight">
+                Give your business
+                <br />
+                superpowers
+              </h2>
+              <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
+                Empower your business with automatic payouts, instant notifications, and real-time sales tracking.
               </p>
-              <button
-                onClick={() => handleFeatureReaction("subscriptions")}
-                className={`flex items-center gap-2 text-xs transition-colors ${
-                  userReactions.subscriptions 
-                    ? "text-[#3AB75C]" 
-                    : "text-neutral-500 hover:text-neutral-700"
-                }`}
-              >
-                <ThumbsUp className={`w-4 h-4 ${userReactions.subscriptions ? "fill-current" : ""}`} />
-                <NumberFlow value={featureReactions.subscriptions || 0} />
-              </button>
+              <a href="/businesses" className="inline-flex items-center justify-center px-8 py-3 border border-black text-black rounded-full font-medium hover:bg-neutral-50 transition-colors cursor-pointer">
+                Learn More
+              </a>
             </div>
-            <AnimatePresence>
-              {showMoreFeatures && (
-                <>
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-                    className="bg-white p-8 rounded-lg relative opacity-75"
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <FileText className="w-8 h-8 text-neutral-400" />
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-semibold">Invoicing</h3>
-                        <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
                       </div>
                     </div>
-                    <p className="text-xs text-neutral-500 mb-3">Feb 12, 2025</p>
-                    <p className="text-neutral-600 mb-4">
-                      Create and send professional invoices to your customers
-                    </p>
-                    <button
-                      onClick={() => handleFeatureReaction("invoicing")}
-                      className={`flex items-center gap-2 text-xs transition-colors ${
-                        userReactions.invoicing 
-                          ? "text-[#3AB75C]" 
-                          : "text-neutral-500 hover:text-neutral-700"
-                      }`}
-                    >
-                      <ThumbsUp className={`w-4 h-4 ${userReactions.invoicing ? "fill-current" : ""}`} />
-                      <NumberFlow value={featureReactions.invoicing || 0} />
-                    </button>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3, delay: 0.05, ease: [0.4, 0, 0.2, 1] }}
-                    className="bg-white p-8 rounded-lg relative opacity-75"
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <UserCircle className="w-8 h-8 text-neutral-400" />
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-semibold">Customers</h3>
-                        <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-neutral-500 mb-3">Mar 20, 2025</p>
-                    <p className="text-neutral-600 mb-4">
-                      Track customer payment history and manage your customer relationships
-                    </p>
-                    <button
-                      onClick={() => handleFeatureReaction("customers")}
-                      className={`flex items-center gap-2 text-xs transition-colors ${
-                        userReactions.customers 
-                          ? "text-[#3AB75C]" 
-                          : "text-neutral-500 hover:text-neutral-700"
-                      }`}
-                    >
-                      <ThumbsUp className={`w-4 h-4 ${userReactions.customers ? "fill-current" : ""}`} />
-                      <NumberFlow value={featureReactions.customers || 0} />
-                    </button>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
-                    className="bg-white p-8 rounded-lg relative opacity-75"
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <Users className="w-8 h-8 text-neutral-400" />
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-semibold">Team Accounts</h3>
-                        <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-neutral-500 mb-3">Apr 15, 2025</p>
-                    <p className="text-neutral-600 mb-4">
-                      Collaborate with your team and manage multiple users on one account
-                    </p>
-                    <button
-                      onClick={() => handleFeatureReaction("teamAccounts")}
-                      className={`flex items-center gap-2 text-xs transition-colors ${
-                        userReactions.teamAccounts 
-                          ? "text-[#3AB75C]" 
-                          : "text-neutral-500 hover:text-neutral-700"
-                      }`}
-                    >
-                      <ThumbsUp className={`w-4 h-4 ${userReactions.teamAccounts ? "fill-current" : ""}`} />
-                      <NumberFlow value={featureReactions.teamAccounts || 0} />
-                    </button>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3, delay: 0.15, ease: [0.4, 0, 0.2, 1] }}
-                    className="bg-white p-8 rounded-lg relative opacity-75"
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <CreditCard className="w-8 h-8 text-neutral-400" />
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-semibold">Virtual Cards</h3>
-                        <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-neutral-500 mb-3">May 22, 2025</p>
-                    <p className="text-neutral-600 mb-4">
-                      Issue virtual cards instantly for online payments and subscriptions
-                    </p>
-                    <button
-                      onClick={() => handleFeatureReaction("virtualCards")}
-                      className={`flex items-center gap-2 text-xs transition-colors ${
-                        userReactions.virtualCards 
-                          ? "text-[#3AB75C]" 
-                          : "text-neutral-500 hover:text-neutral-700"
-                      }`}
-                    >
-                      <ThumbsUp className={`w-4 h-4 ${userReactions.virtualCards ? "fill-current" : ""}`} />
-                      <NumberFlow value={featureReactions.virtualCards || 0} />
-                    </button>
-                  </motion.div>
-                  <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-                    className="bg-white p-8 rounded-lg relative opacity-75"
-                  >
-                    <div className="flex items-center gap-3 mb-2">
-                      <Wallet className="w-8 h-8 text-neutral-400" />
-                      <div className="flex items-center gap-2">
-                        <h3 className="text-xl font-semibold">Physical Cards</h3>
-                        <span className="text-xs font-medium text-neutral-500 bg-neutral-100 px-2 py-1 rounded">Coming Soon</span>
-                      </div>
-                    </div>
-                    <p className="text-xs text-neutral-500 mb-3">Jun 10, 2025</p>
-                    <p className="text-neutral-600 mb-4">
-                      Order physical cards delivered to your address for in-person payments
-                    </p>
-                    <button
-                      onClick={() => handleFeatureReaction("physicalCards")}
-                      className={`flex items-center gap-2 text-xs transition-colors ${
-                        userReactions.physicalCards 
-                          ? "text-[#3AB75C]" 
-                          : "text-neutral-500 hover:text-neutral-700"
-                      }`}
-                    >
-                      <ThumbsUp className={`w-4 h-4 ${userReactions.physicalCards ? "fill-current" : ""}`} />
-                      <NumberFlow value={featureReactions.physicalCards || 0} />
-                    </button>
-                  </motion.div>
-                </>
-              )}
-            </AnimatePresence>
-          </div>
-          {!showMoreFeatures && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex justify-center mt-12"
-            >
-              <button
-                onClick={() => {
-                  const eventData = { section: "features" };
-                  posthog.capture("more_features_clicked", eventData);
-                  trackGAEvent("more_features_clicked", eventData);
-                  setShowMoreFeatures(true);
-                }}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black border border-neutral-300 rounded-full font-medium text-sm hover:bg-neutral-50 transition-colors cursor-pointer"
-              >
-                More Features
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </motion.div>
-          )}
-          {/* Payment Methods */}
-           <div className="text-center mb-32 mt-20">
-            <p className="text-sm text-neutral-600 mb-8">All major payment methods accepted</p>
-            <div className="flex flex-wrap justify-center items-center gap-2 mb-8">
-              {[
-                "Visa",
-                "Mastercard", 
-                "American Express",
-                "Discover",
-                "Apple Pay",
-                "Google Pay",
-                "Stripe"
-              ].map((name, i) => (
-                <div key={i} className="w-12 h-6 relative">
-                  <Image 
-                    src={`/payment-${i + 1}.svg`} 
-                    alt={`${name} payment method accepted`} 
-                    fill 
-                    className="object-contain"
-                    sizes="48px"
-                    loading="lazy"
-                  />
-                </div>
-              ))}
+      </section>
+
+      {/* Teenagers Business Section */}
+      <section className="py-32 bg-white">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="text-neutral-500 text-sm font-medium tracking-wider uppercase mb-4 block">YOUTH EMPOWERMENT</span>
+              <h2 className="text-4xl md:text-5xl font-medium mb-6 heading tracking-tight">
+                Empowering teenagers
+                <br />
+                to do business
+              </h2>
+              <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
+                Give young entrepreneurs the tools they need to start and grow their businesses. From school fundraisers to side hustles, HandyPay makes it easy for teens to accept payments and build financial confidence.
+              </p>
+              <a href="/individuals" className="inline-flex items-center justify-center px-8 py-3 border border-black text-black rounded-full font-medium hover:bg-neutral-50 transition-colors cursor-pointer">
+                Learn More
+              </a>
             </div>
-          </div>
+            <div className="bg-neutral-100 rounded-3xl aspect-[4/3] w-full relative overflow-hidden">
+              <Image
+                src="/webp/generated teenagers.webp"
+                alt="Teen entrepreneurs using HandyPay"
+                fill
+                className="object-cover"
+              />
+            </div>
+                      </div>
+                    </div>
+      </section>
 
           {/* Testimonials Section */}
-          <section id="testimonials" aria-label="Customer testimonials" className="mb-16 w-full">
+      <section id="testimonials" aria-label="Customer testimonials" className="py-32 bg-white">
+        <div className="container mx-auto max-w-6xl px-4">
             <div className="text-center mb-16 space-y-4">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-balance heading">
                 Entrepreneurs love HandyPay
               </h2>
               <p className="text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto text-balance leading-relaxed">
-                Accept payments with QR codes and payment links, directly to your Jamaican bank account or Western Union.
+                Accept payments with QR codes and payment links, directly to your Jamaican bank account or Western Union. <strong>Free to sign up.</strong>
               </p>
             </div>
 
@@ -1164,15 +981,84 @@ export default function Home() {
                       height={16}
                       className="flex-shrink-0"
                     />
+                </div>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-         
-
-          {/* Removed benefits card per request */}
+      {/* FAQ Section */}
+      <section className="py-32 bg-white border-t border-neutral-100">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="grid md:grid-cols-12 gap-12">
+            <div className="md:col-span-4">
+              <h2 className="text-4xl md:text-5xl font-medium heading tracking-tight mb-4">
+                Frequently Asked
+                <br />
+                Questions
+              </h2>
+              
+              <a href="/faqs" className="text-[#3AB75C] font-medium hover:text-[#2ea04a] flex items-center gap-2 mt-8 transition-colors">
+                See More FAQs
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+            <div className="md:col-span-8">
+              <div className="space-y-0">
+                {[
+                  {
+                    q: "Is HandyPay safe?",
+                    a: "Yes, HandyPay uses bank-grade encryption and security measures to protect your data and transactions."
+                  },
+                  {
+                    q: "Can I switch from another payment provider?",
+                    a: "Absolutely. You can start using HandyPay alongside your existing systems or switch completely. No hardware required."
+                  },
+                  {
+                    q: "What networks does HandyPay support?",
+                    a: "HandyPay works with all major card networks including Visa, Mastercard, American Express, and Discover. We also support Apple Pay and Google Pay."
+                  }
+                ].map((faq, i) => (
+                  <div key={i} className="border-b border-neutral-200">
+                    <button
+                      onClick={() => setOpenFaqIndex(openFaqIndex === i ? null : i)}
+                      className="w-full py-6 flex justify-between items-center text-left focus:outline-none group"
+                    >
+                      <span className="text-xl font-medium text-neutral-900">{faq.q}</span>
+                      <span className="flex-shrink-0 ml-4">
+                        <motion.div
+                          animate={{ rotate: openFaqIndex === i ? 45 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <svg className="w-6 h-6 text-[#3AB75C]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                          </svg>
+                        </motion.div>
+                      </span>
+                    </button>
+                    <AnimatePresence>
+                      {openFaqIndex === i && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <p className="text-neutral-600 pb-6 leading-relaxed">
+                            {faq.a}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>

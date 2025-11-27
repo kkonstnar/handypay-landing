@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import posthog from "posthog-js";
 import { trackGAEvent } from "@/lib/google-analytics";
+import { HeaderWaitlistModal } from "@/components/header-waitlist-modal";
 
 function isMobile() {
   if (typeof navigator === "undefined") return false;
@@ -34,9 +35,11 @@ const ANDROID_APP_URL = process.env.NEXT_PUBLIC_ANDROID_APP_URL || "https://play
 const APP_URL = process.env.NEXT_PUBLIC_APP_DOWNLOAD_URL || "https://tryhandypay.com/app";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 const QR_CODE_TRACKING_URL = `${siteUrl}/app/download?source=header_button`;
+const TESTFLIGHT_URL = process.env.NEXT_PUBLIC_TESTFLIGHT_URL || "https://testflight.apple.com/join/example";
 
 export function GetAppButton() {
   const [showQRCode, setShowQRCode] = React.useState(false);
+  const [showWaitlistModal, setShowWaitlistModal] = React.useState(false);
   const qrRef = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
 
@@ -60,31 +63,25 @@ export function GetAppButton() {
         const redirectData = {
           platform: "ios",
           source: "header_button",
-          redirect_type: "direct",
+          redirect_type: "testflight",
         };
         posthog.capture("app_download_clicked", downloadData);
         trackGAEvent("app_download_clicked", downloadData);
         posthog.capture("app_download_redirected", redirectData);
         trackGAEvent("app_download_redirected", redirectData);
-        window.location.href = IOS_APP_URL;
+        window.location.href = TESTFLIGHT_URL;
       } else if (os === "android") {
         const downloadData = {
           platform: "android",
           source: "header_button",
           device_type: "mobile",
         };
-        const redirectData = {
-          platform: "android",
-          source: "header_button",
-          redirect_type: "direct",
-        };
         posthog.capture("app_download_clicked", downloadData);
         trackGAEvent("app_download_clicked", downloadData);
-        posthog.capture("app_download_redirected", redirectData);
-        trackGAEvent("app_download_redirected", redirectData);
-        window.location.href = ANDROID_APP_URL;
+        // Show waitlist modal for Android users
+        setShowWaitlistModal(true);
       } else {
-        // Fallback for other mobile devices
+        // Fallback for other mobile devices - show modal
         const downloadData = {
           platform: "other",
           source: "header_button",
@@ -92,7 +89,7 @@ export function GetAppButton() {
         };
         posthog.capture("app_download_clicked", downloadData);
         trackGAEvent("app_download_clicked", downloadData);
-        window.location.href = APP_URL;
+        setShowWaitlistModal(true);
       }
     } else {
       // Desktop: toggle QR code visibility
@@ -142,7 +139,7 @@ export function GetAppButton() {
         title="Get the app" 
         className="text-black hover:bg-neutral-100 cursor-pointer"
       >
-        Get the app
+        Get the beta app
         <Smartphone className="ml-2 h-4 w-4" color="black" />
       </Button>
       
@@ -174,6 +171,11 @@ export function GetAppButton() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <HeaderWaitlistModal
+        isOpen={showWaitlistModal}
+        onClose={() => setShowWaitlistModal(false)}
+      />
     </div>
   );
 }

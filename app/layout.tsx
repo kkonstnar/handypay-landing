@@ -6,9 +6,20 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { PostHogProvider } from "@/components/providers/posthog-provider";
 import { GoogleAnalyticsProvider } from "@/components/providers/google-analytics-provider";
+import { Toaster } from "@/components/ui/sonner";
 
-const sfRoundedHeading = localFont({ src: "../public/fonts/SF-Pro-Rounded-Regular.otf", variable: "--font-heading" });
-const sfRounded = localFont({ src: "../public/fonts/SF-Pro-Rounded-Regular.otf", variable: "--font-body" });
+// Use Inter Variable Font for both heading and body
+const interHeading = localFont({ 
+  src: "../public/fonts/Inter-VariableFont_opsz,wght.ttf",
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const interBody = localFont({ 
+  src: "../public/fonts/Inter-VariableFont_opsz,wght.ttf",
+  variable: "--font-body",
+  display: "swap",
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 
@@ -267,7 +278,7 @@ export default function RootLayout({
 
   return (
     <html lang="en-JM">
-      <body className={`${sfRoundedHeading.variable} ${sfRounded.variable} antialiased bg-white text-black`}>
+      <body className={`${interHeading.variable} ${interBody.variable} antialiased bg-white text-black`}>
         <Script
           id="structured-data-app"
           type="application/ld+json"
@@ -297,6 +308,7 @@ export default function RootLayout({
             <SiteHeader />
             {children}
             <SiteFooter />
+            <Toaster />
           </PostHogProvider>
         </GoogleAnalyticsProvider>
       </body>

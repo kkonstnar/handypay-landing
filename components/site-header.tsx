@@ -1,29 +1,33 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { GetAppButton } from "@/components/get-app-button";
+import { HeaderWaitlistModal } from "@/components/header-waitlist-modal";
 import posthog from "posthog-js";
 import { trackGAEvent } from "@/lib/google-analytics";
 
 export function SiteHeader() {
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false);
+
   return (
-    <header className="w-full py-4">
-      <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
+    <header className="sticky top-0 z-50 w-full py-4 bg-white/95 backdrop-blur-sm border-b border-neutral-200 transition-all duration-300">
+      <div className="max-w-5xl lg:max-w-4xl xl:max-w-3xl mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
           <Image src="/handypay-full.svg" alt="HandyPay" width={120} height={32} />
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-neutral-700">
-          <a 
-            href="#features" 
-            className="hover:text-black"
+          <button
+            className="hover:text-black transition-colors"
             onClick={() => {
-              const eventData = { link: "features", location: "header" };
+              setShowWaitlistModal(true);
+              const eventData = { link: "join_waitlist", location: "header" };
               posthog.capture("navigation_clicked", eventData);
               trackGAEvent("navigation_clicked", eventData);
             }}
           >
-            Features
-          </a>
+            Join Waitlist
+          </button>
           <a 
             href="#testimonials" 
             className="hover:text-black"
@@ -33,7 +37,7 @@ export function SiteHeader() {
               trackGAEvent("navigation_clicked", eventData);
             }}
           >
-            Testmonials
+            Testimonials
           </a>
           <a 
             href="https://www.tiktok.com/@handypay" 
@@ -56,6 +60,11 @@ export function SiteHeader() {
           <GetAppButton />
         </div>
       </div>
+
+      <HeaderWaitlistModal
+        isOpen={showWaitlistModal}
+        onClose={() => setShowWaitlistModal(false)}
+      />
     </header>
   );
 }

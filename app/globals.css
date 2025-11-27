@@ -29,3 +29,16 @@ body {
 .heading {
   font-family: var(--font-heading), var(--font-body), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
+
+/* Reduce font weight for bold text */
+strong {
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: 550;
+}
+
+.font-semibold {
+  font-weight: 550;
+}
