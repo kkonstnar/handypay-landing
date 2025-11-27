@@ -12,15 +12,20 @@ const createSupabaseClient = () => {
       from: () => ({
         select: () => ({
           eq: () => ({
-            single: () => Promise.resolve({ data: null, error: null })
+            single: () => Promise.resolve({ data: null, error: null }),
           }),
           order: () => Promise.resolve({ data: [], error: null }),
-          count: () => Promise.resolve({ count: 0, error: null })
+          count: () => Promise.resolve({ count: 0, error: null }),
         }),
         insert: () => ({
-          select: () => Promise.resolve({ data: null, error: new Error('Supabase not configured') })
-        })
-      })
+          select: () =>
+            Promise.resolve({
+              data: null,
+              error: new Error("Supabase not configured"),
+            }),
+        }),
+      }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
   }
 
