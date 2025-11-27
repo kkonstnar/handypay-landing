@@ -16,6 +16,7 @@ import { addToWaitlist } from "@/components/email-input"
 import { toast } from "sonner"
 import posthog from "posthog-js"
 import { trackGAEvent } from "@/lib/google-analytics"
+import { trackJoinWaitlist } from "@/lib/google-ads"
 
 interface HeaderWaitlistModalProps {
   isOpen: boolean
@@ -43,6 +44,7 @@ export function HeaderWaitlistModal({ isOpen, onClose }: HeaderWaitlistModalProp
         }
         posthog.capture("waitlist_signup", waitlistData)
         trackGAEvent("waitlist_signup", waitlistData)
+        trackJoinWaitlist()
 
         toast.success("Successfully joined the waitlist!", {
           description: "We'll send updates to " + email,

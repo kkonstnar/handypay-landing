@@ -10,6 +10,7 @@ import { AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import posthog from "posthog-js";
 import { trackGAEvent } from "@/lib/google-analytics";
+import { trackDownloadApp, trackGooglePlayClick } from "@/lib/google-ads";
 import { Input } from "@/components/ui/input";
 import { EmailInput } from "@/components/email-input";
 
@@ -60,7 +61,7 @@ export default function Home() {
   ];
 
   const rotatingDescriptions = [
-    "No setup fees, no monthly fees, no hidden costs. Generate QR codes instantly for customers to scan and pay with cards, Cash App, PayPal, Apple Pay, or Google Pay.",
+    "No setup fees, no monthly fees, no hidden costs. Accept payments with cards, Cash App, Apple Pay, or Google Pay.",
     "Generate QR codes instantly for customers to scan and pay with cards, Cash App, PayPal, Apple Pay, or Google Pay.",
     "Accept payments in both USD and JMD. Choose the currency that works best for your business.",
     "Share payment links via WhatsApp, SMS, or email. Get paid wherever your customers are.",
@@ -239,6 +240,7 @@ export default function Home() {
     };
     posthog.capture("app_download_clicked", eventData);
     trackGAEvent("app_download_clicked", eventData);
+    trackDownloadApp();
 
     if (isMobile()) {
       const os = getMobileOS();
@@ -250,6 +252,7 @@ export default function Home() {
         };
         posthog.capture("app_download_redirected", redirectData);
         trackGAEvent("app_download_redirected", redirectData);
+        trackGooglePlayClick();
         window.location.href = ANDROID_APP_URL;
       } else {
         // On mobile but not Android, still redirect
@@ -582,6 +585,37 @@ export default function Home() {
                   {rotatingDescriptions[currentTextIndex]}
             </motion.p>
               </AnimatePresence>
+            </motion.div>
+
+            {/* App Store Coming Soon */}
+            <motion.div
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mb-6"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="flex items-center gap-2">
+                  <Image
+                    src="/apple.svg"
+                    alt="Apple App Store"
+                    width={20}
+                    height={20}
+                    className="w-5 h-5"
+                  />
+                  <span className="text-sm text-neutral-600">Coming Soon</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Image
+                    src="/64px-Google_Play_2022_icon.svg.png"
+                    alt="Google Play Store"
+                    width={16}
+                    height={16}
+                    className="w-4 h-4"
+                  />
+                  <span className="text-sm text-neutral-600">Beta Available</span>
+                </div>
+              </div>
             </motion.div>
 
             {/* Email Input */}

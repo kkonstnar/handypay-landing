@@ -303,6 +303,22 @@ export default function RootLayout({
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
         />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-XXXXXXX'}`}
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-ads-gtag"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-XXXXXXX'}');
+            `,
+          }}
+        />
         <GoogleAnalyticsProvider>
           <PostHogProvider>
             <SiteHeader />

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input"
 import { toast } from "sonner"
 import posthog from "posthog-js"
 import { trackGAEvent } from "@/lib/google-analytics"
+import { trackJoinWaitlist } from "@/lib/google-ads"
 
 import { supabase, WaitlistEntry } from '@/lib/supabase'
 
@@ -100,6 +101,7 @@ export function EmailInput({ onSubmit }: { onSubmit?: (email: string) => void })
         }
         posthog.capture("waitlist_signup", waitlistData)
         trackGAEvent("waitlist_signup", waitlistData)
+        trackJoinWaitlist()
 
         toast.success("Successfully joined the waitlist!", {
           description: "We'll send updates to " + email,

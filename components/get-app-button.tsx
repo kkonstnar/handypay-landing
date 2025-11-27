@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import posthog from "posthog-js";
 import { trackGAEvent } from "@/lib/google-analytics";
+import { trackDownloadApp, trackGooglePlayClick } from "@/lib/google-ads";
 import { HeaderWaitlistModal } from "@/components/header-waitlist-modal";
 
 function isMobile() {
@@ -67,6 +68,7 @@ export function GetAppButton() {
         };
         posthog.capture("app_download_clicked", downloadData);
         trackGAEvent("app_download_clicked", downloadData);
+        trackDownloadApp();
         posthog.capture("app_download_redirected", redirectData);
         trackGAEvent("app_download_redirected", redirectData);
         window.location.href = TESTFLIGHT_URL;
@@ -78,6 +80,7 @@ export function GetAppButton() {
         };
         posthog.capture("app_download_clicked", downloadData);
         trackGAEvent("app_download_clicked", downloadData);
+        trackGooglePlayClick();
         // Show waitlist modal for Android users
         setShowWaitlistModal(true);
       } else {
