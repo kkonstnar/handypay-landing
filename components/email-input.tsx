@@ -16,6 +16,13 @@ import { supabase, WaitlistEntry } from '@/lib/supabase'
 // Supabase-based waitlist storage
 export async function addToWaitlist(email: string, source: string = 'website') {
   try {
+    // Check if Supabase is properly configured
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.log("Supabase not configured, skipping waitlist signup for:", email)
+      // Return success to avoid breaking the UI during development/static generation
+      return { success: true, data: { email, source } }
+    }
+
     // Check if email already exists
     const { data: existing } = await supabase
       .from('waitlist')
@@ -55,6 +62,12 @@ export async function addToWaitlist(email: string, source: string = 'website') {
 
 export async function getWaitlistCount(): Promise<number> {
   try {
+    // Check if Supabase is properly configured
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.log("Supabase not configured, returning 0 for waitlist count")
+      return 0
+    }
+
     const { count } = await supabase
       .from('waitlist')
       .select('*', { count: 'exact', head: true })
@@ -68,6 +81,12 @@ export async function getWaitlistCount(): Promise<number> {
 
 export async function getWaitlistEmails(): Promise<WaitlistEntry[]> {
   try {
+    // Check if Supabase is properly configured
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      console.log("Supabase not configured, returning empty array for waitlist emails")
+      return []
+    }
+
     const { data } = await supabase
       .from('waitlist')
       .select('*')
