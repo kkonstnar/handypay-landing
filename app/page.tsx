@@ -56,7 +56,7 @@ export default function Home() {
     "Create QR Codes\ninstantly.",
     "Multi Currency\nSupport.",
     "Send Payment Links\neverywhere.",
-    "Get Paid to Your\nJamaican Bank Account."
+    "Get Paid to\nYour Jamaican Bank."
   ];
 
   const rotatingDescriptions = [
@@ -510,9 +510,41 @@ export default function Home() {
       {/* Hero Section */}
       <section aria-label="Hero section" className="min-h-screen flex items-start px-4 pt-8 md:pt-16 pb-12 md:pb-20">
         <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12 items-start">
+            {/* Mobile: Images at top, Desktop: Right Column - Rotating Images */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex justify-center md:justify-end relative h-full min-h-[250px] md:min-h-[380px] order-1 md:order-3"
+            >
+              <div className="rounded-3xl aspect-square w-full max-w-[380px] md:max-w-[480px] relative overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentTextIndex}
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Image
+                      src={rotatingImages[currentTextIndex % rotatingImages.length]}
+                      alt={`Hero image ${(currentTextIndex % rotatingImages.length) + 1}`}
+                      fill
+                      className="object-cover rounded-3xl"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-xl font-semibold text-black z-10">
+
+              </div>
+            </motion.div>
+
             {/* Left Column - Text Content */}
-            <div className="text-left">
+            <div className="text-left order-2 md:order-1">
             <motion.h1
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -674,7 +706,7 @@ export default function Home() {
           </div>
 
             {/* Middle Column - Vertical Loader */}
-            <div className="hidden md:flex flex-col items-center justify-center py-8">
+            <div className="hidden md:flex flex-col items-center justify-center py-8 order-2">
               <div className="w-px h-32 bg-gradient-to-b from-transparent via-neutral-300 to-transparent relative">
                 <motion.div
                   key={currentTextIndex}
@@ -696,37 +728,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Column - Rotating Images */}
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex justify-center md:justify-end relative h-full min-h-[380px]"
-            >
-              <div className="rounded-3xl aspect-square w-full max-w-[480px] relative overflow-hidden">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentTextIndex}
-                    className="absolute inset-0"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Image
-                      src={rotatingImages[currentTextIndex % rotatingImages.length]}
-                      alt={`Hero image ${(currentTextIndex % rotatingImages.length) + 1}`}
-                      fill
-                      className="object-cover rounded-3xl"
-                    />
-                  </motion.div>
-                </AnimatePresence>
-            </div>
-
-              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-xl font-semibold text-black z-10">
-             
-            </div>
-            </motion.div>
           </div>
         </div>
       </section>
@@ -806,7 +807,7 @@ export default function Home() {
       <section className="py-32 bg-white">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="bg-neutral-100 rounded-3xl aspect-[4/3] w-full relative overflow-hidden">
+            <div className="bg-neutral-100 rounded-3xl aspect-square w-full relative overflow-hidden">
               <Image
                 src="/webp/black man busines.webp"
                 alt="Business owner using HandyPay"
@@ -850,7 +851,7 @@ export default function Home() {
                 Learn More
               </a>
             </div>
-            <div className="bg-neutral-100 rounded-3xl aspect-[4/3] w-full relative overflow-hidden">
+            <div className="bg-neutral-100 rounded-3xl aspect-square w-full relative overflow-hidden">
               <Image
                 src="/webp/generated teenagers.webp"
                 alt="Teen entrepreneurs using HandyPay"
@@ -866,10 +867,10 @@ export default function Home() {
       <section id="testimonials" aria-label="Customer testimonials" className="py-32 bg-white">
         <div className="container mx-auto max-w-6xl px-4">
             <div className="text-center mb-16 space-y-4">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-balance heading">
+              <h2 className="text-4xl md:text-5xl text-left md:text-center lg:text-6xl font-bold tracking-tight text-balance heading">
                 Entrepreneurs love HandyPay
               </h2>
-              <p className="text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto text-balance leading-relaxed">
+              <p className="text-lg md:text-xl text-left md:text-center text-neutral-600 max-w-3xl mx-auto text-balance leading-relaxed">
                 Accept payments with QR codes and payment links, directly to your Jamaican bank account or Western Union. <strong>Free to sign up.</strong>
               </p>
             </div>
