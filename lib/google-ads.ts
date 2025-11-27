@@ -4,7 +4,7 @@
  */
 
 declare global {
-  function gtag(...args: any[]): void;
+  function gtag(command: string, targetId: string, config?: Record<string, unknown>): void;
 }
 
 export const trackConversion = (conversionLabel: string, value?: number) => {
