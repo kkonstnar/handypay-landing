@@ -511,17 +511,17 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewStructuredData) }}
       />
       {/* Hero Section */}
-      <section aria-label="Hero section" className="min-h-screen flex items-start px-4 pt-8 md:pt-16 pb-12 md:pb-20">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12 items-start">
+      <section aria-label="Hero section" className="min-h-screen flex items-start px-4 pt-8 md:pt-16 pb-12 md:pb-20 w-full overflow-hidden">
+        <div className="container mx-auto max-w-6xl w-full">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12 items-start w-full">
             {/* Mobile: Images at top, Desktop: Right Column - Rotating Images */}
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex justify-center md:justify-end relative h-full min-h-[250px] md:min-h-[380px] order-1 md:order-3"
+              className="flex justify-center md:justify-end relative h-full min-h-[250px] md:min-h-[380px] order-1 md:order-3 w-full"
             >
-              <div className="rounded-3xl aspect-square w-full max-w-[380px] md:max-w-[480px] relative overflow-hidden">
+              <div className="rounded-3xl aspect-square w-full max-w-[380px] md:max-w-[480px] relative overflow-hidden mx-auto md:mx-0">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentTextIndex}
@@ -838,8 +838,8 @@ export default function Home() {
       </section>
       */}
       {/* Merchant Tools Section */}
-      <section className="py-32 bg-white">
-        <div className="container mx-auto max-w-6xl px-4">
+      <section className="py-32 bg-white overflow-x-hidden">
+        <div className="container mx-auto max-w-6xl px-4 w-full">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="bg-neutral-100 rounded-3xl aspect-square w-full relative overflow-hidden">
               <Image
@@ -868,8 +868,8 @@ export default function Home() {
       </section>
 
       {/* Teenagers Business Section */}
-      <section className="py-32 bg-white">
-        <div className="container mx-auto max-w-6xl px-4">
+      <section className="py-32 bg-white overflow-x-hidden">
+        <div className="container mx-auto max-w-6xl px-4 w-full">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <span className="text-neutral-500 text-sm font-medium tracking-wider uppercase mb-4 block">YOUTH EMPOWERMENT</span>
@@ -898,8 +898,8 @@ export default function Home() {
       </section>
 
           {/* Testimonials Section */}
-      <section id="testimonials" aria-label="Customer testimonials" className="py-32 bg-white">
-        <div className="container mx-auto max-w-6xl px-4">
+      <section id="testimonials" aria-label="Customer testimonials" className="py-32 bg-white overflow-x-hidden">
+        <div className="container mx-auto max-w-6xl px-4 w-full">
             <div className="text-center mb-16 space-y-4">
               <h2 className="text-4xl md:text-5xl text-left md:text-center lg:text-6xl font-bold tracking-tight text-balance heading">
                 Entrepreneurs love HandyPay
@@ -1024,8 +1024,8 @@ export default function Home() {
           </section>
 
       {/* FAQ Section */}
-      <section className="py-32 bg-white border-t border-neutral-100">
-        <div className="container mx-auto max-w-6xl px-4">
+      <section className="py-32 bg-white border-t border-neutral-100 overflow-x-hidden">
+        <div className="container mx-auto max-w-6xl px-4 w-full">
           <div className="grid md:grid-cols-12 gap-12">
             <div className="md:col-span-4">
               <h2 className="text-4xl md:text-5xl font-medium heading tracking-tight mb-4">

@@ -18,12 +18,16 @@ html {
   scroll-behavior: smooth;
   background: #ffffff !important;
   color: #171717 !important;
+  overflow-x: hidden;
 }
 
 body {
   background: #ffffff !important;
   color: #171717 !important;
   font-family: var(--font-body), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 .heading {
