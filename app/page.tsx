@@ -61,8 +61,8 @@ export default function Home() {
   ];
 
   const rotatingDescriptions = [
-    "No setup fees, no monthly fees, no hidden costs. Accept payments with cards, Cash App, Apple Pay, or Google Pay.",
-    "Generate QR codes instantly for customers to scan and pay with cards, Cash App, PayPal, Apple Pay, or Google Pay.",
+    "No setup fees, no monthly fees, no hidden costs. Accept payments with cards.",
+    "Generate QR codes instantly for customers to scan and pay with their card.",
     "Accept payments in both USD and JMD. Choose the currency that works best for your business.",
     "Share payment links via WhatsApp, SMS, or email. Get paid wherever your customers are.",
     "Receive payments directly to your Jamaican bank account within 2 business days."
