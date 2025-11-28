@@ -30,7 +30,7 @@ export async function sendWaitlistWelcomeEmail({
     const { data, error } = await resend.emails.send({
       from: 'HandyPay <hello@tryhandypay.com>', // Update with your verified domain
       to: [email],
-      subject: "You're on the HandyPay waitlist! 🎉",
+      subject: "Thanks for joining the HandyPay waitlist",
       html: emailHtml,
     })
 

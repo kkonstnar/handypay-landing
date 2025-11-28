@@ -4,26 +4,33 @@
  */
 
 declare global {
-  function gtag(command: string, targetId: string, config?: Record<string, unknown>): void;
+  function gtag(
+    command: string,
+    targetId: string,
+    config?: Record<string, unknown>
+  ): void;
 }
 
 export const trackConversion = (conversionLabel: string, value?: number) => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'conversion', {
-      send_to: `${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-XXXXXXX'}/${conversionLabel}`,
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", "conversion", {
+      send_to: `${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || "AW-XXXXXXX"}/${conversionLabel}`,
       value: value || 0,
-      currency: 'JMD'
+      currency: "JMD",
     });
   }
 };
 
 // Predefined conversion actions
 export const CONVERSION_ACTIONS = {
-  JOIN_WAITLIST: 'lRfYCJ-RkMgbEJztlpZC', // Submit lead form conversion
-  DOWNLOAD_APP: 'DOWNLOAD_APP', // Replace with actual conversion label from Google Ads
-  GOOGLE_PLAY_CLICK: 'GOOGLE_PLAY_CLICK' // Replace with actual conversion label from Google Ads
+  JOIN_WAITLIST: "lRfYCJ-RkMgbEJztlpZC", // Submit lead form conversion
+  DOWNLOAD_APP: "DOWNLOAD_APP", // Replace with actual conversion label from Google Ads
+  GOOGLE_PLAY_CLICK: "GOOGLE_PLAY_CLICK", // Replace with actual conversion label from Google Ads
 } as const;
 
-export const trackJoinWaitlist = () => trackConversion(CONVERSION_ACTIONS.JOIN_WAITLIST);
-export const trackDownloadApp = () => trackConversion(CONVERSION_ACTIONS.DOWNLOAD_APP);
-export const trackGooglePlayClick = () => trackConversion(CONVERSION_ACTIONS.GOOGLE_PLAY_CLICK);
+export const trackJoinWaitlist = () =>
+  trackConversion(CONVERSION_ACTIONS.JOIN_WAITLIST);
+export const trackDownloadApp = () =>
+  trackConversion(CONVERSION_ACTIONS.DOWNLOAD_APP);
+export const trackGooglePlayClick = () =>
+  trackConversion(CONVERSION_ACTIONS.GOOGLE_PLAY_CLICK);

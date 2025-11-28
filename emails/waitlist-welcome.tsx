@@ -32,7 +32,7 @@ export const WaitlistWelcomeEmail = ({
     </Head>
     <Tailwind>
       <Body className="bg-[#f6f9fc]" style={{ fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
-        <Preview>Welcome to the HandyPay waitlist</Preview>
+        <Preview>Thanks for joining the HandyPay waitlist</Preview>
         <Container className="bg-white mx-auto py-5 pb-12 mb-16 max-w-[600px]">
           <Section className="px-12">
             <Img
@@ -49,66 +49,14 @@ export const WaitlistWelcomeEmail = ({
             </Text>
 
             <Text className="text-[#484848] text-base leading-6 text-left">
-              Thanks for joining the HandyPay waitlist. We're excited to have you as part of our early community.
-            </Text>
-
-            {position > 0 && (
-              <Section className="bg-[#3AB75C] rounded-lg my-6 p-5 text-center">
-                <Text className="text-white text-xl font-bold m-0">
-                  You're <strong>#{position}</strong> on the waitlist
-                </Text>
-              </Section>
-            )}
-
-            <Text className="text-[#484848] text-base leading-6 text-left">
-              HandyPay is Jamaica's easiest way to accept digital payments. With just a QR code or payment link, you can:
+              You're now on the exclusive list. You'll be one of the first to know when HandyPay launches.
             </Text>
 
             <Text className="text-[#484848] text-base leading-6 text-left">
-              • Accept card payments instantly<br />
-              • Get paid directly to your Jamaican bank account<br />
-              • Receive payouts to Western Union<br />
-              • No hardware or setup fees required
+              HandyPay makes it easy to accept digital payments in Jamaica with QR codes and payment links.
             </Text>
 
             <Hr className="border-[#e6ebf1] my-5" />
-
-            <Text className="text-[#484848] text-base leading-6 text-left">
-              We'll send you an email as soon as we're ready to launch. In the meantime, follow us for updates:
-            </Text>
-
-            <Section className="text-left my-6">
-              <Link href="https://www.instagram.com/handypayapp" className="inline-block mr-3">
-                <Img
-                  src="https://cdn.simpleicons.org/instagram/E4405F"
-                  width="24"
-                  height="24"
-                  alt="Instagram"
-                />
-              </Link>
-              <Link href="https://www.tiktok.com/@handypay" className="inline-block mr-3">
-                <Img
-                  src="https://cdn.simpleicons.org/tiktok/000000"
-                  width="24"
-                  height="24"
-                  alt="TikTok"
-                />
-              </Link>
-              <Link href="https://discord.gg/handypay" className="inline-block mr-3">
-                <Img
-                  src="https://cdn.simpleicons.org/discord/5865F2"
-                  width="24"
-                  height="24"
-                  alt="Discord"
-                />
-              </Link>
-            </Section>
-
-            <Hr className="border-[#e6ebf1] my-5" />
-
-            <Text className="text-[#484848] text-base leading-6 text-left">
-              Questions? Reply to this email and we'll get back to you.
-            </Text>
 
             <Text className="text-[#484848] text-base leading-6 text-left">
               — The HandyPay Team
