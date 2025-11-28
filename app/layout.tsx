@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { PostHogProvider } from "@/components/providers/posthog-provider";
 import { GoogleAnalyticsProvider } from "@/components/providers/google-analytics-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/next";
 
 // Use Inter Variable Font for both heading and body
 const interHeading = localFont({ 
@@ -327,6 +328,7 @@ export default function RootLayout({
             {children}
             <SiteFooter />
             <Toaster />
+            <Analytics />
           </PostHogProvider>
         </GoogleAnalyticsProvider>
       </body>

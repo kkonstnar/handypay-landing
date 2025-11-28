@@ -11,48 +11,28 @@ import posthog from "posthog-js"
 import { trackGAEvent } from "@/lib/google-analytics"
 import { trackJoinWaitlist } from "@/lib/google-ads"
 
-import { supabase, WaitlistEntry } from '@/lib/supabase'
+import { WaitlistEntry } from '@/lib/supabase'
 
-// Supabase-based waitlist storage
+// Call the API route instead of Supabase directly (client components can't access service role key)
 export async function addToWaitlist(email: string, source: string = 'website') {
   try {
-    // Check if Supabase is properly configured
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      console.log("Supabase not configured, skipping waitlist signup for:", email)
-      // Return success to avoid breaking the UI during development/static generation
-      return { success: true, data: { email, source } }
-    }
+    const response = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, source }),
+    })
 
-    // Check if email already exists
-    const { data: existing } = await supabase
-      .from('waitlist')
-      .select('id')
-      .eq('email', email)
-      .single()
+    const result = await response.json()
 
-    if (existing) {
-      console.log("Email already in waitlist:", email)
-      return { success: false, message: 'Email already registered' }
-    }
-
-    // Add new email
-    const { data, error } = await supabase
-      .from('waitlist')
-      .insert([{
-        email,
-        source,
-        user_agent: typeof window !== 'undefined' ? window.navigator.userAgent : null,
-        ip_address: null // Will be handled by Supabase functions if needed
-      }])
-      .select()
-
-    if (error) {
-      console.error('Error adding to waitlist:', error)
-      return { success: false, message: 'Failed to add email' }
+    if (!response.ok) {
+      console.error('Error adding to waitlist:', result.error)
+      return { success: false, message: result.error || 'Failed to add email' }
     }
 
     console.log("Added to waitlist:", email, "Source:", source)
-    return { success: true, data }
+    return { success: true, data: result.data }
 
   } catch (error) {
     console.error('Error in addToWaitlist:', error)
@@ -60,44 +40,6 @@ export async function addToWaitlist(email: string, source: string = 'website') {
   }
 }
 
-export async function getWaitlistCount(): Promise<number> {
-  try {
-    // Check if Supabase is properly configured
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      console.log("Supabase not configured, returning 0 for waitlist count")
-      return 0
-    }
-
-    const { count } = await supabase
-      .from('waitlist')
-      .select('*', { count: 'exact', head: true })
-
-    return count || 0
-  } catch (error) {
-    console.error('Error getting waitlist count:', error)
-    return 0
-  }
-}
-
-export async function getWaitlistEmails(): Promise<WaitlistEntry[]> {
-  try {
-    // Check if Supabase is properly configured
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      console.log("Supabase not configured, returning empty array for waitlist emails")
-      return []
-    }
-
-    const { data } = await supabase
-      .from('waitlist')
-      .select('*')
-      .order('created_at', { ascending: false })
-
-    return data || []
-  } catch (error) {
-    console.error('Error getting waitlist emails:', error)
-    return []
-  }
-}
 
 export function EmailInput({ onSubmit }: { onSubmit?: (email: string) => void }) {
   const [email, setEmail] = useState("")

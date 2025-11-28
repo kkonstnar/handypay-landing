@@ -46,5 +46,6 @@ export interface WaitlistEntry {
   source: string;
   created_at: string;
   user_agent?: string;
+  device_type?: string;
   ip_address?: string;
 }
