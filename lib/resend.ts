@@ -42,8 +42,7 @@ export async function sendWaitlistWelcomeEmail({
       console.error("Error sending waitlist email:", {
         name: result.error.name,
         message: result.error.message,
-        statusCode: result.error.statusCode,
-        fullError: JSON.stringify(result.error)
+        fullError: JSON.stringify(result.error),
       });
       return { success: false, message: result.error.message };
     }
