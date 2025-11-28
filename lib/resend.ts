@@ -28,7 +28,7 @@ export async function sendWaitlistWelcomeEmail({
 
     // Send the email
     const { data, error } = await resend.emails.send({
-      from: 'HandyPay <hello@tryhandypay.com>', // Update with your verified domain
+      from: 'HandyPay <onboarding@resend.dev>', // Using Resend's test domain until you verify your own
       to: [email],
       subject: "Thanks for joining the HandyPay waitlist",
       html: emailHtml,
