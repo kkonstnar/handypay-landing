@@ -303,8 +303,10 @@ export default function RootLayout({
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
         />
+        {/* Google tag (gtag.js) */}
         <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-XXXXXXX'}`}
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17763251868"
           strategy="afterInteractive"
         />
         <Script
@@ -315,7 +317,7 @@ export default function RootLayout({
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID || 'AW-XXXXXXX'}');
+              gtag('config', 'AW-17763251868');
             `,
           }}
         />
