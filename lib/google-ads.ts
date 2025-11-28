@@ -19,7 +19,7 @@ export const trackConversion = (conversionLabel: string, value?: number) => {
 
 // Predefined conversion actions
 export const CONVERSION_ACTIONS = {
-  JOIN_WAITLIST: 'JOIN_WAITLIST', // Replace with actual conversion label from Google Ads
+  JOIN_WAITLIST: 'lRfYCJ-RkMgbEJztlpZC', // Submit lead form conversion
   DOWNLOAD_APP: 'DOWNLOAD_APP', // Replace with actual conversion label from Google Ads
   GOOGLE_PLAY_CLICK: 'GOOGLE_PLAY_CLICK' // Replace with actual conversion label from Google Ads
 } as const;
