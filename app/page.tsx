@@ -12,7 +12,6 @@ import posthog from "posthog-js";
 import { trackGAEvent } from "@/lib/google-analytics";
 import { trackDownloadApp, trackGooglePlayClick } from "@/lib/google-ads";
 import { Input } from "@/components/ui/input";
-import { EmailInput } from "@/components/email-input";
 
 function isMobile() {
   if (typeof window === "undefined") return false;
@@ -34,7 +33,7 @@ function getMobileOS() {
   return null;
 }
 
-const IOS_APP_URL = process.env.NEXT_PUBLIC_IOS_APP_URL || "https://apps.apple.com/app/handypay";
+const IOS_APP_URL = process.env.NEXT_PUBLIC_IOS_APP_URL || "https://apps.apple.com/jm/app/handypay/id6751820310";
 const ANDROID_APP_URL = process.env.NEXT_PUBLIC_ANDROID_APP_URL || "https://play.google.com/store/apps/details?id=com.handypay";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 const QR_CODE_TRACKING_URL = `${siteUrl}/app/download?source=hero_section`;
@@ -587,25 +586,39 @@ export default function Home() {
               </AnimatePresence>
             </motion.div>
 
-            {/* App Store Coming Soon */}
+            {/* Download Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mb-6"
+              className="mb-8"
             >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 flex-wrap">
+                <a
+                  href={IOS_APP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => {
+                    const eventData = {
+                      platform: "ios",
+                      source: "hero_section",
+                      device_type: isMobile() ? "mobile" : "desktop",
+                    };
+                    posthog.capture("app_download_clicked", eventData);
+                    trackGAEvent("app_download_clicked", eventData);
+                  }}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white rounded-full font-medium text-sm hover:bg-neutral-800 transition-colors"
+                >
                   <Image
                     src="/apple.svg"
-                    alt="Apple App Store"
-                    width={20}
-                    height={20}
-                    className="w-5 h-5"
+                    alt="Apple"
+                    width={18}
+                    height={18}
+                    className="w-[18px] h-[18px] invert"
                   />
-                  <span className="text-sm text-neutral-600">Coming Soon</span>
-                </div>
-                <div className="flex items-center gap-2">
+                  <span>Download on App Store</span>
+                </a>
+                <div className="flex items-center gap-2 px-4 py-2.5 bg-neutral-100 text-neutral-500 rounded-full text-sm">
                   <Image
                     src="/64px-Google_Play_2022_icon.svg.png"
                     alt="Google Play Store"
@@ -613,19 +626,9 @@ export default function Home() {
                     height={16}
                     className="w-4 h-4"
                   />
-                  <span className="text-sm text-neutral-600">Beta Available</span>
+                  <span>Android Coming Soon</span>
                 </div>
               </div>
-            </motion.div>
-
-            {/* Email Input */}
-            <motion.div
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="mb-8"
-            >
-              <EmailInput />
             </motion.div>
            
               {/* Download Buttons - Commented out

@@ -7,40 +7,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import posthog from "posthog-js";
 import { trackGAEvent } from "@/lib/google-analytics";
-import { trackDownloadApp, trackGooglePlayClick } from "@/lib/google-ads";
-import { HeaderWaitlistModal } from "@/components/header-waitlist-modal";
+import { trackDownloadApp } from "@/lib/google-ads";
 
 function isMobile() {
   if (typeof navigator === "undefined") return false;
   return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
-function getMobileOS() {
-  if (typeof navigator === "undefined") return null;
-  const userAgent = navigator.userAgent || navigator.vendor || (window as Window & { opera?: string }).opera;
-  
-  if (!userAgent) return null;
-  
-  if (/android/i.test(userAgent)) {
-    return "android";
-  }
-  if (/iPad|iPhone|iPod/.test(userAgent) && !(window as Window & { MSStream?: unknown }).MSStream) {
-    return "ios";
-  }
-  return null;
-}
-
-// TODO: Replace with actual app store URLs
-const IOS_APP_URL = process.env.NEXT_PUBLIC_IOS_APP_URL || "https://apps.apple.com/app/handypay";
-const ANDROID_APP_URL = process.env.NEXT_PUBLIC_ANDROID_APP_URL || "https://play.google.com/store/apps/details?id=com.handypay";
-const APP_URL = process.env.NEXT_PUBLIC_APP_DOWNLOAD_URL || "https://tryhandypay.com/app";
+const IOS_APP_URL = process.env.NEXT_PUBLIC_IOS_APP_URL || "https://apps.apple.com/jm/app/handypay/id6751820310";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 const QR_CODE_TRACKING_URL = `${siteUrl}/app/download?source=header_button`;
-const TESTFLIGHT_URL = process.env.NEXT_PUBLIC_TESTFLIGHT_URL || "https://testflight.apple.com/join/example";
 
 export function GetAppButton() {
   const [showQRCode, setShowQRCode] = React.useState(false);
-  const [showWaitlistModal, setShowWaitlistModal] = React.useState(false);
   const qrRef = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
 
@@ -54,46 +33,23 @@ export function GetAppButton() {
     trackGAEvent("get_app_button_clicked", buttonEventData);
 
     if (isMobile()) {
-      const os = getMobileOS();
-      if (os === "ios") {
-        const downloadData = {
-          platform: "ios",
-          source: "header_button",
-          device_type: "mobile",
-        };
-        const redirectData = {
-          platform: "ios",
-          source: "header_button",
-          redirect_type: "testflight",
-        };
-        posthog.capture("app_download_clicked", downloadData);
-        trackGAEvent("app_download_clicked", downloadData);
-        trackDownloadApp();
-        posthog.capture("app_download_redirected", redirectData);
-        trackGAEvent("app_download_redirected", redirectData);
-        window.location.href = TESTFLIGHT_URL;
-      } else if (os === "android") {
-        const downloadData = {
-          platform: "android",
-          source: "header_button",
-          device_type: "mobile",
-        };
-        posthog.capture("app_download_clicked", downloadData);
-        trackGAEvent("app_download_clicked", downloadData);
-        trackGooglePlayClick();
-        // Show waitlist modal for Android users
-        setShowWaitlistModal(true);
-      } else {
-        // Fallback for other mobile devices - show modal
-        const downloadData = {
-          platform: "other",
-          source: "header_button",
-          device_type: "mobile",
-        };
-        posthog.capture("app_download_clicked", downloadData);
-        trackGAEvent("app_download_clicked", downloadData);
-        setShowWaitlistModal(true);
-      }
+      // On mobile, redirect directly to App Store
+      const downloadData = {
+        platform: "ios",
+        source: "header_button",
+        device_type: "mobile",
+      };
+      const redirectData = {
+        platform: "ios",
+        source: "header_button",
+        redirect_type: "app_store",
+      };
+      posthog.capture("app_download_clicked", downloadData);
+      trackGAEvent("app_download_clicked", downloadData);
+      trackDownloadApp();
+      posthog.capture("app_download_redirected", redirectData);
+      trackGAEvent("app_download_redirected", redirectData);
+      window.location.href = IOS_APP_URL;
     } else {
       // Desktop: toggle QR code visibility
       setShowQRCode(!showQRCode);
@@ -142,7 +98,7 @@ export function GetAppButton() {
         title="Get the app" 
         className="text-black hover:bg-neutral-100 cursor-pointer"
       >
-        Get the beta app
+        Download the app
         <Smartphone className="ml-2 h-4 w-4" color="black" />
       </Button>
       
@@ -174,11 +130,6 @@ export function GetAppButton() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <HeaderWaitlistModal
-        isOpen={showWaitlistModal}
-        onClose={() => setShowWaitlistModal(false)}
-      />
     </div>
   );
 }

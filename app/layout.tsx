@@ -176,7 +176,7 @@ export default function RootLayout({
     "description": "HandyPay makes it easy for anyone in Jamaica to accept digital payments with QR codes and payment links, directly to their Jamaican bank account or Western Union. Accept remittances and money transfers.",
     "url": siteUrl,
     "downloadUrl": [
-      "https://apps.apple.com/app/handypay",
+      "https://apps.apple.com/jm/app/handypay/id6751820310",
       "https://play.google.com/store/apps/details?id=com.handypay"
     ],
     "screenshot": `${siteUrl}/iphone-mockup.svg`,
