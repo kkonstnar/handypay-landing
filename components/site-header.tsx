@@ -13,9 +13,31 @@ export function SiteHeader() {
           <Image src="/handypay-full.svg" alt="HandyPay" width={120} height={32} />
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-neutral-700">
+          <Link 
+            href="/businesses" 
+            className="hover:text-black transition-colors"
+            onClick={() => {
+              const eventData = { link: "businesses", location: "header" };
+              posthog.capture("navigation_clicked", eventData);
+              trackGAEvent("navigation_clicked", eventData);
+            }}
+          >
+            Businesses
+          </Link>
+          <Link 
+            href="/individuals" 
+            className="hover:text-black transition-colors"
+            onClick={() => {
+              const eventData = { link: "individuals", location: "header" };
+              posthog.capture("navigation_clicked", eventData);
+              trackGAEvent("navigation_clicked", eventData);
+            }}
+          >
+            Individuals
+          </Link>
           <a 
             href="#testimonials" 
-            className="hover:text-black"
+            className="hover:text-black transition-colors"
             onClick={() => {
               const eventData = { link: "testimonials", location: "header" };
               posthog.capture("navigation_clicked", eventData);

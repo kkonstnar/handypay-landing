@@ -1,9 +1,8 @@
 "use client"
 
-import { useState } from "react"
 import Image from "next/image"
 import Script from "next/script"
-import { HeaderWaitlistModal } from "@/components/header-waitlist-modal"
+import { Check } from "lucide-react"
 
 // Structured data for business page
 const businessStructuredData = {
@@ -37,9 +36,9 @@ const businessStructuredData = {
   ]
 }
 
-export function BusinessesClient() {
-  const [showModal, setShowModal] = useState(false)
+const IOS_APP_URL = "https://apps.apple.com/jm/app/handypay/id6751820310"
 
+export function BusinessesClient() {
   return (
     <main className="flex flex-col">
       {/* Hero Section */}
@@ -68,8 +67,8 @@ export function BusinessesClient() {
 
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
-                    <span className="text-white text-sm font-bold">✓</span>
+                  <div className="flex-shrink-0 w-6 h-6 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
+                    <Check className="w-4 h-4 text-white" strokeWidth={3} />
                   </div>
                   <div>
                     <h3 className="font-medium text-lg mb-2">No Setup Fees</h3>
@@ -80,8 +79,8 @@ export function BusinessesClient() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
-                    <span className="text-white text-sm font-bold">✓</span>
+                  <div className="flex-shrink-0 w-6 h-6 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
+                    <Check className="w-4 h-4 text-white" strokeWidth={3} />
                   </div>
                   <div>
                     <h3 className="font-medium text-lg mb-2">Fast Payouts</h3>
@@ -92,8 +91,8 @@ export function BusinessesClient() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
-                    <span className="text-white text-sm font-bold">✓</span>
+                  <div className="flex-shrink-0 w-6 h-6 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
+                    <Check className="w-4 h-4 text-white" strokeWidth={3} />
                   </div>
                   <div>
                     <h3 className="font-medium text-lg mb-2">Multi-Currency Support</h3>
@@ -104,8 +103,8 @@ export function BusinessesClient() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
-                    <span className="text-white text-sm font-bold">✓</span>
+                  <div className="flex-shrink-0 w-6 h-6 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
+                    <Check className="w-4 h-4 text-white" strokeWidth={3} />
                   </div>
                   <div>
                     <h3 className="font-medium text-lg mb-2">Real-Time Analytics</h3>
@@ -116,13 +115,32 @@ export function BusinessesClient() {
                 </div>
               </div>
 
-              <div className="mt-8">
-                <button
-                  onClick={() => setShowModal(true)}
-                  className="bg-white text-black border-1 border-black px-8 py-3 rounded-full font-medium hover:bg-neutral-50 transition-colors"
+              <div className="mt-8 flex items-center gap-3 flex-wrap">
+                <a
+                  href={IOS_APP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white rounded-full font-medium text-sm hover:bg-neutral-800 transition-colors"
                 >
-                  Join Waitlist
-                </button>
+                  <Image
+                    src="/apple.svg"
+                    alt="Apple"
+                    width={18}
+                    height={18}
+                    className="w-[18px] h-[18px] invert"
+                  />
+                  <span>Download on App Store</span>
+                </a>
+                <div className="flex items-center gap-2 px-4 py-2.5 bg-neutral-100 text-neutral-500 rounded-full text-sm">
+                  <Image
+                    src="/64px-Google_Play_2022_icon.svg.png"
+                    alt="Google Play Store"
+                    width={16}
+                    height={16}
+                    className="w-4 h-4"
+                  />
+                  <span>Android Coming Soon</span>
+                </div>
               </div>
             </div>
 
@@ -140,11 +158,6 @@ export function BusinessesClient() {
           </div>
         </div>
       </section>
-
-      <HeaderWaitlistModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-      />
 
       <Script
         id="structured-data-business"
