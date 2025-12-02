@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Script from "next/script";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Landmark, FileText, Heart, Globe, Users, UserCircle, Repeat, Wallet, ThumbsUp, CreditCard, ChevronDown } from "lucide-react";
 import NumberFlow from "@number-flow/react";
@@ -12,6 +13,8 @@ import posthog from "posthog-js";
 import { trackGAEvent } from "@/lib/google-analytics";
 import { trackDownloadApp, trackGooglePlayClick } from "@/lib/google-ads";
 import { Input } from "@/components/ui/input";
+
+const RotatingEarth = dynamic(() => import("@/components/rotating-earth"), { ssr: false });
 
 function isMobile() {
   if (typeof window === "undefined") return false;
@@ -54,17 +57,17 @@ export default function Home() {
   const rotatingTexts = [
     "Accept Payments\nwith your phone.",
     "Create QR Codes\ninstantly.",
-    "Multi Currency\nSupport.",
+    "Get Paid in\n17 Countries.",
     "Send Payment Links\neverywhere.",
-    "Get Paid to\nYour Jamaican Bank."
+    "USD, JMD, CAD\nand more."
   ];
 
   const rotatingDescriptions = [
     "No setup fees, no monthly fees, no hidden costs. Accept payments with cards.",
     "Generate QR codes instantly for customers to scan and pay with their card.",
-    "Accept payments in both USD and JMD. Choose the currency that works best for you.",
+    "Receive payments directly to your bank account across 17 countries within 2 business days.",
     "Share payment links via WhatsApp, SMS, or email. Get paid wherever your customers are.",
-    "Receive payments directly to your Jamaican bank account within 2 business days."
+    "Accept payments in multiple currencies across the Caribbean, Africa, and beyond."
   ];
 
   const rotatingImages = [
@@ -283,7 +286,7 @@ export default function Home() {
         particleCount: 15,
         spread: 30,
         origin: { y: 0.6 },
-        colors: ["#3AB75C", "#22c55e", "#16a34a"],
+        colors: ["#11AD30", "#22c55e", "#16a34a"],
         gravity: 0.8,
         ticks: 100,
         scalar: 0.6,
@@ -628,6 +631,18 @@ export default function Home() {
                   />
                   <span>Android Coming Soon</span>
                 </div>
+                <a
+                  href="#countries"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 border border-neutral-300 text-neutral-700 rounded-full text-sm hover:bg-neutral-50 transition-colors"
+                  onClick={() => {
+                    const eventData = { link: "countries_info", location: "hero" };
+                    posthog.capture("navigation_clicked", eventData);
+                    trackGAEvent("navigation_clicked", eventData);
+                  }}
+                >
+                  <Globe className="w-4 h-4" />
+                  <span>17 Countries</span>
+                </a>
               </div>
             </motion.div>
            
@@ -747,7 +762,7 @@ export default function Home() {
               <div className="w-px h-32 bg-gradient-to-b from-transparent via-neutral-300 to-transparent relative">
                 <motion.div
                   key={currentTextIndex}
-                  className="absolute inset-0 bg-gradient-to-b from-[#3AB75C] to-[#3AB75C] rounded-full"
+                  className="absolute inset-0 bg-gradient-to-b from-[#11AD30] to-[#11AD30] rounded-full"
                   initial={{ scaleY: 0, opacity: 0.3 }}
                   animate={{
                     scaleY: [0, 1, 1, 0],
@@ -809,7 +824,7 @@ export default function Home() {
               Placeholder for illustration
               </div>
             <div>
-              <span className="text-[#3AB75C] font-medium mb-4 block">Secure</span>
+              <span className="text-[#11AD30] font-medium mb-4 block">Secure</span>
               <h2 className="text-4xl md:text-5xl font-medium mb-6 heading tracking-tight">
                 Relentless protection.
                 <br />
@@ -828,10 +843,10 @@ export default function Home() {
                   "Verified Merchants"
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
-                    <svg className="w-5 h-5 text-[#3AB75C]" viewBox="0 0 20 20" fill="currentColor">
+                    <svg className="w-5 h-5 text-[#11AD30]" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-[#3AB75C] font-medium">{item}</span>
+                    <span className="text-[#11AD30] font-medium">{item}</span>
             </div>
                 ))}
               </div>
@@ -868,6 +883,53 @@ export default function Home() {
             </div>
                       </div>
                     </div>
+      </section>
+
+      {/* Global Countries Section */}
+      <section id="countries" className="py-16 md:py-32 bg-white overflow-x-hidden">
+        <div className="container mx-auto max-w-6xl px-4 w-full">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Globe */}
+            <div className="flex justify-center">
+              <RotatingEarth width={450} height={450} className="max-w-full" />
+            </div>
+
+            {/* Text Content */}
+            <div>
+              <span className="text-neutral-500 text-sm font-medium tracking-wider uppercase mb-4 block">ACCEPT PAYMENTS GLOBALLY</span>
+              <h2 className="text-4xl md:text-5xl font-medium mb-6 heading tracking-tight">
+                Collect payments from clients anywhere in the world
+              </h2>
+              <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
+                Get paid across the Caribbean, Africa, North America, and beyond. No complicated setups, just a link or QR code built for simplicity.
+              </p>
+
+              {/* Stats Row */}
+              <div className="flex items-center gap-8 mb-8">
+                <div>
+                  <div className="text-4xl font-bold text-black mb-1">17</div>
+                  <div className="text-neutral-500 text-sm">Countries</div>
+                </div>
+                <div className="w-px h-12 bg-neutral-200"></div>
+                <div>
+                  <div className="text-4xl font-bold text-black mb-1">3 days</div>
+                  <div className="text-neutral-500 text-sm">Payout time</div>
+                </div>
+              </div>
+
+              {/* View Countries Link */}
+              <a
+                href="/countries"
+                className="inline-flex items-center gap-2 text-[#11AD30] hover:text-[#2ea04a] font-medium transition-colors"
+              >
+                View all supported countries
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Teenagers Business Section */}
@@ -1037,7 +1099,7 @@ export default function Home() {
                 Questions
               </h2>
               
-              <a href="/faqs" className="text-[#3AB75C] font-medium hover:text-[#2ea04a] flex items-center gap-2 mt-8 transition-colors">
+              <a href="/faqs" className="text-[#11AD30] font-medium hover:text-[#2ea04a] flex items-center gap-2 mt-8 transition-colors">
                 See More FAQs
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -1071,7 +1133,7 @@ export default function Home() {
                           animate={{ rotate: openFaqIndex === i ? 45 : 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <svg className="w-6 h-6 text-[#3AB75C]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-6 h-6 text-[#11AD30]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                           </svg>
                         </motion.div>

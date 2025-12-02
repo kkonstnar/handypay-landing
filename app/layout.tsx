@@ -9,15 +9,15 @@ import { GoogleAnalyticsProvider } from "@/components/providers/google-analytics
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/next";
 
-// Use Inter Variable Font for both heading and body
-const interHeading = localFont({ 
-  src: "../public/fonts/Inter-VariableFont_opsz,wght.ttf",
+// Use Manrope Variable Font for both heading and body
+const manropeHeading = localFont({ 
+  src: "../public/fonts/Manrope-VariableFont_wght.ttf",
   variable: "--font-heading",
   display: "swap",
 });
 
-const interBody = localFont({ 
-  src: "../public/fonts/Inter-VariableFont_opsz,wght.ttf",
+const manropeBody = localFont({ 
+  src: "../public/fonts/Manrope-VariableFont_wght.ttf",
   variable: "--font-body",
   display: "swap",
 });
@@ -147,7 +147,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   colorScheme: "light",
-  themeColor: "#3AB75C",
+  themeColor: "#1a472a",
 };
 
 export default function RootLayout({
@@ -278,8 +278,8 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en-JM">
-      <body className={`${interHeading.variable} ${interBody.variable} antialiased bg-white text-black`}>
+    <html lang="en-JM" className="bg-[#1a472a]">
+      <body className={`${manropeHeading.variable} ${manropeBody.variable} antialiased bg-white text-black`}>
         <Script
           id="structured-data-app"
           type="application/ld+json"

@@ -36,15 +36,15 @@ export function SiteHeader() {
             Individuals
           </Link>
           <a 
-            href="#testimonials" 
+            href="#countries" 
             className="hover:text-black transition-colors"
             onClick={() => {
-              const eventData = { link: "testimonials", location: "header" };
+              const eventData = { link: "countries", location: "header" };
               posthog.capture("navigation_clicked", eventData);
               trackGAEvent("navigation_clicked", eventData);
             }}
           >
-            Testimonials
+            Countries
           </a>
           <a 
             href="https://www.tiktok.com/@handypay" 

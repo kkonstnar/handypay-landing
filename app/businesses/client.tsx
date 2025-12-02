@@ -67,7 +67,7 @@ export function BusinessesClient() {
 
               <div className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-6 h-6 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
+                  <div className="flex-shrink-0 w-6 h-6 bg-[#11AD30] rounded-full flex items-center justify-center mt-1">
                     <Check className="w-4 h-4 text-white" strokeWidth={3} />
                   </div>
                   <div>
@@ -79,7 +79,7 @@ export function BusinessesClient() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-6 h-6 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
+                  <div className="flex-shrink-0 w-6 h-6 bg-[#11AD30] rounded-full flex items-center justify-center mt-1">
                     <Check className="w-4 h-4 text-white" strokeWidth={3} />
                   </div>
                   <div>
@@ -91,7 +91,7 @@ export function BusinessesClient() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-6 h-6 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
+                  <div className="flex-shrink-0 w-6 h-6 bg-[#11AD30] rounded-full flex items-center justify-center mt-1">
                     <Check className="w-4 h-4 text-white" strokeWidth={3} />
                   </div>
                   <div>
@@ -103,7 +103,7 @@ export function BusinessesClient() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-6 h-6 bg-[#3AB75C] rounded-full flex items-center justify-center mt-1">
+                  <div className="flex-shrink-0 w-6 h-6 bg-[#11AD30] rounded-full flex items-center justify-center mt-1">
                     <Check className="w-4 h-4 text-white" strokeWidth={3} />
                   </div>
                   <div>

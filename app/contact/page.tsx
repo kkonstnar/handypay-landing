@@ -58,7 +58,7 @@ export default function ContactPage() {
                   </p>
                   <a
                     href="mailto:support@handypay.com"
-                    className="text-[#3AB75C] hover:text-[#2ea04a] font-medium text-lg"
+                    className="text-[#11AD30] hover:text-[#2ea04a] font-medium text-lg"
                   >
                     support@handypay.com
                   </a>

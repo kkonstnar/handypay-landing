@@ -21,9 +21,26 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="container mx-auto px-4 py-12 prose max-w-4xl">
-      <h1>Privacy Policy</h1>
-      <p className="text-neutral-600">Last Updated: May 23, 2025</p>
+    <main className="relative">
+      {/* Vertical dashed lines */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="max-w-4xl mx-auto h-full relative">
+          <div className="absolute left-0 top-0 bottom-0 w-px border-l border-dashed border-neutral-200"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-px border-r border-dashed border-neutral-200"></div>
+          <div className="absolute left-1/3 top-0 bottom-0 w-px border-l border-dashed border-neutral-200"></div>
+          <div className="absolute right-1/3 top-0 bottom-0 w-px border-r border-dashed border-neutral-200"></div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-12 prose max-w-4xl relative">
+        <div className="text-center mb-8">
+          <span className="inline-block px-3 py-1 text-sm font-medium text-[#11AD30] bg-[#11AD30]/10 rounded-full mb-4">
+            License and Notes
+          </span>
+          <h1 className="text-4xl md:text-5xl font-medium mb-4">Privacy Policy</h1>
+          <p className="text-neutral-600">Last Updated: <strong>May 23, 2025</strong></p>
+        </div>
+        <hr className="border-neutral-200 mb-8" />
 
       <h2>1. Introduction</h2>
       <p>
@@ -1027,13 +1044,14 @@ export default function Page() {
         <li>Your continued use constitutes acceptance of any modifications</li>
       </ul>
 
-      <p className="text-sm text-neutral-600 mt-8 border-t pt-6">
-        <strong>Last Updated:</strong> May 23, 2025<br />
-        <strong>Version:</strong> 2.0<br />
-        <br />
-        This Privacy Policy is effective as of the Last Updated date above. By using HandyPay&apos;s 
-        Services, you acknowledge that you have read, understood, and agree to this Privacy Policy.
-      </p>
+        <p className="text-sm text-neutral-600 mt-8 border-t pt-6">
+          <strong>Last Updated:</strong> May 23, 2025<br />
+          <strong>Version:</strong> 2.0<br />
+          <br />
+          This Privacy Policy is effective as of the Last Updated date above. By using HandyPay&apos;s 
+          Services, you acknowledge that you have read, understood, and agree to this Privacy Policy.
+        </p>
+      </div>
     </main>
   );
 }

@@ -4,7 +4,7 @@ export default function AboutPage() {
   return (
     <div className="flex flex-col items-center">
       <div className=" px-4 md:px-[108px] py-[100px] flex flex-col gap-10 max-w-[1440px] ">
-        <h1 className="text-3xl underline decoration-4 underline-offset-4 decoration-[#3AB75C]">
+        <h1 className="text-3xl underline decoration-4 underline-offset-4 decoration-[#11AD30]">
           About Us
         </h1>
 
@@ -95,7 +95,7 @@ export default function AboutPage() {
           that work anywhere, anytime.
         </h3>
 
-        <p className="text-xl text-[#3AB75C]">
+        <p className="text-xl text-[#11AD30]">
           We&apos;re committed to innovation, security, and accessibility, ensuring
           that every Jamaican can participate in the modern digital economy.
         </p>

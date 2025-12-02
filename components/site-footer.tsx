@@ -1,42 +1,91 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Instagram } from "lucide-react";
 import posthog from "posthog-js";
 import { trackGAEvent } from "@/lib/google-analytics";
 
 export function SiteFooter() {
   return (
-    <footer className="w-full border-t border-neutral-200 border-1 py-8 overflow-x-hidden">
-      <div className="container mx-auto px-4">
-        {/* Single Row with Multiple Columns */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+    <footer className="w-full bg-[#1a472a] text-white overflow-hidden relative">
+      {/* Main Footer Content */}
+      <div className="container mx-auto px-6 pt-16 pb-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-16">
           {/* Logo & Brand */}
-          <div className="flex flex-col">
-          <Link 
-            href="/" 
-              className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer mb-4"
-            onClick={() => {
-              const eventData = { location: "footer" };
-              posthog.capture("logo_clicked", eventData);
-              trackGAEvent("logo_clicked", eventData);
-            }}
-          >
-            <Image src="/handypay.svg" alt="HandyPay" width={24} height={24} />
-              <span className="font-medium">HandyPay</span>
+          <div className="col-span-2 md:col-span-1">
+            <Link 
+              href="/" 
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer mb-4"
+              onClick={() => {
+                const eventData = { location: "footer" };
+                posthog.capture("logo_clicked", eventData);
+                trackGAEvent("logo_clicked", eventData);
+              }}
+            >
+              <Image src="/handypay.svg" alt="HandyPay" width={28} height={28} style={{ filter: 'brightness(0) invert(1)' }} />
+              <span className="font-semibold text-lg">HandyPay</span>
             </Link>
-            <p className="text-sm text-neutral-600">© {new Date().getFullYear()} HandyPay</p>
+            <p className="text-sm text-white/60 mb-6">
+              Accept payments anywhere.<br />
+              Get paid to your bank.
+            </p>
+            <p className="text-xs text-white/40">© {new Date().getFullYear()} HandyPay</p>
+          </div>
+
+          {/* Products */}
+          <div>
+            <h3 className="font-medium text-sm text-white/80 mb-4 uppercase tracking-wider">Products</h3>
+            <ul className="space-y-3">
+              <li>
+                <Link
+                  href="/businesses"
+                  className="text-white/60 hover:text-white transition-colors text-sm"
+                  onClick={() => {
+                    const eventData = { link: "businesses" };
+                    posthog.capture("footer_link_clicked", eventData);
+                    trackGAEvent("footer_link_clicked", eventData);
+                  }}
+                >
+                  For Businesses
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/individuals"
+                  className="text-white/60 hover:text-white transition-colors text-sm"
+                  onClick={() => {
+                    const eventData = { link: "individuals" };
+                    posthog.capture("footer_link_clicked", eventData);
+                    trackGAEvent("footer_link_clicked", eventData);
+                  }}
+                >
+                  For Individuals
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/faqs"
+                  className="text-white/60 hover:text-white transition-colors text-sm"
+                  onClick={() => {
+                    const eventData = { link: "faqs" };
+                    posthog.capture("footer_link_clicked", eventData);
+                    trackGAEvent("footer_link_clicked", eventData);
+                  }}
+                >
+                  FAQs
+                </Link>
+              </li>
+            </ul>
           </div>
 
           {/* Company */}
           <div>
-            <h3 className="font-medium text-sm text-neutral-900 mb-4">Company</h3>
+            <h3 className="font-medium text-sm text-white/80 mb-4 uppercase tracking-wider">Company</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href="/about"
-                  className="text-neutral-600 hover:text-black transition-colors text-sm"
+                  className="text-white/60 hover:text-white transition-colors text-sm"
                   onClick={() => {
                     const eventData = { link: "about" };
                     posthog.capture("footer_link_clicked", eventData);
@@ -48,21 +97,8 @@ export function SiteFooter() {
               </li>
               <li>
                 <Link
-                  href="/blog"
-                  className="text-neutral-600 hover:text-black transition-colors text-sm"
-                  onClick={() => {
-                    const eventData = { link: "blog" };
-                    posthog.capture("footer_link_clicked", eventData);
-                    trackGAEvent("footer_link_clicked", eventData);
-                  }}
-                >
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/contact"
-                  className="text-neutral-600 hover:text-black transition-colors text-sm"
+                  className="text-white/60 hover:text-white transition-colors text-sm"
                   onClick={() => {
                     const eventData = { link: "contact" };
                     posthog.capture("footer_link_clicked", eventData);
@@ -75,86 +111,14 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Developers */}
+          {/* Legal */}
           <div>
-            <h3 className="font-medium text-sm text-neutral-900 mb-4">Developers</h3>
+            <h3 className="font-medium text-sm text-white/80 mb-4 uppercase tracking-wider">Legal</h3>
             <ul className="space-y-3">
-              <li>
-                <a
-                  href="#"
-                  className="text-neutral-600 hover:text-black transition-colors text-sm"
-                  onClick={() => {
-                    const eventData = { link: "api_docs" };
-                    posthog.capture("footer_link_clicked", eventData);
-                    trackGAEvent("footer_link_clicked", eventData);
-                  }}
-                >
-                  API Docs
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-neutral-600 hover:text-black transition-colors text-sm"
-                  onClick={() => {
-                    const eventData = { link: "integrations" };
-                    posthog.capture("footer_link_clicked", eventData);
-                    trackGAEvent("footer_link_clicked", eventData);
-                  }}
-                >
-                  Integrations
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-neutral-600 hover:text-black transition-colors text-sm"
-                  onClick={() => {
-                    const eventData = { link: "webhooks" };
-                    posthog.capture("footer_link_clicked", eventData);
-                    trackGAEvent("footer_link_clicked", eventData);
-                  }}
-                >
-                  Webhooks
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h3 className="font-medium text-sm text-neutral-900 mb-4">Resources</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link
-                  href="/faqs"
-                  className="text-neutral-600 hover:text-black transition-colors text-sm"
-                  onClick={() => {
-                    const eventData = { link: "faqs" };
-                    posthog.capture("footer_link_clicked", eventData);
-                    trackGAEvent("footer_link_clicked", eventData);
-                  }}
-                >
-                  FAQs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/changelog"
-                  className="text-neutral-600 hover:text-black transition-colors text-sm"
-                  onClick={() => {
-                    const eventData = { link: "changelog" };
-                    posthog.capture("footer_link_clicked", eventData);
-                    trackGAEvent("footer_link_clicked", eventData);
-                  }}
-                >
-                  Changelog
-                </Link>
-              </li>
               <li>
                 <Link
                   href="/terms"
-                  className="text-neutral-600 hover:text-black transition-colors text-sm"
+                  className="text-white/60 hover:text-white transition-colors text-sm"
                   onClick={() => {
                     const eventData = { link: "terms" };
                     posthog.capture("footer_link_clicked", eventData);
@@ -167,7 +131,7 @@ export function SiteFooter() {
               <li>
                 <Link
                   href="/privacy"
-                  className="text-neutral-600 hover:text-black transition-colors text-sm"
+                  className="text-white/60 hover:text-white transition-colors text-sm"
                   onClick={() => {
                     const eventData = { link: "privacy" };
                     posthog.capture("footer_link_clicked", eventData);
@@ -175,20 +139,20 @@ export function SiteFooter() {
                   }}
                 >
                   Privacy
-          </Link>
+                </Link>
               </li>
             </ul>
           </div>
           
           {/* Social Links */}
           <div>
-            <h3 className="font-medium text-sm text-neutral-900 mb-4">Follow Us</h3>
-            <div className="flex items-center gap-3">
+            <h3 className="font-medium text-sm text-white/80 mb-4 uppercase tracking-wider">Social</h3>
+            <div className="flex items-center gap-4">
               <a 
                 href="https://www.instagram.com/handypayapp" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-neutral-600 hover:text-black transition-colors cursor-pointer"
+                className="text-white/60 hover:text-white transition-colors cursor-pointer"
                 aria-label="Instagram"
                 onClick={() => {
                   const eventData = { platform: "instagram", location: "footer" };
@@ -202,7 +166,7 @@ export function SiteFooter() {
                 href="https://www.tiktok.com/@handypay" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-neutral-600 hover:text-black transition-colors cursor-pointer"
+                className="text-white/60 hover:text-white transition-colors cursor-pointer"
                 aria-label="TikTok"
                 onClick={() => {
                   const eventData = { platform: "tiktok", location: "footer" };
@@ -218,7 +182,7 @@ export function SiteFooter() {
                 href="https://discord.gg/handypay" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-neutral-600 hover:text-black transition-colors cursor-pointer"
+                className="text-white/60 hover:text-white transition-colors cursor-pointer"
                 aria-label="Discord"
                 onClick={() => {
                   const eventData = { platform: "discord", location: "footer" };
@@ -232,6 +196,22 @@ export function SiteFooter() {
               </a>
             </div>
           </div>
+        </div>
+
+        {/* Mission Statement */}
+        <div className="max-w-3xl mx-auto text-center mb-8">
+          <p className="text-white/70 text-sm leading-relaxed">
+            HandyPay was created to empower entrepreneurs and businesses across Jamaica and the Caribbean. 
+            Our mission is to remove the financial barriers that hold people back, making it simple for anyone 
+            to accept payments and get paid — quickly, securely, and without friction.
+          </p>
+        </div>
+      </div>
+
+      {/* Large Translucent Logo */}
+      <div className="relative w-full overflow-hidden">
+        <div className="text-[20vw] md:text-[18vw] font-bold text-white/[0.06] whitespace-nowrap text-center leading-none select-none pointer-events-none -mb-[4vw]">
+          HandyPay
         </div>
       </div>
     </footer>
