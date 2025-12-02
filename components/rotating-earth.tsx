@@ -2,6 +2,21 @@
 
 import { useEffect, useRef, useState } from "react"
 import * as d3 from "d3"
+import type { GeoPermissibleObjects } from "d3"
+
+interface GeoFeature {
+  type: string
+  geometry: {
+    type: string
+    coordinates: number[][][] | number[][][][]
+  }
+  properties?: Record<string, unknown>
+}
+
+interface GeoFeatureCollection {
+  type: string
+  features: GeoFeature[]
+}
 
 interface RotatingEarthProps {
   width?: number
@@ -58,11 +73,11 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
       return inside
     }
 
-    const pointInFeature = (point: [number, number], feature: any): boolean => {
+    const pointInFeature = (point: [number, number], feature: GeoFeature): boolean => {
       const geometry = feature.geometry
 
       if (geometry.type === "Polygon") {
-        const coordinates = geometry.coordinates
+        const coordinates = geometry.coordinates as number[][][]
         // Check if point is in outer ring
         if (!pointInPolygon(point, coordinates[0])) {
           return false
@@ -75,8 +90,9 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
         }
         return true
       } else if (geometry.type === "MultiPolygon") {
+        const coordinates = geometry.coordinates as number[][][][]
         // Check each polygon in the MultiPolygon
-        for (const polygon of geometry.coordinates) {
+        for (const polygon of coordinates) {
           // Check if point is in outer ring
           if (pointInPolygon(point, polygon[0])) {
             // Check if point is in any hole
@@ -98,20 +114,18 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
       return false
     }
 
-    const generateDotsInPolygon = (feature: any, dotSpacing = 16) => {
+    const generateDotsInPolygon = (feature: GeoFeature, dotSpacing = 16) => {
       const dots: [number, number][] = []
-      const bounds = d3.geoBounds(feature)
+      const bounds = d3.geoBounds(feature as GeoPermissibleObjects)
       const [[minLng, minLat], [maxLng, maxLat]] = bounds
 
       const stepSize = dotSpacing * 0.08
-      let pointsGenerated = 0
 
       for (let lng = minLng; lng <= maxLng; lng += stepSize) {
         for (let lat = minLat; lat <= maxLat; lat += stepSize) {
           const point: [number, number] = [lng, lat]
           if (pointInFeature(point, feature)) {
             dots.push(point)
-            pointsGenerated++
           }
         }
       }
@@ -126,7 +140,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
     }
 
     const allDots: DotData[] = []
-    let landFeatures: any
+    let landFeatures: GeoFeatureCollection | null = null
 
     const render = () => {
       // Clear canvas
@@ -157,10 +171,10 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
 
         // Draw land outlines - green
         context.beginPath()
-        landFeatures.features.forEach((feature: any) => {
-          path(feature)
+        landFeatures.features.forEach((feature: GeoFeature) => {
+          path(feature as GeoPermissibleObjects)
         })
-        context.strokeStyle = "#3AB75C"
+        context.strokeStyle = "#11AD30"
         context.lineWidth = 1 * scaleFactor
         context.stroke()
 
@@ -176,7 +190,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
           ) {
             context.beginPath()
             context.arc(projected[0], projected[1], 1.2 * scaleFactor, 0, 2 * Math.PI)
-            context.fillStyle = "#3AB75C"
+            context.fillStyle = "#11AD30"
             context.globalAlpha = 0.6
             context.fill()
             context.globalAlpha = 1
@@ -197,81 +211,35 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
         landFeatures = await response.json()
 
         // Generate dots for all land features
-        let totalDots = 0
-        landFeatures.features.forEach((feature: any) => {
-          const dots = generateDotsInPolygon(feature, 16)
-          dots.forEach(([lng, lat]) => {
-            allDots.push({ lng, lat, visible: true })
-            totalDots++
+        if (landFeatures) {
+          landFeatures.features.forEach((feature: GeoFeature) => {
+            const dots = generateDotsInPolygon(feature, 16)
+            dots.forEach(([lng, lat]) => {
+              allDots.push({ lng, lat, visible: true })
+            })
           })
-        })
+        }
 
         render()
         setIsLoading(false)
-      } catch (err) {
+      } catch {
         setError("Failed to load land map data")
         setIsLoading(false)
       }
     }
 
-    // Set up rotation and interaction
+    // Set up rotation
     const rotation: [number, number] = [0, 0]
-    let autoRotate = true
     const rotationSpeed = 0.5
 
     const rotate = () => {
-      if (autoRotate) {
-        rotation[0] += rotationSpeed
-        projection.rotate(rotation)
-        render()
-      }
+      rotation[0] += rotationSpeed
+      projection.rotate(rotation)
+      render()
     }
 
     // Auto-rotation timer
     const rotationTimer = d3.timer(rotate)
-
-    const handleMouseDown = (event: MouseEvent) => {
-      autoRotate = false
-      const startX = event.clientX
-      const startY = event.clientY
-      const startRotation: [number, number] = [...rotation]
-
-      const handleMouseMove = (moveEvent: MouseEvent) => {
-        const sensitivity = 0.5
-        const dx = moveEvent.clientX - startX
-        const dy = moveEvent.clientY - startY
-
-        rotation[0] = startRotation[0] + dx * sensitivity
-        rotation[1] = startRotation[1] - dy * sensitivity
-        rotation[1] = Math.max(-90, Math.min(90, rotation[1]))
-
-        projection.rotate(rotation)
-        render()
-      }
-
-      const handleMouseUp = () => {
-        document.removeEventListener("mousemove", handleMouseMove)
-        document.removeEventListener("mouseup", handleMouseUp)
-
-        setTimeout(() => {
-          autoRotate = true
-        }, 10)
-      }
-
-      document.addEventListener("mousemove", handleMouseMove)
-      document.addEventListener("mouseup", handleMouseUp)
-    }
-
-    const handleWheel = (event: WheelEvent) => {
-      event.preventDefault()
-      const scaleFactor = event.deltaY > 0 ? 0.9 : 1.1
-      const newRadius = Math.max(radius * 0.5, Math.min(radius * 3, projection.scale() * scaleFactor))
-      projection.scale(newRadius)
-      render()
-    }
-
-    canvas.addEventListener("mousedown", handleMouseDown)
-    canvas.addEventListener("wheel", handleWheel)
 
     // Load the world data
     loadWorldData()
@@ -279,8 +247,6 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
     // Cleanup
     return () => {
       rotationTimer.stop()
-      canvas.removeEventListener("mousedown", handleMouseDown)
-      canvas.removeEventListener("wheel", handleWheel)
     }
   }, [width, height])
 
@@ -299,15 +265,14 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
     <div className={`relative ${className}`}>
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#3AB75C]"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#11AD30]"></div>
         </div>
       )}
       <canvas
         ref={canvasRef}
-        className="w-full h-auto"
+        className="w-full h-auto pointer-events-none"
         style={{ maxWidth: "100%", height: "auto" }}
       />
     </div>
   )
 }
-
