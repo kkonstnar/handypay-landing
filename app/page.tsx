@@ -780,8 +780,8 @@ export default function Home() {
           </div>
         </div>
         
-        {/* Down Arrow Circle Button */}
-        <motion.div
+        
+        {/* <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
@@ -806,7 +806,7 @@ export default function Home() {
           >
             <ChevronDown className="w-5 h-5" />
           </motion.a>
-        </motion.div>
+        </motion.div> */}
       </section>
 
       {/* Get Started Section */}
