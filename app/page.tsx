@@ -543,10 +543,6 @@ export default function Home() {
                   </motion.div>
                 </AnimatePresence>
               </div>
-
-              <div className="absolute hidden md:block bottom-10 left-1/2 -translate-x-1/2 text-xl font-semibold text-black z-10">
-
-              </div>
             </motion.div>
 
             {/* Left Column - Text Content */}
@@ -789,7 +785,7 @@ export default function Home() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 w-full flex justify-center"
+          className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 w-full flex justify-center"
         >
           <motion.a
             href="#get-started"
