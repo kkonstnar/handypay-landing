@@ -15,6 +15,7 @@ import { trackDownloadApp, trackGooglePlayClick } from "@/lib/google-ads";
 import { Input } from "@/components/ui/input";
 
 const RotatingEarth = dynamic(() => import("@/components/rotating-earth"), { ssr: false });
+const GetStartedSection = dynamic(() => import("@/components/get-started-section"), { ssr: false });
 
 function isMobile() {
   if (typeof window === "undefined") return false;
@@ -513,7 +514,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewStructuredData) }}
       />
       {/* Hero Section */}
-      <section aria-label="Hero section" className="min-h-screen flex items-start px-4 pt-8 md:pt-16 pb-12 md:pb-20 w-full overflow-hidden">
+      <section aria-label="Hero section" className="relative min-h-screen flex items-start px-4 pt-8 md:pt-16 pb-12 md:pb-20 w-full overflow-hidden">
         <div className="container mx-auto max-w-6xl w-full">
           <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12 items-start w-full">
             {/* Mobile: Images at top, Desktop: Right Column - Rotating Images */}
@@ -782,6 +783,84 @@ export default function Home() {
 
           </div>
         </div>
+        
+        {/* Down Arrow Circle Button */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 w-full flex justify-center"
+        >
+          <motion.a
+            href="#get-started"
+            className="inline-flex items-center justify-center w-12 h-12 rounded-full border border-neutral-500 text-black hover:bg-neutral-100 transition-colors cursor-pointer shadow-lg"
+            animate={{ y: [0, 8, 0] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              const getStartedSection = document.getElementById('get-started') || document.querySelector('[data-section="get-started"]');
+              if (getStartedSection) {
+                getStartedSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          >
+            <ChevronDown className="w-5 h-5" />
+          </motion.a>
+        </motion.div>
+      </section>
+
+      {/* Get Started Section */}
+      <GetStartedSection />
+
+      {/* Global Countries Section */}
+      <section id="countries" className="py-16 md:py-32 bg-white overflow-x-hidden">
+        <div className="container mx-auto max-w-6xl px-4 w-full">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            {/* Globe */}
+            <div className="flex justify-center">
+              <RotatingEarth width={450} height={450} className="max-w-full" />
+            </div>
+
+            {/* Text Content */}
+            <div>
+              <span className="text-neutral-500 text-sm font-medium tracking-wider uppercase mb-4 block">ACCEPT PAYMENTS GLOBALLY</span>
+              <h2 className="text-4xl md:text-5xl font-medium mb-6 heading tracking-tight">
+                Collect payments from clients anywhere in the world
+              </h2>
+              <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
+                Get paid across the Caribbean, Africa, North America, and beyond. No complicated setups, just a link or QR code built for simplicity.
+              </p>
+
+              {/* Stats Row */}
+              <div className="flex items-center gap-8 mb-8">
+                <div>
+                  <div className="text-4xl font-bold text-black mb-1">17</div>
+                  <div className="text-neutral-500 text-sm">Countries</div>
+                </div>
+                <div className="w-px h-12 bg-neutral-200"></div>
+                <div>
+                  <div className="text-4xl font-bold text-black mb-1">3 days</div>
+                  <div className="text-neutral-500 text-sm">Payout time</div>
+                </div>
+              </div>
+
+              {/* View Countries Link */}
+              <a
+                href="/countries"
+                className="inline-flex items-center gap-2 text-[#11AD30] hover:text-[#2ea04a] font-medium transition-colors"
+              >
+                View all supported countries
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/*
@@ -883,53 +962,6 @@ export default function Home() {
             </div>
                       </div>
                     </div>
-      </section>
-
-      {/* Global Countries Section */}
-      <section id="countries" className="py-16 md:py-32 bg-white overflow-x-hidden">
-        <div className="container mx-auto max-w-6xl px-4 w-full">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Globe */}
-            <div className="flex justify-center">
-              <RotatingEarth width={450} height={450} className="max-w-full" />
-            </div>
-
-            {/* Text Content */}
-            <div>
-              <span className="text-neutral-500 text-sm font-medium tracking-wider uppercase mb-4 block">ACCEPT PAYMENTS GLOBALLY</span>
-              <h2 className="text-4xl md:text-5xl font-medium mb-6 heading tracking-tight">
-                Collect payments from clients anywhere in the world
-              </h2>
-              <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
-                Get paid across the Caribbean, Africa, North America, and beyond. No complicated setups, just a link or QR code built for simplicity.
-              </p>
-
-              {/* Stats Row */}
-              <div className="flex items-center gap-8 mb-8">
-                <div>
-                  <div className="text-4xl font-bold text-black mb-1">17</div>
-                  <div className="text-neutral-500 text-sm">Countries</div>
-                </div>
-                <div className="w-px h-12 bg-neutral-200"></div>
-                <div>
-                  <div className="text-4xl font-bold text-black mb-1">3 days</div>
-                  <div className="text-neutral-500 text-sm">Payout time</div>
-                </div>
-              </div>
-
-              {/* View Countries Link */}
-              <a
-                href="/countries"
-                className="inline-flex items-center gap-2 text-[#11AD30] hover:text-[#2ea04a] font-medium transition-colors"
-              >
-                View all supported countries
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Teenagers Business Section */}
