@@ -20,7 +20,7 @@ const tabs = [
     title: "Verify your identity",
     lottie: "/lotties/Face recognition-2.json",
     description:
-      "Quick and secure identity verification using your government-issued ID. Our advanced system verifies your identity in minutes.",
+      "Quick and secure identity verification using your government-issued ID. Our advanced system verifies your identity in seconds.",
   },
   {
     id: "bank",
@@ -66,9 +66,8 @@ export default function GetStartedSection() {
   return (
     <section id="get-started" className="py-16 md:py-32 bg-white overflow-x-hidden">
       <div className="container mx-auto max-w-6xl px-4 w-full">
-        
         <h2 className="mb-12 md:mb-16 text-center text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight heading">
-          Sign-up in 30 seconds
+          Sign-up <br/> in 30 seconds
         </h2>
         
         <div className="rounded-3xl bg-white p-6 md:p-10 lg:p-14 ">

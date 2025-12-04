@@ -85,7 +85,7 @@ export function IndividualsClient() {
                   <div>
                     <h3 className="font-medium text-lg mb-2">Easy Setup</h3>
                     <p className="text-neutral-600">
-                      Get started in minutes with our simple mobile app - no complex setup required.
+                      Get started in seconds with our simple mobile app - no complex setup required.
                     </p>
                   </div>
                 </div>
