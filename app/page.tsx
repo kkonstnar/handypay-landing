@@ -544,7 +544,7 @@ export default function Home() {
                 </AnimatePresence>
               </div>
 
-              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-xl font-semibold text-black z-10">
+              <div className="absolute hidden md:block bottom-10 left-1/2 -translate-x-1/2 text-xl font-semibold text-black z-10">
 
               </div>
             </motion.div>
