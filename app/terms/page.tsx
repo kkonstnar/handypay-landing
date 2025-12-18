@@ -178,15 +178,11 @@ export default function Page() {
       <h2>6. Fees and Charges</h2>
       <p>
         <strong>Transaction Fees:</strong> HandyPay charges a service fee for each transaction 
-        processed through our platform. Our current fee structure is:
+        processed through our platform. Our current fee structure is approximately 5% per transaction, 
+        which includes payment processing costs. There are no monthly fees, setup fees, or hidden costs.
       </p>
-      <ul>
-        <li>2.9% of the transaction amount</li>
-        <li>JMD 30 per transaction</li>
-      </ul>
       <p>
-        In addition to our fees, Stripe&apos;s standard processing fees apply. These fees are 
-        automatically deducted from each transaction before payout.
+        These fees are automatically deducted from each transaction before payout.
       </p>
       <p>
         <strong>Fee Changes:</strong> We reserve the right to modify our fee structure at any time. 

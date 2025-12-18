@@ -177,7 +177,7 @@ export default function RootLayout({
     "url": siteUrl,
     "downloadUrl": [
       "https://apps.apple.com/jm/app/handypay/id6751820310",
-      "https://play.google.com/store/apps/details?id=com.handypay"
+      "https://play.google.com/store/apps/details?id=com.handypay.mobile&hl=en"
     ],
     "screenshot": `${siteUrl}/iphone-mockup.svg`,
     "featureList": [

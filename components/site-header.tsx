@@ -13,28 +13,17 @@ export function SiteHeader() {
           <Image src="/handypay-full.svg" alt="HandyPay" width={120} height={32} />
         </Link>
         <nav className="hidden md:flex items-center gap-6 text-neutral-700">
-          <Link 
-            href="/businesses" 
-            className="hover:text-black transition-colors"
+          <a 
+            href="#pricing" 
+            className="hover:text-black transition-colors font-medium"
             onClick={() => {
-              const eventData = { link: "businesses", location: "header" };
+              const eventData = { link: "pricing", location: "header" };
               posthog.capture("navigation_clicked", eventData);
               trackGAEvent("navigation_clicked", eventData);
             }}
           >
-            Businesses
-          </Link>
-          <Link 
-            href="/individuals" 
-            className="hover:text-black transition-colors"
-            onClick={() => {
-              const eventData = { link: "individuals", location: "header" };
-              posthog.capture("navigation_clicked", eventData);
-              trackGAEvent("navigation_clicked", eventData);
-            }}
-          >
-            Individuals
-          </Link>
+            Pricing
+          </a>
           <a 
             href="#countries" 
             className="hover:text-black transition-colors"
@@ -45,6 +34,17 @@ export function SiteHeader() {
             }}
           >
             Countries
+          </a>
+          <a 
+            href="#testimonials" 
+            className="hover:text-black transition-colors"
+            onClick={() => {
+              const eventData = { link: "testimonials", location: "header" };
+              posthog.capture("navigation_clicked", eventData);
+              trackGAEvent("navigation_clicked", eventData);
+            }}
+          >
+            Testimonials
           </a>
           <a 
             href="https://www.tiktok.com/@handypay" 

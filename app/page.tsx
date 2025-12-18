@@ -16,6 +16,8 @@ import { Input } from "@/components/ui/input";
 
 const RotatingEarth = dynamic(() => import("@/components/rotating-earth"), { ssr: false });
 const GetStartedSection = dynamic(() => import("@/components/get-started-section"), { ssr: false });
+const DemoSection = dynamic(() => import("@/components/demo-section"), { ssr: false });
+const IndustriesSection = dynamic(() => import("@/components/industries-section"), { ssr: false });
 
 function isMobile() {
   if (typeof window === "undefined") return false;
@@ -38,7 +40,7 @@ function getMobileOS() {
 }
 
 const IOS_APP_URL = process.env.NEXT_PUBLIC_IOS_APP_URL || "https://apps.apple.com/jm/app/handypay/id6751820310";
-const ANDROID_APP_URL = process.env.NEXT_PUBLIC_ANDROID_APP_URL || "https://play.google.com/store/apps/details?id=com.handypay";
+const ANDROID_APP_URL = process.env.NEXT_PUBLIC_ANDROID_APP_URL || "https://play.google.com/store/apps/details?id=com.handypay.mobile&hl=en";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 const QR_CODE_TRACKING_URL = `${siteUrl}/app/download?source=hero_section`;
 
@@ -64,7 +66,7 @@ export default function Home() {
   ];
 
   const rotatingDescriptions = [
-    "No setup fees, no monthly fees, no hidden costs. Accept payments with cards.",
+    "Free to download. No monthly fees. Just ~5% per transaction.",
     "Generate QR codes instantly for customers to scan and pay with their card.",
     "Receive payments directly to your bank account across 17 countries within 2 business days.",
     "Share payment links via WhatsApp, SMS, or email. Get paid wherever your customers are.",
@@ -593,40 +595,56 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mb-8"
             >
-              <div className="flex items-center gap-3 flex-wrap">
-                <a
-                  href={IOS_APP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => {
-                    const eventData = {
-                      platform: "ios",
-                      source: "hero_section",
-                      device_type: isMobile() ? "mobile" : "desktop",
-                    };
-                    posthog.capture("app_download_clicked", eventData);
-                    trackGAEvent("app_download_clicked", eventData);
-                  }}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white rounded-full font-medium text-sm hover:bg-neutral-800 transition-colors"
-                >
-                  <Image
-                    src="/apple.svg"
-                    alt="Apple"
-                    width={18}
-                    height={18}
-                    className="w-[18px] h-[18px] invert"
-                  />
-                  <span>Download on App Store</span>
-                </a>
-                <div className="flex items-center gap-2 px-4 py-2.5 bg-neutral-100 text-neutral-500 rounded-full text-sm">
-                  <Image
-                    src="/64px-Google_Play_2022_icon.svg.png"
-                    alt="Google Play Store"
-                    width={16}
-                    height={16}
-                    className="w-4 h-4"
-                  />
-                  <span>Android Coming Soon</span>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <a
+                    href={IOS_APP_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      const eventData = {
+                        platform: "ios",
+                        source: "hero_section",
+                        device_type: isMobile() ? "mobile" : "desktop",
+                      };
+                      posthog.capture("app_download_clicked", eventData);
+                      trackGAEvent("app_download_clicked", eventData);
+                    }}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white rounded-full font-medium text-sm hover:bg-neutral-800 transition-colors"
+                  >
+                    <Image
+                      src="/apple.svg"
+                      alt="Apple"
+                      width={18}
+                      height={18}
+                      className="w-[18px] h-[18px] invert"
+                    />
+                    <span>Download on App Store</span>
+                  </a>
+                  <a
+                    href="https://play.google.com/store/apps/details?id=com.handypay.mobile&hl=en"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      const eventData = {
+                        platform: "android",
+                        source: "hero_section",
+                        device_type: isMobile() ? "mobile" : "desktop",
+                      };
+                      posthog.capture("app_download_clicked", eventData);
+                      trackGAEvent("app_download_clicked", eventData);
+                    }}
+                    className="inline-flex items-center gap-2 px-4 py-2.5 border border-neutral-300 text-neutral-700 rounded-full text-sm hover:bg-neutral-50 transition-colors"
+                  >
+                    <Image
+                      src="/64px-Google_Play_2022_icon.svg.png"
+                      alt="Google Play Store"
+                      width={16}
+                      height={16}
+                      className="w-4 h-4"
+                    />
+                    <span>Get it on Google Play</span>
+                  </a>
                 </div>
                 <a
                   href="#countries"
@@ -809,128 +827,161 @@ export default function Home() {
         </motion.div> */}
       </section>
 
-      {/* Get Started Section */}
+      {/* Industries Section */}
+      <IndustriesSection />
+
+      {/* Demo Section */}
+      <DemoSection />
+
+      {/* Get Started Section - Hidden for now
       <GetStartedSection />
+      */}
 
-      {/* Global Countries Section */}
-      <section id="countries" className="py-16 md:py-32 bg-white overflow-x-hidden">
-        <div className="container mx-auto max-w-6xl px-4 w-full">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            {/* Globe */}
-            <div className="flex justify-center">
-              <RotatingEarth width={450} height={450} className="max-w-full" />
-            </div>
+      
 
-            {/* Text Content */}
-            <div>
-              <span className="text-neutral-500 text-sm font-medium tracking-wider uppercase mb-4 block">ACCEPT PAYMENTS GLOBALLY</span>
-              <h2 className="text-4xl md:text-5xl font-medium mb-6 heading tracking-tight">
-                Collect payments from clients anywhere in the world
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 md:py-28 bg-white overflow-hidden">
+        <div className="container mx-auto max-w-5xl px-6">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+            {/* Left - Main Price */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#11AD30] mb-4 block">
+                Pricing
+              </span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-neutral-900 leading-[1.1] tracking-tight mb-6">
+                ~5%
+                <span className="block text-2xl md:text-3xl text-neutral-500 font-medium mt-2">per transaction</span>
               </h2>
-              <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
-                Get paid across the Caribbean, Africa, North America, and beyond. No complicated setups, just a link or QR code built for simplicity.
+              <p className="text-lg text-neutral-600 leading-relaxed">
+                Free to download. No monthly fees. No setup costs. No hidden charges. 
+                You only pay when you get paid.
               </p>
+            </motion.div>
 
-              {/* Stats Row */}
-              <div className="flex items-center gap-8 mb-8">
-                <div>
-                  <div className="text-4xl font-bold text-black mb-1">17</div>
-                  <div className="text-neutral-500 text-sm">Countries</div>
-                </div>
-                <div className="w-px h-12 bg-neutral-200"></div>
-                <div>
-                  <div className="text-4xl font-bold text-black mb-1">3 days</div>
-                  <div className="text-neutral-500 text-sm">Payout time</div>
-                </div>
-              </div>
-
-              {/* View Countries Link */}
-              <a
-                href="/countries"
-                className="inline-flex items-center gap-2 text-[#11AD30] hover:text-[#2ea04a] font-medium transition-colors"
-              >
-                View all supported countries
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </a>
-            </div>
+            {/* Right - Features Grid */}
+            <motion.div 
+              className="grid grid-cols-2 gap-6"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              {[
+                { value: "$0", label: "Monthly fee" },
+                { value: "$0", label: "Setup fee" },
+                { value: "2-3 days", label: "Payout time" },
+                { value: "All cards", label: "Visa, Mastercard, Amex" },
+              ].map((item, i) => (
+                <motion.div 
+                  key={i}
+                  className="space-y-1"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.3 + i * 0.1 }}
+                >
+                  <div className="text-2xl font-bold text-neutral-900">{item.value}</div>
+                  <div className="text-neutral-500 text-sm">{item.label}</div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/*
-      <section className="py-32 bg-neutral-50">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="text-left mb-16">
-            <h2 className="text-4xl md:text-5xl font-medium heading tracking-tight mb-4">
-              Power up your business
-              <br />
-              your way.
-            </h2>
-                </div>
+      {/* Global Reach Section */}
+      <section id="countries" className="relative py-24 md:py-40 bg-neutral-50 overflow-hidden">
+        {/* Large Background Globe */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-40">
+          <div className="w-[800px] h-[800px] md:w-[1200px] md:h-[1200px] relative">
+            <RotatingEarth width={1200} height={1200} className="w-full h-full" />
+          </div>
+        </div>
+        
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-transparent to-neutral-50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-neutral-50/80 via-transparent to-neutral-50/80" />
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { label: "QR Codes" },
-              { label: "Payment Links" },
-              { label: "Bank Deposits" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="bg-neutral-100 rounded-3xl aspect-square shadow-sm border border-neutral-200 flex flex-col items-center justify-center text-neutral-400"
-              >
-                <div className="w-full h-full bg-neutral-200 rounded-2xl flex flex-col items-center justify-center gap-4">
-                  <span className="font-medium text-neutral-800 text-center px-4">{item.label}</span>
-            </div>
-                </div>
-            ))}
-              </div>
-            </div>
-      </section>
-      */}
+        {/* Content */}
+        <div className="relative z-10 container mx-auto max-w-5xl px-6">
+          <div className="text-center">
+            <motion.span 
+              className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-[#11AD30] mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              Global Reach
+            </motion.span>
+            <motion.h2 
+              className="text-4xl md:text-6xl lg:text-7xl font-semibold text-neutral-900 mb-6 leading-[1.1] tracking-tight"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              Sign up from 17 countries.<br />
+              <span className="text-neutral-500">Accept payments from anywhere.</span>
+            </motion.h2>
+            <motion.p 
+              className="text-lg md:text-xl text-neutral-600 max-w-2xl mx-auto mb-12 leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              Whether you&apos;re in Jamaica, Nigeria, the UK, or Canada—create your account and start accepting card payments from clients around the world.
+            </motion.p>
 
-      {/* Secure Section */}
-      {/*
-      <section className="py-32 bg-white">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="bg-neutral-100 rounded-3xl aspect-square w-full relative overflow-hidden">
-              Placeholder for illustration
+            {/* Stats */}
+            <motion.div 
+              className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16 mb-12"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              <div className="text-center">
+                <div className="text-5xl md:text-6xl font-bold text-neutral-900 mb-2">17</div>
+                <div className="text-neutral-500 text-sm uppercase tracking-wider">Countries to sign up</div>
               </div>
-            <div>
-              <span className="text-[#11AD30] font-medium mb-4 block">Secure</span>
-              <h2 className="text-4xl md:text-5xl font-medium mb-6 heading tracking-tight">
-                Relentless protection.
-                <br />
-                Restful ease.
-              </h2>
-              <p className="text-lg text-neutral-600 mb-8 leading-relaxed">
-                HandyPay is built with bank-grade security to keep your money safe. We use advanced encryption and fraud monitoring to protect every transaction.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
-                {[
-                  "Bank-Grade Security",
-                  "Fraud Protection",
-                  "Encrypted Data",
-                  "24/7 Monitoring",
-                  "Secure Payouts", 
-                  "Verified Merchants"
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <svg className="w-5 h-5 text-[#11AD30]" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-[#11AD30] font-medium">{item}</span>
-            </div>
-                ))}
+              <div className="hidden sm:block w-px h-16 bg-neutral-300" />
+              <div className="text-center">
+                <div className="text-5xl md:text-6xl font-bold text-neutral-900 mb-2">195+</div>
+                <div className="text-neutral-500 text-sm uppercase tracking-wider">Countries can pay you</div>
               </div>
-            </div>
+              <div className="hidden sm:block w-px h-16 bg-neutral-300" />
+              <div className="text-center">
+                <div className="text-5xl md:text-6xl font-bold text-neutral-900 mb-2">17</div>
+                <div className="text-neutral-500 text-sm uppercase tracking-wider">Currencies supported</div>
               </div>
-            </div>
+            </motion.div>
+
+            {/* CTA */}
+            <motion.a
+              href="/countries"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#11AD30] text-white rounded-full font-medium hover:bg-[#0e9428] transition-colors"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              View all supported countries
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </motion.a>
+          </div>
+        </div>
       </section>
-      */}
-      {/* Merchant Tools Section */}
+
+      {/* Merchant Tools Section
       <section className="py-32 bg-white overflow-x-hidden">
         <div className="container mx-auto max-w-6xl px-4 w-full">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -960,7 +1011,7 @@ export default function Home() {
                     </div>
       </section>
 
-      {/* Teenagers Business Section */}
+      Teenagers Business Section
       <section className="py-32 bg-white overflow-x-hidden">
         <div className="container mx-auto max-w-6xl px-4 w-full">
           <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -988,19 +1039,25 @@ export default function Home() {
             </div>
                       </div>
                     </div>
-      </section>
+      </section> */}
 
           {/* Testimonials Section */}
       <section id="testimonials" aria-label="Customer testimonials" className="py-32 bg-white overflow-x-hidden">
         <div className="container mx-auto max-w-6xl px-4 w-full">
-            <div className="text-center mb-16 space-y-4">
+            <motion.div 
+              className="text-center mb-16 space-y-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
               <h2 className="text-4xl md:text-5xl text-left md:text-center lg:text-6xl font-bold tracking-tight text-balance heading">
                 Entrepreneurs love HandyPay
               </h2>
               <p className="text-lg md:text-xl text-left md:text-center text-neutral-600 max-w-3xl mx-auto text-balance leading-relaxed">
-                Accept payments with QR codes and payment links, directly to your Jamaican bank account or Western Union. <strong>Free to sign up.</strong>
+                Accept payments with QR codes and payment links, directly to your bank account or Western Union. <strong>Free to download. ~5% per transaction.</strong>
               </p>
-            </div>
+            </motion.div>
 
             {/* Testimonials Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1120,7 +1177,13 @@ export default function Home() {
       <section className="py-32 bg-white border-t border-neutral-100 overflow-x-hidden">
         <div className="container mx-auto max-w-6xl px-4 w-full">
           <div className="grid md:grid-cols-12 gap-12">
-            <div className="md:col-span-4">
+            <motion.div 
+              className="md:col-span-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
               <h2 className="text-4xl md:text-5xl font-medium heading tracking-tight mb-4">
                 Frequently Asked
                 <br />
@@ -1133,17 +1196,23 @@ export default function Home() {
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </a>
-            </div>
-            <div className="md:col-span-8">
+            </motion.div>
+            <motion.div 
+              className="md:col-span-8"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               <div className="space-y-0">
                 {[
                   {
-                    q: "Is HandyPay safe?",
-                    a: "Yes, HandyPay uses bank-grade encryption and security measures to protect your data and transactions."
+                    q: "How much does HandyPay cost?",
+                    a: "HandyPay is free to download and use. We only charge approximately 5% per transaction—no monthly fees, no setup fees, no hidden costs."
                   },
                   {
-                    q: "Can I switch from another payment provider?",
-                    a: "Absolutely. You can start using HandyPay alongside your existing systems or switch completely. No hardware required."
+                    q: "Is HandyPay safe?",
+                    a: "Yes, HandyPay uses bank-grade encryption and security measures to protect your data and transactions."
                   },
                   {
                     q: "What networks does HandyPay support?",
@@ -1185,7 +1254,7 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

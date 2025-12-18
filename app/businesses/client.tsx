@@ -131,7 +131,12 @@ export function BusinessesClient() {
                   />
                   <span>Download on App Store</span>
                 </a>
-                <div className="flex items-center gap-2 px-4 py-2.5 bg-neutral-100 text-neutral-500 rounded-full text-sm">
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.handypay.mobile&hl=en"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 border border-neutral-300 text-neutral-700 rounded-full text-sm hover:bg-neutral-50 transition-colors"
+                >
                   <Image
                     src="/64px-Google_Play_2022_icon.svg.png"
                     alt="Google Play Store"
@@ -139,8 +144,8 @@ export function BusinessesClient() {
                     height={16}
                     className="w-4 h-4"
                   />
-                  <span>Android Coming Soon</span>
-                </div>
+                  <span>Get it on Google Play</span>
+                </a>
               </div>
             </div>
 

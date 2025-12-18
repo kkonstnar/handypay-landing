@@ -7,8 +7,42 @@ import { trackGAEvent } from "@/lib/google-analytics";
 
 export function SiteFooter() {
   return (
-    <footer className="w-full bg-[#1a472a] text-white overflow-hidden relative">
+    <footer className="w-full overflow-hidden relative">
+      {/* Disclaimer Section */}
+      <div className="bg-white text-neutral-500 py-12 md:py-16 border-t border-neutral-200">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 text-[13px] leading-relaxed">
+            <div className="space-y-6">
+              <p>
+                <sup>1</sup>All payment processing services are provided by Stripe, Inc. HandyPay is not a bank 
+                and does not hold customer funds. Funds are processed through Stripe and paid out directly 
+                to your connected bank account. Payout timing may vary based on your bank and location.
+              </p>
+              <p>
+                <sup>2</sup>HandyPay, Inc. is a financial technology company and not a bank. Payment processing 
+                services are subject to Stripe&apos;s terms of service. Transaction fees apply: approximately 5% 
+                per transaction. International card payments and currency conversion may incur additional fees.
+              </p>
+            </div>
+            <div className="space-y-6">
+              <p>
+                Payouts are typically processed within 2-3 business days after a successful transaction. 
+                Actual timing depends on your bank&apos;s processing schedule and may vary due to weekends, 
+                holidays, or technical issues. First payouts may take 7-14 days for verification purposes.
+              </p>
+              <p>
+                HandyPay is available in select countries. Service availability, supported currencies, and 
+                payout methods may vary by location. All transactions are subject to fraud screening and 
+                compliance review. HandyPay reserves the right to hold, suspend, or reverse transactions 
+                that violate our terms of service.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Footer Content */}
+      <div className="bg-[#1a472a] text-white">
       <div className="container mx-auto px-6 pt-16 pb-8">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-16">
           {/* Logo & Brand */}
@@ -213,6 +247,7 @@ export function SiteFooter() {
         <div className="text-[20vw] md:text-[18vw] font-bold text-white/[0.06] whitespace-nowrap text-center leading-none select-none pointer-events-none -mb-[4vw]">
           HandyPay
         </div>
+      </div>
       </div>
     </footer>
   );
