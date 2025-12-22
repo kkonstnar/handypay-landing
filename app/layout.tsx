@@ -27,10 +27,10 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "HandyPay - Accept Card Payments with QR Codes in Jamaica",
+    default: "HandyPay - Accept Card Payments with Payment Links in Jamaica",
     template: "%s | HandyPay"
   },
-  description: "HandyPay makes it easy for anyone in Jamaica to accept digital payments with QR codes and payment links, directly to their Jamaican bank account or Western Union. Get paid in 2 business days. Accept remittances and money transfers. Download the free mobile payment app for iOS and Android.",
+  description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, ~5% per transaction.",
   keywords: [
     "HandyPay",
     "QR code payments",
@@ -83,23 +83,23 @@ export const metadata: Metadata = {
     alternateLocale: ["en_US"],
     url: siteUrl,
     siteName: "HandyPay",
-    title: "HandyPay - Accept Card Payments with QR Codes in Jamaica",
-    description: "Accept digital payments with QR codes and payment links in Jamaica. Get paid directly to your Jamaican bank account or Western Union in 2 business days. Free mobile payment app.",
+    title: "HandyPay - Accept Card Payments with Payment Links in Jamaica",
+    description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, ~5% per transaction.",
     images: [
       {
-        url: `${siteUrl}/iphone-mockup.svg`,
+        url: `${siteUrl}/handypay-full.svg`,
         width: 1200,
         height: 630,
-        alt: "HandyPay mobile app - Accept card payments with QR codes in Jamaica",
+        alt: "HandyPay - Accept card payments with payment links in Jamaica",
         type: "image/svg+xml",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "HandyPay - Accept Card Payments with QR Codes in Jamaica",
-    description: "Accept digital payments with QR codes and payment links in Jamaica. Get paid directly to your Jamaican bank account or Western Union in 2 business days.",
-    images: [`${siteUrl}/iphone-mockup.svg`],
+    title: "HandyPay - Accept Card Payments with Payment Links in Jamaica",
+    description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, ~5% per transaction.",
+    images: [`${siteUrl}/handypay-full.svg`],
     creator: "@handypay",
     site: "@handypay",
   },
