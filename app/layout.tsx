@@ -232,7 +232,7 @@ export default function RootLayout({
     "sameAs": [
       "https://www.instagram.com/handypayapp",
       "https://www.tiktok.com/@handypay",
-      "https://discord.gg/handypay"
+      "https://discord.gg/JcbAPzwR"
     ],
     "knowsAbout": [
       "Payment Processing",

@@ -213,7 +213,7 @@ export function SiteFooter() {
                 </svg>
               </a>
               <a 
-                href="https://discord.gg/handypay" 
+                href="https://discord.gg/JcbAPzwR" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-white/60 hover:text-white transition-colors cursor-pointer"
