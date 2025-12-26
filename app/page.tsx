@@ -3,7 +3,7 @@ import Image from "next/image";
 import Script from "next/script";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { Landmark, FileText, Heart, Globe, Users, UserCircle, Repeat, Wallet, ThumbsUp, CreditCard, ChevronDown } from "lucide-react";
+import { Landmark, FileText, Heart, Globe, Users, UserCircle, Repeat, Wallet, ThumbsUp, CreditCard, ChevronDown, Star } from "lucide-react";
 import NumberFlow from "@number-flow/react";
 import { useState, useEffect, useRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
@@ -66,7 +66,7 @@ export default function Home() {
   ];
 
   const rotatingDescriptions = [
-    "Free to download. No monthly fees. Just ~5% per transaction.",
+    "Free to download &Accept payments in 17 countries. No monthly fees. Just ~5% per transaction.",
     "Generate QR codes instantly for customers to scan and pay with their card.",
     "Receive payments directly to your bank account across 17 countries within 2 business days.",
     "Share payment links via WhatsApp, SMS, or email. Get paid wherever your customers are.",
@@ -399,17 +399,20 @@ export default function Home() {
 
   const reviewStructuredData = {
     "@context": "https://schema.org",
-    "@type": "Product",
+    "@type": "SoftwareApplication",
     "name": "HandyPay",
     "description": "Mobile payment app for accepting card payments with QR codes and payment links in Jamaica",
-    "brand": {
-      "@type": "Brand",
-      "name": "HandyPay"
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "iOS, Android",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
     },
     "aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": "4.75",
-      "reviewCount": "6",
+      "ratingValue": "4.9",
+      "ratingCount": "100",
       "bestRating": "5",
       "worstRating": "1"
     },
@@ -658,6 +661,17 @@ export default function Home() {
                   <Globe className="w-4 h-4" />
                   <span>17 Countries</span>
                 </a>
+              </div>
+
+              {/* App Rating */}
+              <div className="flex items-center gap-2 mt-4">
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <span className="font-semibold text-neutral-900">4.9</span>
+                <span className="text-neutral-500 text-sm">(100) App Rating</span>
               </div>
             </motion.div>
            
