@@ -18,7 +18,11 @@ const IOS_APP_URL = process.env.NEXT_PUBLIC_IOS_APP_URL || "https://apps.apple.c
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 const QR_CODE_TRACKING_URL = `${siteUrl}/app/download?source=header_button`;
 
-export function GetAppButton() {
+interface GetAppButtonProps {
+  variant?: "default" | "rounded";
+}
+
+export function GetAppButton({ variant = "default" }: GetAppButtonProps) {
   const [showQRCode, setShowQRCode] = React.useState(false);
   const qrRef = React.useRef<HTMLDivElement>(null);
   const buttonRef = React.useRef<HTMLButtonElement>(null);
@@ -92,14 +96,18 @@ export function GetAppButton() {
       <Button 
         ref={buttonRef}
         onClick={handleClick} 
-        variant="ghost" 
+        variant={variant === "rounded" ? "default" : "ghost"}
         size="sm" 
         aria-label="Get the app" 
         title="Get the app" 
-        className="text-black hover:bg-neutral-100 cursor-pointer"
+        className={
+          variant === "rounded"
+            ? "bg-neutral-900 hover:bg-neutral-800 text-white rounded-full px-4 py-2 text-[13px] cursor-pointer"
+            : "text-black hover:bg-neutral-100 cursor-pointer"
+        }
       >
-        Download the app
-        <Smartphone className="ml-2 h-4 w-4" color="black" />
+        {variant === "rounded" ? "Get App" : "Download the app"}
+        <Smartphone className="ml-2 h-4 w-4" color={variant === "rounded" ? "white" : "black"} />
       </Button>
       
       <AnimatePresence>

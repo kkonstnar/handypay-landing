@@ -150,7 +150,7 @@ export function IndividualsClient() {
                   className="inline-flex items-center gap-2 px-4 py-2.5 border border-neutral-300 text-neutral-700 rounded-full text-sm hover:bg-neutral-50 transition-colors"
                 >
                   <Image
-                    src="/64px-Google_Play_2022_icon.svg.png"
+                    src="/webp/google-play-icon.webp"
                     alt="Google Play Store"
                     width={16}
                     height={16}

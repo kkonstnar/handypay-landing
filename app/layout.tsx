@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     default: "HandyPay - Accept Card Payments with Payment Links in Jamaica",
     template: "%s | HandyPay"
   },
-  description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, ~5% per transaction.",
+  description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, 4.9% + 40¢ per transaction.",
   keywords: [
     "HandyPay",
     "QR code payments",
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
     url: siteUrl,
     siteName: "HandyPay",
     title: "HandyPay - Accept Card Payments with Payment Links in Jamaica",
-    description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, ~5% per transaction.",
+    description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, 4.9% + 40¢ per transaction.",
     images: [
       {
         url: `${siteUrl}/handypay-full.svg`,
@@ -98,7 +98,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "HandyPay - Accept Card Payments with Payment Links in Jamaica",
-    description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, ~5% per transaction.",
+    description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, 4.9% + 40¢ per transaction.",
     images: [`${siteUrl}/handypay-full.svg`],
     creator: "@handypay",
     site: "@handypay",
@@ -325,7 +325,9 @@ export default function RootLayout({
         <GoogleAnalyticsProvider>
           <PostHogProvider>
             <SiteHeader />
-            {children}
+            <main className="pt-20">
+              {children}
+            </main>
             <SiteFooter />
             <Toaster />
             <Analytics />

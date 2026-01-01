@@ -3,14 +3,14 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const industries = [
   {
     id: "food",
     title: "Food +\nBeverage",
     shortTitle: "Food & Bev",
-    image: "/african-lady-making-use-her-pos-machine.jpg",
+    image: "/webp/african-lady-making-use-her-pos-machine.webp",
     stat: "Instant",
     statLabel: "QR code generation",
     description: "Let customers pay at the table or counter—no hardware needed.",
@@ -19,16 +19,16 @@ const industries = [
     id: "retail",
     title: "Retail",
     shortTitle: "Retail",
-    image: "/woman-making-mobile-payment.jpg",
-    stat: "~5%",
-    statLabel: "per transaction",
+    image: "/webp/woman-making-mobile-payment.webp",
+    stat: "4.9%",
+    statLabel: "+ 40¢ per transaction",
     description: "Accept card payments in-store or online with QR codes and payment links.",
   },
   {
     id: "beauty",
     title: "Beauty",
     shortTitle: "Beauty",
-    image: "/pleased-relaxed-woman-wears-bathrobe-wrapped-towel-head.jpg",
+    image: "/webp/pleased-relaxed-woman-wears-bathrobe-wrapped-towel-head.webp",
     stat: "2-3 days",
     statLabel: "payout to your bank",
     description: "Perfect for salons, spas, and freelance beauty professionals.",
@@ -37,7 +37,7 @@ const industries = [
     id: "services",
     title: "Services",
     shortTitle: "Services",
-    image: "/person-shopping-second-hand-market.jpg",
+    image: "/webp/person-shopping-second-hand-market.webp",
     stat: "17",
     statLabel: "countries supported",
     description: "Contractors, tutors, consultants—get paid from clients anywhere.",
@@ -48,6 +48,14 @@ const AUTO_ADVANCE_INTERVAL = 5000; // 5 seconds
 
 export default function IndustriesSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  // Progress timer using CSS transition
+  useEffect(() => {
+    setProgress(0);
+    const timeout = setTimeout(() => setProgress(100), 50);
+    return () => clearTimeout(timeout);
+  }, [activeIndex]);
 
   // Auto-advance
   useEffect(() => {
@@ -60,6 +68,7 @@ export default function IndustriesSection() {
 
   const activeIndustry = industries[activeIndex];
   const inactiveIndustries = industries.filter((_, i) => i !== activeIndex);
+  const nextIndex = (activeIndex + 1) % industries.length;
 
   return (
     <section className="py-20 md:py-28 bg-neutral-50 overflow-hidden">
@@ -83,138 +92,136 @@ export default function IndustriesSection() {
         {/* Industry Cards - Desktop */}
         <div className="hidden md:grid md:grid-cols-[2fr_1fr_1fr_1fr] gap-3">
           {/* Active Large Card */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndustry.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer"
-              onClick={() => setActiveIndex((activeIndex + 1) % industries.length)}
-            >
-              <Image
-                src={activeIndustry.image}
-                alt={activeIndustry.title}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              
-              {/* Content */}
-              <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between">
-                {/* Title */}
-                <motion.h3 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.4 }}
-                  className="text-3xl md:text-4xl lg:text-5xl font-bold text-white whitespace-pre-line leading-[1.1]"
-                  style={{ fontFamily: "var(--font-display), system-ui" }}
-                >
-                  {activeIndustry.title}
-                </motion.h3>
+          <div
+            className="relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer"
+            onClick={() => setActiveIndex((activeIndex + 1) % industries.length)}
+          >
+            <Image
+              src={activeIndustry.image}
+              alt={activeIndustry.title}
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            
+            {/* Content */}
+            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between">
+              {/* Title */}
+              <h3 
+                className="text-3xl md:text-4xl lg:text-5xl font-bold text-white whitespace-pre-line leading-[1.1]"
+                style={{ fontFamily: "var(--font-display), system-ui" }}
+              >
+                {activeIndustry.title}
+              </h3>
 
-                {/* Bottom Stats */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.4 }}
-                >
-                  <div className="border-t border-white/30 pt-4">
-                    <div className="flex items-end justify-between">
-                      <div>
-                        <div className="text-3xl md:text-4xl font-bold text-white mb-1">
-                          {activeIndustry.stat}
-                        </div>
-                        <div className="text-sm text-neutral-300">
-                          {activeIndustry.statLabel}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-1 text-white text-sm font-medium hover:text-[#11AD30] transition-colors">
-                        Learn more
-                        <ArrowUpRight className="w-4 h-4" />
-                      </div>
+              {/* Bottom Stats */}
+              <div className="border-t border-white/30 pt-4">
+                <div className="flex items-end justify-between">
+                  <div>
+                    <div className="text-3xl md:text-4xl font-bold text-white mb-1">
+                      {activeIndustry.stat}
+                    </div>
+                    <div className="text-sm text-neutral-300">
+                      {activeIndustry.statLabel}
                     </div>
                   </div>
-                </motion.div>
+                  <div className="flex items-center gap-1 text-white text-sm font-medium hover:text-[#11AD30] transition-colors">
+                    Learn more
+                    <ArrowUpRight className="w-4 h-4" />
+                  </div>
+                </div>
               </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          </div>
 
           {/* Inactive Cards */}
-          {inactiveIndustries.map((industry, i) => {
+          {inactiveIndustries.map((industry) => {
             const originalIndex = industries.findIndex(ind => ind.id === industry.id);
+            const isNext = originalIndex === nextIndex;
+            
             return (
-              <motion.div
-                key={industry.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer group"
-                onClick={() => setActiveIndex(originalIndex)}
-              >
-                <Image
-                  src={industry.image}
-                  alt={industry.title}
-                  fill
-                  className="object-cover brightness-50 group-hover:brightness-75 transition-all duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                
-                {/* Title */}
-                <div className="absolute inset-0 p-4 flex flex-col justify-end">
-                  <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-[#11AD30] transition-colors">
-                    {industry.shortTitle}
-                  </h3>
+              <div key={industry.id} className="flex flex-col gap-2">
+                <div
+                  className="relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer group"
+                  onClick={() => setActiveIndex(originalIndex)}
+                >
+                  <Image
+                    src={industry.image}
+                    alt={industry.title}
+                    fill
+                    className="object-cover brightness-50 group-hover:brightness-75 transition-[filter] duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  
+                  {/* Title */}
+                  <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                    <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-[#11AD30] transition-colors duration-300">
+                      {industry.shortTitle}
+                    </h3>
+                  </div>
                 </div>
-              </motion.div>
+                
+                {/* Progress bar - only on next card */}
+                {isNext && (
+                  <div className="h-1 bg-neutral-200 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-[#11AD30] rounded-full"
+                      style={{ 
+                        width: `${progress}%`,
+                        transition: progress === 0 ? 'none' : `width ${AUTO_ADVANCE_INTERVAL - 50}ms linear`,
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
 
         {/* Industry Cards - Mobile */}
         <div className="md:hidden">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeIndustry.id}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="relative aspect-[3/4] rounded-2xl overflow-hidden mb-4"
-            >
-              <Image
-                src={activeIndustry.image}
-                alt={activeIndustry.title}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              
-              <div className="absolute inset-0 p-6 flex flex-col justify-between">
-                <h3 className="text-3xl font-bold text-white whitespace-pre-line leading-[1.1]">
-                  {activeIndustry.title}
-                </h3>
-                <div className="border-t border-white/30 pt-4">
-                  <div className="text-2xl font-bold text-white mb-1">{activeIndustry.stat}</div>
-                  <div className="text-sm text-neutral-300 mb-2">{activeIndustry.statLabel}</div>
-                  <p className="text-sm text-neutral-400">{activeIndustry.description}</p>
-                </div>
+          <div className="relative aspect-[3/4] rounded-2xl overflow-hidden mb-4">
+            <Image
+              src={activeIndustry.image}
+              alt={activeIndustry.title}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            
+            <div className="absolute inset-0 p-6 flex flex-col justify-between">
+              <h3 className="text-3xl font-bold text-white whitespace-pre-line leading-[1.1]">
+                {activeIndustry.title}
+              </h3>
+              <div className="border-t border-white/30 pt-4">
+                <div className="text-2xl font-bold text-white mb-1">{activeIndustry.stat}</div>
+                <div className="text-sm text-neutral-300 mb-2">{activeIndustry.statLabel}</div>
+                <p className="text-sm text-neutral-400">{activeIndustry.description}</p>
               </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          </div>
 
-          {/* Mobile Dots */}
+          {/* Mobile Progress Dots */}
           <div className="flex justify-center gap-2">
             {industries.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setActiveIndex(i)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  i === activeIndex ? "bg-[#11AD30] w-6" : "bg-neutral-600"
-                }`}
-              />
+                className="relative h-2 rounded-full overflow-hidden transition-all duration-300"
+                style={{ width: i === activeIndex ? '24px' : '8px' }}
+              >
+                <div className={`absolute inset-0 ${i === activeIndex ? 'bg-neutral-300' : 'bg-neutral-400'}`} />
+                {i === activeIndex && (
+                  <div 
+                    className="absolute inset-0 bg-[#11AD30] rounded-full"
+                    style={{ 
+                      width: `${progress}%`,
+                      transition: progress === 0 ? 'none' : `width ${AUTO_ADVANCE_INTERVAL - 50}ms linear`,
+                    }}
+                  />
+                )}
+              </button>
             ))}
           </div>
         </div>

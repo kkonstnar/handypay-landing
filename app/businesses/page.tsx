@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/black man busines.jpeg",
+        url: "/webp/black man busines.webp",
         width: 1200,
         height: 630,
         alt: "HandyPay business payments - Accept QR codes and payment links in Jamaica",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "HandyPay for Businesses - Scale Your Payments in Jamaica",
     description: "Accept payments your way with QR codes and payment links. Get paid to your Jamaican bank account in 2 business days.",
-    images: ["/black man busines.jpeg"],
+    images: ["/webp/black man busines.webp"],
   },
 }
 

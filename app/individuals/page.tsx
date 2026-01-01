@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/generated teenagers.png",
+        url: "/webp/generated teenagers.webp",
         width: 1200,
         height: 630,
         alt: "HandyPay individual payments - Get paid with QR codes in Jamaica",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "HandyPay for Individuals - Get Paid Easily in Jamaica",
     description: "Create QR codes and payment links to get paid for your freelance work or side hustle. Receive money in JMD or USD.",
-    images: ["/generated teenagers.png"],
+    images: ["/webp/generated teenagers.webp"],
   },
 }
 

@@ -178,7 +178,7 @@ export default function Page() {
       <h2>6. Fees and Charges</h2>
       <p>
         <strong>Transaction Fees:</strong> HandyPay charges a service fee for each transaction 
-        processed through our platform. Our current fee structure is approximately 5% per transaction, 
+        processed through our platform. Our current fee structure is 4.9% + 40¢ per transaction, 
         which includes payment processing costs. There are no monthly fees, setup fees, or hidden costs.
       </p>
       <p>

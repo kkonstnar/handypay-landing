@@ -20,7 +20,7 @@ export function SiteFooter() {
               </p>
               <p>
                 <sup>2</sup>HandyPay, Inc. is a financial technology company and not a bank. Payment processing 
-                services are subject to Stripe&apos;s terms of service. Transaction fees apply: approximately 5% 
+                services are subject to Stripe&apos;s terms of service. Transaction fees apply: 4.9% + 40¢ 
                 per transaction. International card payments and currency conversion may incur additional fees.
               </p>
             </div>
@@ -94,6 +94,32 @@ export function SiteFooter() {
                   }}
                 >
                   For Individuals
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/developers"
+                  className="text-white/60 hover:text-white transition-colors text-sm"
+                  onClick={() => {
+                    const eventData = { link: "developers" };
+                    posthog.capture("footer_link_clicked", eventData);
+                    trackGAEvent("footer_link_clicked", eventData);
+                  }}
+                >
+                  Developers
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/website-payments"
+                  className="text-white/60 hover:text-white transition-colors text-sm"
+                  onClick={() => {
+                    const eventData = { link: "website-payments" };
+                    posthog.capture("footer_link_clicked", eventData);
+                    trackGAEvent("footer_link_clicked", eventData);
+                  }}
+                >
+                  Accept Payments on Website
                 </Link>
               </li>
               <li>
@@ -173,6 +199,19 @@ export function SiteFooter() {
                   }}
                 >
                   Privacy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/delete-account"
+                  className="text-white/60 hover:text-white transition-colors text-sm"
+                  onClick={() => {
+                    const eventData = { link: "delete-account" };
+                    posthog.capture("footer_link_clicked", eventData);
+                    trackGAEvent("footer_link_clicked", eventData);
+                  }}
+                >
+                  Delete Account
                 </Link>
               </li>
             </ul>

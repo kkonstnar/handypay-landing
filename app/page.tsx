@@ -66,7 +66,7 @@ export default function Home() {
   ];
 
   const rotatingDescriptions = [
-    "Free to download &Accept payments in 17 countries. No monthly fees. Just ~5% per transaction.",
+    "Free to download & accept payments in 17 countries. No monthly fees. Just 4.9% + 40¢ per transaction.",
     "Generate QR codes instantly for customers to scan and pay with their card.",
     "Receive payments directly to your bank account across 17 countries within 2 business days.",
     "Share payment links via WhatsApp, SMS, or email. Get paid wherever your customers are.",
@@ -520,6 +520,8 @@ export default function Home() {
       />
       {/* Hero Section */}
       <section aria-label="Hero section" className="relative min-h-screen flex items-start px-4 pt-8 md:pt-16 pb-12 md:pb-20 w-full overflow-hidden">
+        {/* Grid background */}
+        <div className="absolute inset-0 bg-grid-fade pointer-events-none" />
         <div className="container mx-auto max-w-6xl w-full">
           <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12 items-start w-full">
             {/* Mobile: Images at top, Desktop: Right Column - Rotating Images */}
@@ -637,16 +639,18 @@ export default function Home() {
                       posthog.capture("app_download_clicked", eventData);
                       trackGAEvent("app_download_clicked", eventData);
                     }}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 border border-neutral-300 text-neutral-700 rounded-full text-sm hover:bg-neutral-50 transition-colors"
+                    className="relative inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-b from-white to-neutral-100 border border-neutral-200 text-neutral-700 rounded-full text-sm hover:from-neutral-50 hover:to-neutral-150 transition-all shadow-sm overflow-hidden"
                   >
+                    {/* Glossy shine overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-transparent h-1/2 pointer-events-none" />
                     <Image
-                      src="/64px-Google_Play_2022_icon.svg.png"
+                      src="/webp/google-play-icon.webp"
                       alt="Google Play Store"
                       width={16}
                       height={16}
-                      className="w-4 h-4"
+                      className="w-4 h-4 relative z-10"
                     />
-                    <span>Get it on Google Play</span>
+                    <span className="relative z-10">Get it on Google Play</span>
                   </a>
                 </div>
                 <a
@@ -733,7 +737,7 @@ export default function Home() {
                   className="inline-flex items-center gap-2 px-6 py-2 bg-white text-black border border-neutral-300 rounded-full font-medium text-sm hover:bg-neutral-50 transition-colors cursor-pointer"
                 >
                   <Image 
-                    src="/64px-Google_Play_2022_icon.svg.png" 
+                    src="/webp/google-play-icon.webp" 
                     alt="Google Play Store logo" 
                     width={16} 
                     height={16}
@@ -782,7 +786,7 @@ export default function Home() {
             >
                 <span className="text-sm text-neutral-600">Partnered with</span>
                 <Image src="/stripe.svg" alt="Stripe" width={54} height={20} /> <span className="text-sm text-neutral-600">&</span>
-                <Image src="/wulogo.png" alt="Western Union" width={54} height={20} />
+                <Image src="/webp/wulogo.webp" alt="Western Union" width={54} height={20} />
             </motion.div>
           </div>
 
@@ -854,8 +858,10 @@ export default function Home() {
       
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 md:py-28 bg-white overflow-hidden">
-        <div className="container mx-auto max-w-5xl px-6">
+      <section id="pricing" className="relative py-20 md:py-28 bg-white overflow-hidden">
+        {/* Grid background */}
+        <div className="absolute inset-0 bg-grid-light pointer-events-none" />
+        <div className="container mx-auto max-w-5xl px-6 relative z-10">
           <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
             {/* Left - Main Price */}
             <motion.div
@@ -868,7 +874,7 @@ export default function Home() {
                 Pricing
               </span>
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-neutral-900 leading-[1.1] tracking-tight mb-6">
-                ~5%
+                4.9% <span className="text-3xl md:text-4xl lg:text-5xl">+ 40¢</span>
                 <span className="block text-2xl md:text-3xl text-neutral-500 font-medium mt-2">per transaction</span>
               </h2>
               <p className="text-lg text-neutral-600 leading-relaxed">
@@ -907,6 +913,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* TODO: Accept Payments on Website & App Section - COMING SOON
+          Uncomment when ready. The section code is in git history. */}
 
       {/* Global Reach Section */}
       <section id="countries" className="relative py-24 md:py-40 bg-neutral-50 overflow-hidden">
@@ -1056,8 +1065,10 @@ export default function Home() {
       </section> */}
 
           {/* Testimonials Section */}
-      <section id="testimonials" aria-label="Customer testimonials" className="py-32 bg-white overflow-x-hidden">
-        <div className="container mx-auto max-w-6xl px-4 w-full">
+      <section id="testimonials" aria-label="Customer testimonials" className="relative py-32 bg-neutral-50 overflow-x-hidden">
+        {/* Grid background */}
+        <div className="absolute inset-0 bg-grid pointer-events-none" />
+        <div className="container mx-auto max-w-6xl px-4 w-full relative z-10">
             <motion.div 
               className="text-center mb-16 space-y-4"
               initial={{ opacity: 0, y: 30 }}
@@ -1069,7 +1080,7 @@ export default function Home() {
                 Entrepreneurs love HandyPay
               </h2>
               <p className="text-lg md:text-xl text-left md:text-center text-neutral-600 max-w-3xl mx-auto text-balance leading-relaxed">
-                Accept payments with QR codes and payment links, directly to your bank account or Western Union. <strong>Free to download. ~5% per transaction.</strong>
+                Accept payments with QR codes and payment links, directly to your bank account or Western Union. <strong>Free to download. 4.9% + 40¢ per transaction.</strong>
               </p>
             </motion.div>
 
@@ -1082,7 +1093,7 @@ export default function Home() {
                   <div className="flex items-center gap-2 mb-4">
                     <span className="font-medium text-neutral-900">Keisha Williams</span>
                     <Image 
-                      src="/verified-badge.png"
+                      src="/webp/verified-badge.webp"
                       alt="Verified"
                       width={18}
                       height={18}
@@ -1104,7 +1115,7 @@ export default function Home() {
                   <div className="flex items-center gap-2">
                     <span className="text-neutral-600 text-sm">Marcus Thompson</span>
                     <Image 
-                      src="/verified-badge.png"
+                      src="/webp/verified-badge.webp"
                       alt="Verified"
                       width={16}
                       height={16}
@@ -1123,7 +1134,7 @@ export default function Home() {
                   <div className="flex items-center gap-2">
                     <span className="text-neutral-600 text-sm">Aaliyah Johnson</span>
                     <Image 
-                      src="/verified-badge.png"
+                      src="/webp/verified-badge.webp"
                       alt="Verified"
                       width={16}
                       height={16}
@@ -1136,7 +1147,7 @@ export default function Home() {
                   <div className="flex items-center gap-2 mb-4">
                     <span className="font-medium text-neutral-900">Jamal Davis</span>
                     <Image 
-                      src="/verified-badge.png"
+                      src="/webp/verified-badge.webp"
                       alt="Verified"
                       width={18}
                       height={18}
@@ -1155,7 +1166,7 @@ export default function Home() {
                   <div className="flex items-center gap-2 mb-4">
                     <span className="font-medium text-neutral-900">Tyrone Mitchell</span>
                     <Image 
-                      src="/verified-badge.png"
+                      src="/webp/verified-badge.webp"
                       alt="Verified"
                       width={18}
                       height={18}
@@ -1174,7 +1185,7 @@ export default function Home() {
                   <div className="flex items-center gap-2">
                     <span className="text-neutral-600 text-sm">Jordan Washington</span>
                     <Image 
-                      src="/verified-badge.png"
+                      src="/webp/verified-badge.webp"
                       alt="Verified"
                       width={16}
                       height={16}
@@ -1222,7 +1233,7 @@ export default function Home() {
                 {[
                   {
                     q: "How much does HandyPay cost?",
-                    a: "HandyPay is free to download and use. We only charge approximately 5% per transaction—no monthly fees, no setup fees, no hidden costs."
+                    a: "HandyPay is free to download and use. We only charge 4.9% + 40¢ per transaction—no monthly fees, no setup fees, no hidden costs."
                   },
                   {
                     q: "Is HandyPay safe?",
