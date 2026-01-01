@@ -639,18 +639,16 @@ export default function Home() {
                       posthog.capture("app_download_clicked", eventData);
                       trackGAEvent("app_download_clicked", eventData);
                     }}
-                    className="relative inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-b from-white to-neutral-100 border border-neutral-200 text-neutral-700 rounded-full text-sm hover:from-neutral-50 hover:to-neutral-150 transition-all shadow-sm overflow-hidden"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/70 backdrop-blur-sm border border-neutral-200/60 text-neutral-700 rounded-full text-sm hover:bg-white/90 hover:border-neutral-300 transition-all shadow-sm"
                   >
-                    {/* Glossy shine overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-transparent to-transparent h-1/2 pointer-events-none" />
                     <Image
                       src="/webp/google-play-icon.webp"
                       alt="Google Play Store"
                       width={16}
                       height={16}
-                      className="w-4 h-4 relative z-10"
+                      className="w-4 h-4"
                     />
-                    <span className="relative z-10">Get it on Google Play</span>
+                    <span>Get it on Google Play</span>
                   </a>
                 </div>
                 <a
