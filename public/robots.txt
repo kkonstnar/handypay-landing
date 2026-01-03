@@ -1,10 +1,26 @@
+# HandyPay Robots.txt
+# https://tryhandypay.com
+
 User-agent: *
 Allow: /
 
-# Sitemap
+# Sitemap location
 Sitemap: https://tryhandypay.com/sitemap.xml
 
-# Disallow admin/private routes if any
+# Allow all country pages for SEO
+Allow: /countries/
+Allow: /countries/*
+
+# Disallow admin/private routes
 Disallow: /api/
 Disallow: /delete-account
 
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

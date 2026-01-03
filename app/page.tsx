@@ -18,6 +18,7 @@ const RotatingEarth = dynamic(() => import("@/components/rotating-earth"), { ssr
 const GetStartedSection = dynamic(() => import("@/components/get-started-section"), { ssr: false });
 const DemoSection = dynamic(() => import("@/components/demo-section"), { ssr: false });
 const IndustriesSection = dynamic(() => import("@/components/industries-section"), { ssr: false });
+import { FlagImage } from "@/components/flag-image";
 
 function isMobile() {
   if (typeof window === "undefined") return false;
@@ -982,6 +983,37 @@ export default function Home() {
                 <div className="text-5xl md:text-6xl font-bold text-neutral-900 mb-2">17</div>
                 <div className="text-neutral-500 text-sm uppercase tracking-wider">Currencies supported</div>
               </div>
+            </motion.div>
+
+            {/* Popular Countries */}
+            <motion.div
+              className="flex flex-wrap justify-center gap-3 mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.35 }}
+            >
+              {[
+                { name: "Jamaica", slug: "jamaica", countryCode: "JM" },
+                { name: "Nigeria", slug: "nigeria", countryCode: "NG" },
+                { name: "Trinidad", slug: "trinidad-and-tobago", countryCode: "TT" },
+                { name: "Ghana", slug: "ghana", countryCode: "GH" },
+                { name: "USA", slug: "united-states", countryCode: "US" },
+                { name: "Canada", slug: "canada", countryCode: "CA" },
+              ].map((country) => (
+                <a
+                  key={country.slug}
+                  href={`/countries/${country.slug}`}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm border border-neutral-200 rounded-full text-sm text-neutral-700 hover:border-[#11AD30] hover:text-[#11AD30] transition-all"
+                >
+                  <FlagImage 
+                    countryCode={country.countryCode} 
+                    countryName={country.name} 
+                    size="sm"
+                  />
+                  <span>{country.name}</span>
+                </a>
+              ))}
             </motion.div>
 
             {/* CTA */}
