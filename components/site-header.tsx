@@ -1,16 +1,46 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { GetAppButton } from "@/components/get-app-button";
 import posthog from "posthog-js";
 import { trackGAEvent } from "@/lib/google-analytics";
+import { ChevronDown } from "lucide-react";
 
 const navLinks = [
   { href: "/#pricing", label: "Pricing", event: "pricing" },
   { href: "/#countries", label: "Countries", event: "countries" },
-  { href: "/#testimonials", label: "Testimonials", event: "testimonials" },
   { href: "/faqs", label: "FAQs", event: "faqs" },
+];
+
+const productLinks = [
+  { 
+    href: "/app/download", 
+    label: "Mobile App", 
+    description: "Accept payments on the go",
+    event: "mobile_app" 
+  },
+  { 
+    href: "/website-payments", 
+    label: "Website Payments", 
+    description: "Embed checkout on your site",
+    event: "website_payments",
+    badge: "Coming Soon"
+  },
+  { 
+    href: "/wordpress-plugin", 
+    label: "WordPress Plugin", 
+    description: "WooCommerce & Gutenberg blocks",
+    event: "wordpress_plugin",
+    badge: "Coming Soon"
+  },
+  { 
+    href: "/developers", 
+    label: "Developers", 
+    description: "API & SDKs for any platform",
+    event: "developers",
+    badge: "Coming Soon"
+  },
 ];
 
 const socialLinks = [
@@ -35,6 +65,65 @@ const socialLinks = [
     ),
   },
 ];
+
+function ProductsDropdown({ isFloating = false }: { isFloating?: boolean }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => setIsOpen(false), 150);
+  };
+
+  return (
+    <div 
+      className="relative" 
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <button
+        className={`flex items-center gap-1 hover:text-neutral-900 transition-colors ${isFloating ? "text-[14px]" : "text-[15px]"}`}
+      >
+        Products
+        <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+      </button>
+
+      {isOpen && (
+        <div className={`absolute top-full left-0 pt-2 ${isFloating ? "left-1/2 -translate-x-1/2" : ""}`}>
+          <div className="w-64 bg-white rounded-xl shadow-lg border border-neutral-200 py-2">
+            {productLinks.map((product) => (
+              <Link
+                key={product.href}
+                href={product.href}
+                className="block px-4 py-3 hover:bg-neutral-50 transition-colors"
+                onClick={() => {
+                  setIsOpen(false);
+                  const eventData = { link: product.event, location: isFloating ? "header_floating" : "header" };
+                  posthog.capture("navigation_clicked", eventData);
+                  trackGAEvent("navigation_clicked", eventData);
+                }}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-neutral-900 text-sm">{product.label}</span>
+                  {product.badge && (
+                    <span className="text-[10px] font-medium text-[#11AD30] bg-[#11AD30]/10 px-2 py-0.5 rounded-full">
+                      {product.badge}
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-neutral-500 mt-0.5">{product.description}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function SiteHeader() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -62,6 +151,7 @@ export function SiteHeader() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-8 text-[15px] text-neutral-600">
+            <ProductsDropdown />
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -117,6 +207,7 @@ export function SiteHeader() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-7 text-[14px] text-neutral-600">
+            <ProductsDropdown isFloating />
             {navLinks.map((link) => (
               <a
                 key={link.href}

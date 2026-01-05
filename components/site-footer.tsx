@@ -119,7 +119,20 @@ export function SiteFooter() {
                     trackGAEvent("footer_link_clicked", eventData);
                   }}
                 >
-                  Accept Payments on Website
+                  Website Payments
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/wordpress-plugin"
+                  className="text-white/60 hover:text-white transition-colors text-sm"
+                  onClick={() => {
+                    const eventData = { link: "wordpress-plugin" };
+                    posthog.capture("footer_link_clicked", eventData);
+                    trackGAEvent("footer_link_clicked", eventData);
+                  }}
+                >
+                  WordPress Plugin
                 </Link>
               </li>
               <li>
