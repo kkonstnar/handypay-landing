@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useRef, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import posthog from "posthog-js";
 import { trackGAEvent } from "@/lib/google-analytics";
+import { toast } from "sonner";
 
 function getMobileOS() {
   if (typeof navigator === "undefined") return null;
@@ -31,9 +32,15 @@ const APP_URL = process.env.NEXT_PUBLIC_IOS_APP_URL || "https://apps.apple.com/j
 
 function DownloadPageInner() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const source = searchParams.get("source") || "qr_code";
+  const hasRedirected = useRef(false);
 
   useEffect(() => {
+    // Prevent double execution from React Strict Mode
+    if (hasRedirected.current) return;
+    hasRedirected.current = true;
+
     // Track QR code scan event
     const deviceType = isMobile() ? "mobile" : "desktop";
     const os = getMobileOS();
@@ -51,48 +58,51 @@ function DownloadPageInner() {
 
     // Determine redirect URL based on device
     let redirectUrl = APP_URL;
+    let platform = "other";
     
     if (os === "ios") {
       redirectUrl = IOS_APP_URL;
-      
-      // Track iOS download redirect
-      const redirectData = {
-        platform: "ios",
-        source: source,
-        redirect_type: "qr_code_scan",
-        device_type: deviceType,
-      };
-      posthog.capture("app_download_redirected", redirectData);
-      trackGAEvent("app_download_redirected", redirectData);
+      platform = "ios";
     } else if (os === "android") {
       redirectUrl = ANDROID_APP_URL;
-      
-      // Track Android download redirect
-      const redirectData = {
-        platform: "android",
-        source: source,
-        redirect_type: "qr_code_scan",
-        device_type: deviceType,
-      };
-      posthog.capture("app_download_redirected", redirectData);
-      trackGAEvent("app_download_redirected", redirectData);
-    } else {
-      // Track other platform redirect
-      const redirectData = {
-        platform: "other",
-        source: source,
-        redirect_type: "qr_code_scan",
-        device_type: deviceType,
-      };
-      posthog.capture("app_download_redirected", redirectData);
-      trackGAEvent("app_download_redirected", redirectData);
+      platform = "android";
     }
+    
+    // Track download redirect
+    const redirectData = {
+      platform,
+      source: source,
+      redirect_type: "qr_code_scan",
+      device_type: deviceType,
+    };
+    posthog.capture("app_download_redirected", redirectData);
+    trackGAEvent("app_download_redirected", redirectData);
 
     // Small delay to ensure tracking events are sent before redirect
     setTimeout(() => {
-      window.location.href = redirectUrl;
+      // Open app store in new tab
+      window.open(redirectUrl, "_blank");
+      
+      // Show success toast
+      toast.success("Opening App Store", {
+        description: os === "ios" 
+          ? "Taking you to the App Store..." 
+          : os === "android" 
+            ? "Taking you to Google Play..." 
+            : "Opening download page...",
+      });
+      
+      // Navigate back after a short delay
+      setTimeout(() => {
+        // Go back if there's history, otherwise go home
+        if (window.history.length > 1) {
+          router.back();
+        } else {
+          router.push("/");
+        }
+      }, 500);
     }, 100);
-  }, [source]);
+  }, [source, router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
