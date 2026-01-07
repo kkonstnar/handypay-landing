@@ -67,16 +67,16 @@ function DownloadPageInner() {
       redirectUrl = ANDROID_APP_URL;
       platform = "android";
     }
-    
+      
     // Track download redirect
-    const redirectData = {
+      const redirectData = {
       platform,
-      source: source,
-      redirect_type: "qr_code_scan",
-      device_type: deviceType,
-    };
-    posthog.capture("app_download_redirected", redirectData);
-    trackGAEvent("app_download_redirected", redirectData);
+        source: source,
+        redirect_type: "qr_code_scan",
+        device_type: deviceType,
+      };
+      posthog.capture("app_download_redirected", redirectData);
+      trackGAEvent("app_download_redirected", redirectData);
 
     // Small delay to ensure tracking events are sent before redirect
     setTimeout(() => {

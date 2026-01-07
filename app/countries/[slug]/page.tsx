@@ -200,7 +200,7 @@ export default async function CountryPage({ params }: PageProps) {
                 <div className="space-y-4">
                   <div className="rounded-2xl overflow-hidden aspect-[4/5]">
                     <Image
-                      src="/webp/happy man.webp"
+                      src="/webp/happy-man.webp"
                       alt="Entrepreneur using HandyPay"
                       width={300}
                       height={375}
@@ -219,7 +219,7 @@ export default async function CountryPage({ params }: PageProps) {
                     />
                   </div>
                 </div>
-              </div>
+                    </div>
               
               {/* Floating currency badge */}
               <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-lg border border-neutral-100 px-5 py-3 flex items-center gap-4">
@@ -244,27 +244,27 @@ export default async function CountryPage({ params }: PageProps) {
       {/* Local Context Section */}
       <section className="py-16 bg-neutral-50 border-y border-neutral-200">
         <div className="container mx-auto max-w-5xl px-6">
-          <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900 mb-6">
-            Why HandyPay for {country.name}?
-          </h2>
+            <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900 mb-6">
+              Why HandyPay for {country.name}?
+            </h2>
           <p className="text-lg text-neutral-600 leading-relaxed mb-10">
-            {country.localContext}
-          </p>
-          
+              {country.localContext}
+            </p>
+            
           <div className="grid sm:grid-cols-3 gap-6 mb-12">
-            <div className="bg-white rounded-xl p-6 border border-neutral-200">
-              <div className="text-3xl font-bold text-[#11AD30] mb-2">4.9%</div>
-              <div className="text-sm text-neutral-500">+ 40¢ per transaction</div>
+              <div className="bg-white rounded-xl p-6 border border-neutral-200">
+                <div className="text-3xl font-bold text-[#11AD30] mb-2">4.9%</div>
+                <div className="text-sm text-neutral-500">+ 40¢ per transaction</div>
+              </div>
+              <div className="bg-white rounded-xl p-6 border border-neutral-200">
+                <div className="text-3xl font-bold text-neutral-900 mb-2">{country.payoutTime}</div>
+                <div className="text-sm text-neutral-500">Payout time</div>
+              </div>
+              <div className="bg-white rounded-xl p-6 border border-neutral-200">
+                <div className="text-3xl font-bold text-neutral-900 mb-2">$0</div>
+                <div className="text-sm text-neutral-500">Monthly fees</div>
+              </div>
             </div>
-            <div className="bg-white rounded-xl p-6 border border-neutral-200">
-              <div className="text-3xl font-bold text-neutral-900 mb-2">{country.payoutTime}</div>
-              <div className="text-sm text-neutral-500">Payout time</div>
-            </div>
-            <div className="bg-white rounded-xl p-6 border border-neutral-200">
-              <div className="text-3xl font-bold text-neutral-900 mb-2">$0</div>
-              <div className="text-sm text-neutral-500">Monthly fees</div>
-            </div>
-          </div>
 
           {/* Powerful Features - Simple List */}
           <div className="grid sm:grid-cols-2 gap-x-12 gap-y-3">

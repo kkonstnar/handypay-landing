@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 31536000, // 1 year
+  },
+  experimental: {
+    optimizeCss: true,
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
   async headers() {
     return [

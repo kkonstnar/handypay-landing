@@ -75,16 +75,16 @@ export default function Home() {
   ];
 
   const rotatingImages = [
-    "/webp/happy man.webp",
+    "/webp/happy-man.webp",
     "/webp/woman with phone.webp",
     "/webp/woman handypay.webp"
   ];
 
-  // Rotating text effect
+  // Rotating text effect - reduced frequency for better performance
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTextIndex((prev) => (prev + 1) % rotatingTexts.length);
-    }, 3000); // Change every 3 seconds
+    }, 5000); // Change every 5 seconds
 
     return () => clearInterval(interval);
   }, [rotatingTexts.length]);
@@ -546,6 +546,7 @@ export default function Home() {
                       src={rotatingImages[currentTextIndex % rotatingImages.length]}
                       alt={`Hero image ${(currentTextIndex % rotatingImages.length) + 1}`}
                       fill
+                      priority
                       className="object-cover rounded-3xl"
                     />
                   </motion.div>
