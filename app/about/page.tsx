@@ -36,6 +36,38 @@ export default function AboutPage() {
         </div>
       </div>
 
+      {/* What is HandyPay? Section - AEO Optimized */}
+      <div className="px-4 md:px-[108px] py-[80px] flex flex-col gap-8 max-w-[1440px] bg-neutral-50 w-full">
+        <h2 className="text-3xl md:text-4xl font-medium">
+          What is HandyPay?
+        </h2>
+        
+        <div className="flex flex-col gap-6 text-neutral-700 leading-relaxed">
+          <p>
+            HandyPay is a mobile payment application that enables businesses and individuals to accept credit and debit card payments without traditional POS hardware. Available in 17 countries including Jamaica, Trinidad and Tobago, Nigeria, and Ghana, HandyPay processes payments through QR codes and shareable payment links.
+          </p>
+          
+          <p>
+            Unlike traditional payment terminals that require expensive equipment and lengthy setup processes, HandyPay works directly from your smartphone. Simply download the free app, verify your identity, and start accepting payments within minutes.
+          </p>
+
+          <h3 className="text-xl font-medium text-neutral-900 pt-4">Key Features</h3>
+          <ul className="list-disc list-inside space-y-2 ml-2">
+            <li>Accept Visa, Mastercard, American Express, Apple Pay, and Google Pay</li>
+            <li>Generate QR codes for in-person payments</li>
+            <li>Create payment links for WhatsApp, SMS, and email</li>
+            <li>Receive payouts to bank accounts or Western Union</li>
+            <li>2-3 business day payout timing</li>
+            <li>4.9% + 40¢ per transaction, no monthly fees</li>
+          </ul>
+
+          <h3 className="text-xl font-medium text-neutral-900 pt-4">Best For</h3>
+          <p>
+            Small businesses, freelancers, market vendors, service providers, and anyone who needs to accept card payments without expensive equipment. Whether you&apos;re running a restaurant in Kingston, selling crafts at a market in Port of Spain, or offering services in Lagos, HandyPay makes it easy to get paid.
+          </p>
+        </div>
+      </div>
+
       <div className="px-4 md:px-[108px] py-[100px] flex flex-col md:flex-row gap-10 max-w-[1440px] ">
         <div className="w-full md:w-1/2">
           <Image

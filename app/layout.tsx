@@ -27,10 +27,10 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://tryhandypay.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "HandyPay - Accept Card Payments with Payment Links in Jamaica",
+    default: "Accept Card Payments in Jamaica | QR Codes & Links",
     template: "%s | HandyPay"
   },
-  description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, 4.9% + 40¢ per transaction.",
+  description: "Accept Visa, Mastercard & Apple Pay in Jamaica with QR codes. Get paid to your bank in 2 days. Free app, no monthly fees. 4.9% + $0.40 per transaction.",
   keywords: [
     "HandyPay",
     "QR code payments",
@@ -83,8 +83,8 @@ export const metadata: Metadata = {
     alternateLocale: ["en_US"],
     url: siteUrl,
     siteName: "HandyPay",
-    title: "HandyPay - Accept Card Payments with Payment Links in Jamaica",
-    description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, 4.9% + 40¢ per transaction.",
+    title: "Accept Card Payments in Jamaica | QR Codes & Links",
+    description: "Accept Visa, Mastercard & Apple Pay in Jamaica with QR codes. Get paid to your bank in 2 days. Free app, no monthly fees. 4.9% + $0.40 per transaction.",
     images: [
       {
         url: `${siteUrl}/handypay-full.svg`,
@@ -97,8 +97,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "HandyPay - Accept Card Payments with Payment Links in Jamaica",
-    description: "Accept card payments with payment links in Jamaica. Get paid directly to your bank account or Western Union in 2 business days. Free to download, 4.9% + 40¢ per transaction.",
+    title: "Accept Card Payments in Jamaica | QR Codes & Links",
+    description: "Accept Visa, Mastercard & Apple Pay in Jamaica with QR codes. Get paid to your bank in 2 days. Free app, no monthly fees. 4.9% + $0.40 per transaction.",
     images: [`${siteUrl}/handypay-full.svg`],
     creator: "@handypay",
     site: "@handypay",

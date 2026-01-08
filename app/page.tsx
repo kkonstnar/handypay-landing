@@ -62,7 +62,7 @@ export default function Home() {
     "Accept Payments\nwith your phone.",
     "Create QR Codes\ninstantly.",
     "Get Paid in\n17 Countries.",
-    "Send Payment Links\neverywhere.",
+    "Create & Send\nPayment Links",
     "USD, JMD, CAD\nand more."
   ];
 
@@ -75,9 +75,9 @@ export default function Home() {
   ];
 
   const rotatingImages = [
-    "/webp/happy-man.webp",
-    "/webp/woman with phone.webp",
-    "/webp/woman handypay.webp"
+    { src: "/webp/happy-man.webp", alt: "Jamaican business owner smiling while accepting card payment with HandyPay QR code" },
+    { src: "/webp/woman with phone.webp", alt: "Woman entrepreneur using HandyPay mobile app to create payment link" },
+    { src: "/webp/woman handypay.webp", alt: "Caribbean business owner receiving instant payment notification on HandyPay" }
   ];
 
   // Rotating text effect - reduced frequency for better performance
@@ -357,42 +357,66 @@ export default function Home() {
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "How does HandyPay work?",
+        "name": "How much does HandyPay cost?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "HandyPay allows you to accept digital payments in Jamaica using QR codes and payment links. Simply generate a QR code or share a payment link, and customers can pay you directly. Funds are deposited to your Jamaican bank account or Western Union account within 2 business days."
+          "text": "HandyPay is free to download and use. We only charge 4.9% + 40¢ per transaction—no monthly fees, no setup fees, no hidden costs."
         }
       },
       {
         "@type": "Question",
-        "name": "What payment methods does HandyPay accept?",
+        "name": "Is HandyPay safe?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "HandyPay accepts all major credit and debit cards including Visa, Mastercard, American Express, and Discover. We also support Apple Pay and Google Pay for contactless payments."
+          "text": "Yes, HandyPay uses bank-grade encryption and security measures to protect your data and transactions."
         }
       },
       {
         "@type": "Question",
-        "name": "How long does it take to receive payments in Jamaica?",
+        "name": "What networks does HandyPay support?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Payments are processed and deposited to your Jamaican bank account or Western Union account within 2 business days after the transaction is completed."
+          "text": "HandyPay works with all major card networks including Visa, Mastercard, American Express, and Discover. We also support Apple Pay and Google Pay."
         }
       },
       {
         "@type": "Question",
-        "name": "Can I accept payments in both USD and JMD?",
+        "name": "What is the best payment app in Jamaica?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, HandyPay supports multi-currency payments. You can accept payments in both USD (US Dollars) and JMD (Jamaican Dollars), allowing you to choose the currency that works best for your business."
+          "text": "HandyPay is the leading payment app in Jamaica for accepting card payments. With QR codes, payment links, and payouts to your bank account or Western Union in just 2 business days, HandyPay makes it easy for businesses and individuals to get paid."
         }
       },
       {
         "@type": "Question",
-        "name": "Is HandyPay available for iOS and Android?",
+        "name": "How can I accept card payments without a POS machine?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes, HandyPay is available for both iOS and Android devices. You can download it from the App Store for iPhone or Google Play Store for Android devices."
+          "text": "With HandyPay, you can accept card payments using just your smartphone. Generate a QR code for customers to scan, or share a payment link via WhatsApp, SMS, or email—no expensive POS hardware required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What countries does HandyPay work in?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HandyPay is available in 17 countries including Jamaica, Trinidad and Tobago, Barbados, Bahamas, Nigeria, Ghana, Kenya, and more. You can accept payments from customers worldwide and receive payouts locally."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I accept US dollars with HandyPay in Jamaica?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, HandyPay supports multi-currency payments. You can accept payments in both USD (US Dollars) and JMD (Jamaican Dollars), giving you flexibility to serve local and international customers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does HandyPay work with Western Union?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, HandyPay offers Western Union as a payout option. You can receive your earnings directly to a Western Union account, making it convenient to access your funds quickly across the Caribbean and beyond."
         }
       }
     ]
@@ -422,7 +446,13 @@ export default function Home() {
         "@type": "Review",
         "author": {
           "@type": "Person",
-          "name": "Keisha Williams"
+          "name": "Keisha Williams",
+          "jobTitle": "Restaurant Owner",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kingston",
+            "addressCountry": "Jamaica"
+          }
         },
         "datePublished": "2024-01-01",
         "reviewBody": "Game changer for my business. Customers love scanning the QR code - it's so fast. Getting paid directly to my Jamaican bank account in just a few days? This is exactly what I needed.",
@@ -436,7 +466,13 @@ export default function Home() {
         "@type": "Review",
         "author": {
           "@type": "Person",
-          "name": "Marcus Thompson"
+          "name": "Marcus Thompson",
+          "jobTitle": "Freelance Designer",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Montego Bay",
+            "addressCountry": "Jamaica"
+          }
         },
         "datePublished": "2024-01-01",
         "reviewBody": "The payment links are perfect for WhatsApp. I just send it and get paid instantly.",
@@ -450,7 +486,13 @@ export default function Home() {
         "@type": "Review",
         "author": {
           "@type": "Person",
-          "name": "Aaliyah Johnson"
+          "name": "Aaliyah Johnson",
+          "jobTitle": "Beauty Salon Owner",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Port of Spain",
+            "addressCountry": "Trinidad and Tobago"
+          }
         },
         "datePublished": "2024-01-01",
         "reviewBody": "No more complicated payment setups. Just generate a QR code and you're done.",
@@ -464,7 +506,13 @@ export default function Home() {
         "@type": "Review",
         "author": {
           "@type": "Person",
-          "name": "Jamal Davis"
+          "name": "Jamal Davis",
+          "jobTitle": "Market Vendor",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Lagos",
+            "addressCountry": "Nigeria"
+          }
         },
         "datePublished": "2024-01-01",
         "reviewBody": "Western Union payouts are a lifesaver. I wish I found HandyPay sooner. Setting up payments used to take weeks, now it takes minutes.",
@@ -478,7 +526,13 @@ export default function Home() {
         "@type": "Review",
         "author": {
           "@type": "Person",
-          "name": "Tyrone Mitchell"
+          "name": "Tyrone Mitchell",
+          "jobTitle": "Retail Shop Owner",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kingston",
+            "addressCountry": "Jamaica"
+          }
         },
         "datePublished": "2024-01-01",
         "reviewBody": "HandyPay is awesome. The QR code payments work flawlessly, and getting paid to my Jamaican bank account in 2 days is exactly what I needed. Best decision I made for my business.",
@@ -492,7 +546,13 @@ export default function Home() {
         "@type": "Review",
         "author": {
           "@type": "Person",
-          "name": "Jordan Washington"
+          "name": "Jordan Washington",
+          "jobTitle": "Online Seller",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Nassau",
+            "addressCountry": "Bahamas"
+          }
         },
         "datePublished": "2024-01-01",
         "reviewBody": "@handypay made accepting card payments so simple. The payment links work perfectly for my customers, and I love that I can get paid to Western Union too.",
@@ -501,6 +561,40 @@ export default function Home() {
           "ratingValue": "5",
           "bestRating": "5"
         }
+      }
+    ]
+  };
+
+  const howToStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Accept Card Payments with HandyPay",
+    "description": "Learn how to start accepting credit and debit card payments using HandyPay's mobile app with QR codes and payment links.",
+    "totalTime": "PT5M",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Download the App",
+        "text": "Download HandyPay free from the App Store (iOS) or Google Play Store (Android). The app is completely free to download with no subscription fees."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Verify Your Identity",
+        "text": "Sign up and complete identity verification in under 2 minutes. You'll need a valid ID and basic business information."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Connect Your Bank or Western Union",
+        "text": "Link your bank account or Western Union account to receive payouts. Funds are deposited within 2 business days."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 4,
+        "name": "Accept Payments",
+        "text": "Generate QR codes for in-person payments or create payment links to share via WhatsApp, SMS, or email. Start accepting Visa, Mastercard, Apple Pay, and Google Pay immediately."
       }
     ]
   };
@@ -518,6 +612,12 @@ export default function Home() {
         type="application/ld+json"
         strategy="beforeInteractive"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewStructuredData) }}
+      />
+      <Script
+        id="howto-structured-data"
+        type="application/ld+json"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToStructuredData) }}
       />
       {/* Hero Section */}
       <section aria-label="Hero section" className="relative min-h-screen flex items-start px-4 pt-8 md:pt-16 pb-12 md:pb-20 w-full overflow-hidden">
@@ -543,8 +643,8 @@ export default function Home() {
                     transition={{ duration: 0.5 }}
                   >
                     <Image
-                      src={rotatingImages[currentTextIndex % rotatingImages.length]}
-                      alt={`Hero image ${(currentTextIndex % rotatingImages.length) + 1}`}
+                      src={rotatingImages[currentTextIndex % rotatingImages.length].src}
+                      alt={rotatingImages[currentTextIndex % rotatingImages.length].alt}
                       fill
                       priority
                       className="object-cover rounded-3xl"
@@ -556,25 +656,28 @@ export default function Home() {
 
             {/* Left Column - Text Content */}
             <div className="text-left order-2 md:order-1">
-            <motion.h1
+            {/* Hidden H1 for SEO - contains primary keywords */}
+            <h1 className="sr-only">Accept Card Payments in Jamaica & 17 Countries</h1>
+            <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-medium mb-6 heading min-h-[180px] flex items-center"
+              className="text-4xl md:text-5xl lg:text-6xl font-medium mb-6 heading"
+              aria-hidden="true"
             >
               <AnimatePresence mode="wait">
                 <motion.span
                   key={currentTextIndex}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.5 }}
-                  className="whitespace-pre-line"
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.4 }}
+                  className="block whitespace-pre-line"
                 >
                   {rotatingTexts[currentTextIndex]}
                 </motion.span>
               </AnimatePresence>
-            </motion.h1>
+            </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
@@ -782,11 +885,16 @@ export default function Home() {
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-                className="flex items-center gap-3"
+                className="flex flex-col gap-3"
             >
-                <span className="text-sm text-neutral-600">Partnered with</span>
-                <Image src="/stripe.svg" alt="Stripe" width={54} height={20} /> <span className="text-sm text-neutral-600">&</span>
-                <Image src="/webp/wulogo.webp" alt="Western Union" width={54} height={20} />
+                <p className="text-sm text-neutral-500">
+                  HandyPay is a mobile payment app that lets you accept card payments with QR codes and payment links—no POS hardware needed.
+                </p>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-neutral-600">Partnered with</span>
+                  <Image src="/stripe.svg" alt="Stripe payment processing partner" width={54} height={20} /> <span className="text-sm text-neutral-600">&</span>
+                  <Image src="/webp/wulogo.webp" alt="Western Union payout partner" width={54} height={20} />
+                </div>
             </motion.div>
           </div>
 
@@ -911,6 +1019,50 @@ export default function Home() {
               ))}
             </motion.div>
           </div>
+
+          {/* CTA after Pricing */}
+          <motion.div 
+            className="mt-12 pt-12 border-t border-neutral-100 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <p className="text-xl font-medium text-neutral-900 mb-4">Ready to start accepting payments?</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-3">
+              <a
+                href={IOS_APP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-black text-white rounded-full font-medium text-sm hover:bg-neutral-800 transition-colors"
+              >
+                <Image
+                  src="/apple.svg"
+                  alt="Apple App Store"
+                  width={18}
+                  height={18}
+                  className="w-[18px] h-[18px] invert"
+                />
+                <span>Download on App Store</span>
+              </a>
+              <a
+                href={ANDROID_APP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-neutral-200 text-neutral-700 rounded-full text-sm hover:bg-neutral-50 transition-colors"
+              >
+                <Image
+                  src="/webp/google-play-icon.webp"
+                  alt="Google Play Store"
+                  width={16}
+                  height={16}
+                  className="w-4 h-4"
+                />
+                <span>Get it on Google Play</span>
+              </a>
+            </div>
+            <p className="text-sm text-neutral-500">No credit card required. Set up in 2 minutes.</p>
+          </motion.div>
 
         </div>
       </section>
@@ -1126,7 +1278,7 @@ export default function Home() {
                     <span className="font-medium text-neutral-900">Keisha Williams</span>
                     <Image 
                       src="/webp/verified-badge.webp"
-                      alt="Verified"
+                      alt="Verified HandyPay customer"
                       width={18}
                       height={18}
                       className="flex-shrink-0"
@@ -1135,25 +1287,27 @@ export default function Home() {
                   <p className="text-neutral-900 leading-relaxed mb-4">
                     Game changer for my business. Customers love scanning the QR code - it&apos;s so fast.
                   </p>
-                  <p className="text-neutral-900 leading-relaxed">
+                  <p className="text-neutral-900 leading-relaxed mb-4">
                     Getting paid directly to my <span className="font-bold">Jamaican bank account</span> in just a few days? This is exactly what I needed.
                   </p>
+                  <p className="text-neutral-500 text-sm">Restaurant Owner, Kingston, Jamaica</p>
                 </div>
 
                 <div className="bg-white p-6 border border-neutral-200" style={{ borderRadius: '12px 20px 12px 20px', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
                   <p className="text-neutral-900 leading-relaxed mb-4">
                     The payment links are perfect for WhatsApp. I just send it and get paid instantly.
                   </p>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mb-1">
                     <span className="text-neutral-600 text-sm">Marcus Thompson</span>
                     <Image 
                       src="/webp/verified-badge.webp"
-                      alt="Verified"
+                      alt="Verified HandyPay customer"
                       width={16}
                       height={16}
                       className="flex-shrink-0"
                     />
                   </div>
+                  <p className="text-neutral-500 text-sm">Freelance Designer, Montego Bay, Jamaica</p>
                 </div>
               </div>
 
@@ -1163,16 +1317,17 @@ export default function Home() {
                   <p className="text-neutral-900 leading-relaxed mb-4">
                     No more complicated payment setups. Just generate a QR code and you&apos;re done.
                   </p>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mb-1">
                     <span className="text-neutral-600 text-sm">Aaliyah Johnson</span>
                     <Image 
                       src="/webp/verified-badge.webp"
-                      alt="Verified"
+                      alt="Verified HandyPay customer"
                       width={16}
                       height={16}
                       className="flex-shrink-0"
                     />
                   </div>
+                  <p className="text-neutral-500 text-sm">Beauty Salon Owner, Port of Spain, Trinidad</p>
                 </div>
 
                 <div className="bg-white p-6 border border-neutral-200" style={{ borderRadius: '5px 18px 5px 18px', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
@@ -1180,15 +1335,16 @@ export default function Home() {
                     <span className="font-medium text-neutral-900">Jamal Davis</span>
                     <Image 
                       src="/webp/verified-badge.webp"
-                      alt="Verified"
+                      alt="Verified HandyPay customer"
                       width={18}
                       height={18}
                       className="flex-shrink-0"
                     />
                   </div>
-                  <p className="text-neutral-900 leading-relaxed">
+                  <p className="text-neutral-900 leading-relaxed mb-4">
                     Western Union payouts are a lifesaver. <span className="font-bold">I wish I found HandyPay sooner.</span> Setting up payments used to take weeks, now it takes minutes.
                   </p>
+                  <p className="text-neutral-500 text-sm">Market Vendor, Lagos, Nigeria</p>
                 </div>
               </div>
 
@@ -1199,35 +1355,59 @@ export default function Home() {
                     <span className="font-medium text-neutral-900">Tyrone Mitchell</span>
                     <Image 
                       src="/webp/verified-badge.webp"
-                      alt="Verified"
+                      alt="Verified HandyPay customer"
                       width={18}
                       height={18}
                       className="flex-shrink-0"
                     />
                   </div>
-                  <p className="text-neutral-900 leading-relaxed">
+                  <p className="text-neutral-900 leading-relaxed mb-4">
                     <span className="font-bold">HandyPay is awesome.</span> The QR code payments work flawlessly, and getting paid to my Jamaican bank account in 2 days is exactly what I needed. Best decision I made for my business.
                   </p>
+                  <p className="text-neutral-500 text-sm">Retail Shop Owner, Kingston, Jamaica</p>
                 </div>
 
                 <div className="bg-white p-6 border border-neutral-200" style={{ borderRadius: '8px 16px 8px 16px', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)' }}>
                   <p className="text-neutral-900 leading-relaxed mb-4">
                     <span className="font-bold">@handypay</span> made accepting card payments so simple. The payment links work perfectly for my customers, and I love that I can get paid to Western Union too.
                   </p>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mb-1">
                     <span className="text-neutral-600 text-sm">Jordan Washington</span>
                     <Image 
                       src="/webp/verified-badge.webp"
-                      alt="Verified"
+                      alt="Verified HandyPay customer"
                       width={16}
                       height={16}
                       className="flex-shrink-0"
                     />
-                </div>
                   </div>
+                  <p className="text-neutral-500 text-sm">Online Seller, Nassau, Bahamas</p>
                 </div>
               </div>
             </div>
+
+            {/* CTA after Testimonials */}
+            <motion.div 
+              className="mt-16 text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <p className="text-2xl md:text-3xl font-medium text-neutral-900 mb-6">Join thousands of businesses accepting payments with HandyPay</p>
+              <a
+                href={IOS_APP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#11AD30] text-white rounded-full font-medium hover:bg-[#0e9428] transition-colors"
+              >
+                Start Accepting Payments
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </motion.div>
+          </div>
           </section>
 
       {/* FAQ Section */}
@@ -1274,6 +1454,26 @@ export default function Home() {
                   {
                     q: "What networks does HandyPay support?",
                     a: "HandyPay works with all major card networks including Visa, Mastercard, American Express, and Discover. We also support Apple Pay and Google Pay."
+                  },
+                  {
+                    q: "What is the best payment app in Jamaica?",
+                    a: "HandyPay is the leading payment app in Jamaica for accepting card payments. With QR codes, payment links, and payouts to your bank account or Western Union in just 2 business days, HandyPay makes it easy for businesses and individuals to get paid."
+                  },
+                  {
+                    q: "How can I accept card payments without a POS machine?",
+                    a: "With HandyPay, you can accept card payments using just your smartphone. Generate a QR code for customers to scan, or share a payment link via WhatsApp, SMS, or email—no expensive POS hardware required."
+                  },
+                  {
+                    q: "What countries does HandyPay work in?",
+                    a: "HandyPay is available in 17 countries including Jamaica, Trinidad and Tobago, Barbados, Bahamas, Nigeria, Ghana, Kenya, and more. You can accept payments from customers worldwide and receive payouts locally."
+                  },
+                  {
+                    q: "Can I accept US dollars with HandyPay in Jamaica?",
+                    a: "Yes, HandyPay supports multi-currency payments. You can accept payments in both USD (US Dollars) and JMD (Jamaican Dollars), giving you flexibility to serve local and international customers."
+                  },
+                  {
+                    q: "Does HandyPay work with Western Union?",
+                    a: "Yes, HandyPay offers Western Union as a payout option. You can receive your earnings directly to a Western Union account, making it convenient to access your funds quickly across the Caribbean and beyond."
                   }
                 ].map((faq, i) => (
                   <div key={i} className="border-b border-neutral-200">

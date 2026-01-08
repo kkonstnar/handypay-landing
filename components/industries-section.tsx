@@ -11,6 +11,7 @@ const industries = [
     title: "Food +\nBeverage",
     shortTitle: "Food & Bev",
     image: "/webp/african-lady-making-use-her-pos-machine.webp",
+    alt: "Restaurant owner accepting QR code payment from customer at food counter",
     stat: "Instant",
     statLabel: "QR code generation",
     description: "Let customers pay at the table or counter—no hardware needed.",
@@ -20,6 +21,7 @@ const industries = [
     title: "Retail",
     shortTitle: "Retail",
     image: "/webp/woman-making-mobile-payment.webp",
+    alt: "Retail store customer making mobile payment with HandyPay",
     stat: "4.9%",
     statLabel: "+ 40¢ per transaction",
     description: "Accept card payments in-store or online with QR codes and payment links.",
@@ -29,6 +31,7 @@ const industries = [
     title: "Beauty",
     shortTitle: "Beauty",
     image: "/webp/pleased-relaxed-woman-wears-bathrobe-wrapped-towel-head.webp",
+    alt: "Spa client relaxing after paying for beauty services with HandyPay",
     stat: "2-3 days",
     statLabel: "payout to your bank",
     description: "Perfect for salons, spas, and freelance beauty professionals.",
@@ -38,6 +41,7 @@ const industries = [
     title: "Services",
     shortTitle: "Services",
     image: "/webp/person-shopping-second-hand-market.webp",
+    alt: "Service provider accepting card payment at outdoor market using HandyPay",
     stat: "17",
     statLabel: "countries supported",
     description: "Contractors, tutors, consultants—get paid from clients anywhere.",
@@ -98,7 +102,7 @@ export default function IndustriesSection() {
           >
             <Image
               src={activeIndustry.image}
-              alt={activeIndustry.title}
+              alt={activeIndustry.alt}
               fill
               className="object-cover"
               priority
@@ -148,7 +152,7 @@ export default function IndustriesSection() {
                 >
                   <Image
                     src={industry.image}
-                    alt={industry.title}
+                    alt={industry.alt}
                     fill
                     className="object-cover brightness-50 group-hover:brightness-75 transition-[filter] duration-300"
                   />
@@ -184,7 +188,7 @@ export default function IndustriesSection() {
           <div className="relative aspect-[3/4] rounded-2xl overflow-hidden mb-4">
             <Image
               src={activeIndustry.image}
-              alt={activeIndustry.title}
+              alt={activeIndustry.alt}
               fill
               className="object-cover"
             />

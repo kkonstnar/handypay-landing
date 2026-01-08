@@ -7,6 +7,8 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
+    "test": "vitest --run",
+    "test:watch": "vitest",
     "email": "email dev --port 3001",
     "clean": "bash scripts/clean.sh",
     "clean:full": "bash scripts/clean.sh --full"
@@ -49,13 +51,19 @@
     "@eslint/eslintrc": "^3",
     "@react-email/preview-server": "5.0.5",
     "@tailwindcss/postcss": "^4",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.1",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^5.1.2",
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
+    "fast-check": "^4.5.3",
+    "jsdom": "^27.4.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.0.16"
   }
 }
